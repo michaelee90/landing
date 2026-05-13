@@ -1,37 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Michael Ee — strategic designer and learning specialist bridging art and analytics. RISD-trained, MOE-tested.">
+<title>mikeeeww.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600&display=swap');
-.mw-page,.mw-page *{box-sizing:border-box}
-.mw-page{--p:oklch(.96 .028 195);--i:#1f2a2e;--is:#566066;--if:#9aa7ad;--t:oklch(.55 .08 200);--td:oklch(.42 .09 210);font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-style:italic;color:var(--i);font-size:18px;line-height:1.4;min-height:100vh;display:flex;flex-direction:column;background:var(--p) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");background-blend-mode:multiply;padding:64px clamp(24px,5vw,80px) 48px;-webkit-font-smoothing:antialiased}
-.mw-wrap{max-width:1240px;margin:0 auto;width:100%;flex:1;display:flex;flex-direction:column}
-.mw-meta{display:flex;justify-content:space-between;font-family:"Nunito",sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--is);margin-bottom:clamp(40px,8vh,90px)}
-.mw-meta .d{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--t);margin-right:8px;vertical-align:middle;transform:translateY(-1px)}
-.mw-name{font-weight:500;font-size:clamp(72px,18vw,260px);line-height:.86;letter-spacing:-.045em;margin:0;white-space:nowrap;color:#12aaa1}
-.mw-name .a{color:var(--t)}
-.mw-deck{margin-top:clamp(24px,3vh,40px);padding-top:18px;border-top:1.5px solid var(--i);display:flex;align-items:baseline;gap:32px;flex-wrap:wrap}
-.mw-tag{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-style:italic;font-size:clamp(18px,2.1vw,24px);max-width:640px;flex:1 1 320px;line-height:1.35;margin:0}
-.mw-find{font-family:"Nunito",sans-serif;font-size:11px;letter-spacing:.18em;color:var(--is);text-transform:uppercase;white-space:nowrap}
-.mw-find i{font-style:normal;margin-right:4px;color:var(--td)}
-.mw-links{margin-top:clamp(36px,6vh,72px);display:flex;align-items:baseline;flex-wrap:wrap;gap:14px 18px;font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-style:italic;font-size:clamp(22px,2.6vw,32px)}
-.mw-links a{color:var(--i);text-decoration:none;position:relative;padding-bottom:2px;transition:color .25s}
-.mw-links a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--i);transition:.25s}
-.mw-links a:hover,.mw-links a:focus-visible{color:var(--td);outline:none}
-.mw-links a:hover:after,.mw-links a:focus-visible:after{background:var(--td);height:2px}
-.mw-links .s{font-style:italic;color:var(--if);font-size:.7em;transform:translateY(-2px)}
-.mw-links .h{margin-left:auto;font-style:italic;color:var(--if);font-size:14px;white-space:nowrap}
-.mw-foot{margin-top:auto;padding-top:48px;display:flex;justify-content:space-between;font-family:"Nunito",sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--if);border-top:1px solid var(--if)}
-.mw-foot em{font-family:"Cormorant Garamond",serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:13px;color:var(--is)}
-@media(max-width:560px){.mw-meta .r,.mw-links .h{display:none}}
+  :root{
+    --p:oklch(.96 .028 195);
+    --i:#1f2a2e;
+    --is:#566066;
+    --if:#9aa7ad;
+    --t:oklch(.55 .08 200);
+    --td:oklch(.42 .09 210);
+    --teal:#12aaa1;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{
+    margin:0;padding:0;
+    background:var(--p) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-blend-mode:multiply;
+    color:var(--i);
+    font-family:"Cormorant Garamond",Georgia,serif;
+    font-weight:600;font-style:italic;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;flex-direction:column;
+  }
+
+  /* ── page wrapper ── */
+  .mw-page{min-height:100vh;display:flex;flex-direction:column;padding:64px clamp(24px,5vw,80px) 48px;}
+  .mw-wrap{max-width:1240px;margin:0 auto;width:100%;flex:1;display:flex;flex-direction:column;}
+
+  /* ── meta bar ── */
+  .mw-meta{
+    display:flex;justify-content:space-between;
+    font-family:"Nunito",sans-serif;font-style:normal;font-weight:600;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--is);
+    margin-bottom:clamp(24px,4vh,48px);
+  }
+  .mw-meta .d{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-right:8px;vertical-align:middle;transform:translateY(-1px)}
+
+  /* ── hero headline ── */
+  .mw-deck{
+    margin-top:clamp(24px,3vh,40px);
+    padding-top:18px;
+    border-top:1.5px solid var(--i);
+    display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;
+  }
+  .mw-hero{
+    font-family:"Cormorant Garamond",Georgia,serif;
+    font-weight:600;font-style:italic;
+    font-size:clamp(28px,8.5vw,130px);
+    line-height:1.12;letter-spacing:-.02em;
+    color:var(--i);margin:0;
+    max-width:22ch;text-wrap:balance;
+    flex:1 1 300px;
+  }
+  .mw-find{
+    font-family:"Nunito",sans-serif;font-style:normal;font-weight:600;
+    font-size:11px;letter-spacing:.18em;color:var(--is);
+    text-transform:uppercase;white-space:nowrap;
+    display:inline;margin-left:.6em;vertical-align:text-middle;
+  }
+  .mw-find i{font-style:normal;margin-right:4px;color:var(--td)}
+
+  /* ── nav links ── */
+  .mw-links{
+    margin-top:clamp(36px,6vh,72px);
+    display:flex;align-items:baseline;flex-wrap:wrap;gap:14px 18px;
+    font-family:"Cormorant Garamond",Georgia,serif;
+    font-weight:500;font-style:italic;
+    font-size:clamp(22px,2.6vw,32px);
+  }
+  .mw-links a{color:var(--i);text-decoration:none;position:relative;padding-bottom:2px;transition:color .25s}
+  .mw-links a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--i);transition:.25s}
+  .mw-links a:hover,.mw-links a:focus-visible{color:var(--td);outline:none}
+  .mw-links a:hover:after,.mw-links a:focus-visible:after{background:var(--td);height:2px}
+  .mw-links .s{font-style:italic;color:var(--if);font-size:.7em;transform:translateY(-2px)}
+
+  /* ── footer ── */
+  .mw-foot{
+    margin-top:auto;padding-top:48px;
+    display:flex;justify-content:space-between;
+    font-family:"Nunito",sans-serif;font-style:normal;
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--if);border-top:1px solid var(--if);
+  }
+  .mw-foot em{font-family:"Cormorant Garamond",serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:13px;color:var(--is)}
+
+  @media(max-width:560px){.mw-meta .r{display:none}}
+
+  /* ──────────────────────────────────────────────
+     cycle word — slot machine
+  ────────────────────────────────────────────── */
+  .cyc{
+    position:relative;
+    display:inline-block;
+    vertical-align:text-middle;
+    color:var(--teal);
+    font-style:italic;font-weight:600;
+    cursor:default;
+  }
+  .cyc .mask{
+    --row:1.2em;
+    --pad-r:.35em;
+    box-sizing:content-box;
+    display:inline-block;
+    vertical-align:text-middle;
+    height:1em;
+    overflow:hidden;
+    padding-right:var(--pad-r);
+    transition:width .45s cubic-bezier(.7,0,.2,1);
+  }
+  .cyc .stack{
+    display:flex;flex-direction:column;
+    transition:transform .45s cubic-bezier(.7,0,.2,1);
+    will-change:transform;
+  }
+  .cyc .stack > span{
+    display:block;line-height:var(--row);height:var(--row);
+    white-space:nowrap;
+  }
+
+  /* SEE — hand-drawn ring */
+  .cyc-see{padding:0 .12em;}
+  .cyc-see .ring{
+    position:absolute;inset:-.22em -.18em -.18em -.12em;
+    width:calc(100% + .3em);height:calc(100% + .4em);
+    overflow:visible;pointer-events:none;
+  }
+  .cyc-see .ring ellipse{
+    fill:none;stroke:var(--teal);stroke-width:1.6;stroke-linecap:round;
+    stroke-dasharray:240;stroke-dashoffset:240;
+    transition:stroke-dashoffset .85s cubic-bezier(.65,0,.35,1);
+    filter:url(#wobble);
+  }
+  .cyc-see.is-active .ring ellipse,
+  .cyc-see:hover .ring ellipse{stroke-dashoffset:0;}
+
+  /* THINK — underline draw */
+  .cyc-think{padding:0 .04em;}
+  .cyc-think::after{
+    content:"";position:absolute;left:0;right:0;bottom:.02em;
+    height:2px;background:var(--teal);
+    transform:scaleX(0);transform-origin:left center;
+    transition:transform .55s cubic-bezier(.7,0,.2,1);
+  }
+  .cyc-think.is-active::after,
+  .cyc-think:hover::after{transform:scaleX(1);}
+
+  .cyc.is-cycling .stack > span{color:var(--td);}
+  .cyc:not(.is-cycling) .stack > span:first-child{color:var(--teal);}
 </style>
+</head>
+
+<body>
+
+<!-- SVG filter for hand-drawn ring -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="wobble">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.2"/>
+    </filter>
+  </defs>
+</svg>
+
 <div class="mw-page"><div class="mw-wrap">
-<div class="mw-meta"><span><span class="d"></span>MICHAEL EE · BFA(GRAPHIC DESIGN), PGDE</span><span class="r">HELLO WORLD</span></div>
-<h1 class="mw-name">mikeeeww<span class="a">.</span></h1>
-<div class="mw-deck"><p class="mw-tag">Strategic designer and learning specialist bridging art and analytics.</p><span class="mw-find"><i>↓</i>Find me</span></div>
-<nav class="mw-links" aria-label="Contact">
-<a href="http://mikeeeww.squarespace.com/connect">email</a><span class="s">—</span>
-<a href="https://www.dropbox.com/scl/fi/vag136lkso8mnyd2rzkj1/Michael-Ee-CV-2026.pdf?rlkey=yot0wctlwatsuxaihheea8sgl&st=lgkfefaw&dl=0" target="_blank" rel="noopener">résumé</a><span class="s">—</span>
-<a href="http://mikeeeww.squarespace.com" target="_blank" rel="noopener">portfolio</a><span class="s">—</span>
-<a href="http://linkedin.com/in/michael-ee" target="_blank" rel="noopener">linkedin</a>
-<span class="h">(opens in a new tab)</span>
-</nav>
-<footer class="mw-foot"><span>Set in Cormorant Garamond &amp; Nunito</span><span><em>© Michael Ee, 05/2026</em></span></footer>
+
+  <!-- meta bar -->
+  <div class="mw-meta">
+    <span><span class="d"></span>MICHAEL EE · BFA(GRAPHIC DESIGN), PGDE</span>
+    <span class="r">HELLO WORLD</span>
+  </div>
+
+  <!-- hero headline -->
+  <div class="mw-deck">
+    <p class="mw-hero">
+      I spent a decade teaching people how to
+      <span class="cyc cyc-see" data-words="see,observe,perceive,notice,look" aria-label="see">
+        <span class="mask"><span class="stack"><span>see</span></span></span>
+        <svg class="ring" viewBox="0 0 100 60" preserveAspectRatio="none">
+          <ellipse cx="50" cy="30" rx="46" ry="24" transform="rotate(-2.5 50 30)"/>
+        </svg>
+      </span>.<br>
+      Now I help organisations
+      <span class="cyc cyc-think" data-words="think,communicate,adapt" aria-label="think">
+        <span class="mask"><span class="stack"><span>think</span></span></span>
+      </span>
+      better through design — where data meets art. <span class="mw-find"><i>↓</i>Find me</span>
+    </p>
+  </div>
+
+  <!-- nav links -->
+  <nav class="mw-links" aria-label="Contact">
+    <a href="http://mikeeeww.squarespace.com/connect">email</a><span class="s">—</span>
+    <a href="https://www.dropbox.com/scl/fi/vag136lkso8mnyd2rzkj1/Michael-Ee-CV-2026.pdf?rlkey=yot0wctlwatsuxaihheea8sgl&st=lgkfefaw&dl=0" target="_blank" rel="noopener">résumé</a><span class="s">—</span>
+    <a href="http://mikeeeww.squarespace.com" target="_blank" rel="noopener">portfolio</a><span class="s">—</span>
+    <a href="http://linkedin.com/in/michael-ee" target="_blank" rel="noopener">linkedin</a>
+  </nav>
+
+  <!-- footer -->
+  <footer class="mw-foot">
+    <span>Set in Cormorant Garamond &amp; Nunito</span>
+    <span><em>© Michael Ee, 05/2026</em></span>
+  </footer>
+
 </div></div>
+
+<script>
+(() => {
+  function makeCycler(el, opts = {}){
+    const words = (el.dataset.words || '').split(',').map(s => s.trim()).filter(Boolean);
+    if (words.length < 2) return null;
+
+    const mask = el.querySelector('.mask');
+    const stack = el.querySelector('.stack');
+    stack.innerHTML = words.map(w => `<span>${w}</span>`).join('');
+
+    const ghost = document.createElement('span');
+    const cs = getComputedStyle(el);
+    Object.assign(ghost.style, {
+      position:'absolute', visibility:'hidden', whiteSpace:'nowrap',
+      font: cs.font, letterSpacing: cs.letterSpacing,
+      fontStyle: cs.fontStyle, fontWeight: cs.fontWeight,
+    });
+    document.body.appendChild(ghost);
+    const widths = words.map(w => { ghost.textContent = w; return ghost.getBoundingClientRect().width; });
+    ghost.remove();
+
+    let idx = 0;
+    let timer = null;
+    const stepMs = opts.stepMs ?? 700;
+
+    function show(i){
+      idx = i;
+      mask.style.width = widths[i] + 'px';
+      stack.style.transform = `translateY(calc(-${i} * var(--row)))`;
+    }
+    function next(){ show((idx + 1) % words.length); }
+    function start(){
+      el.classList.add('is-active','is-cycling');
+      next();
+      timer = setInterval(next, stepMs);
+    }
+    function stop(){
+      clearInterval(timer); timer = null;
+      el.classList.remove('is-active','is-cycling');
+      show(0);
+    }
+
+    el.addEventListener('mouseenter', start);
+    el.addEventListener('mouseleave', stop);
+    el.addEventListener('focus', start);
+    el.addEventListener('blur', stop);
+    el.tabIndex = 0;
+    show(0);
+    return { start, stop, el };
+  }
+
+  const cyclers = [...document.querySelectorAll('.cyc')].map(el => makeCycler(el)).filter(Boolean);
+
+  // auto-demo on load
+  function demo(){
+    cyclers.forEach((c, i) => {
+      setTimeout(() => {
+        c.start();
+        setTimeout(() => c.stop(), 4000);
+      }, 600 + i * 5600);
+    });
+  }
+  window.addEventListener('load', () => setTimeout(demo, 400));
+})();
+</script>
+
+</body>
+</html>
