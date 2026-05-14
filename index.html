@@ -1,282 +1,671 @@
 <!doctype html>
 <html lang="en">
+
+<!--
+  ========================================================
+  Mike Ee · Landing Page
+  ========================================================
+
+  FILE STRUCTURE (think of it like layers in Illustrator):
+  1. HEAD      — page settings, fonts, and all visual styles
+  2. BODY       — content
+     ├── SVG Filter  — hidden graphic effect for ring animation
+     ├── Meta Bar    — top strip text
+     ├── Hero        — main headline with animated words
+     ├── Nav Links   — email, résumé, portfolio, linkedin
+     └── Footer      — typeset credit and copyright
+  3. SCRIPT    — hover animations
+  ========================================================
+-->
+
+
+<!-- =====================================================
+  1. HEAD — Settings, fonts, and styles
+  Not visible on screen; tells browser how to set up the page before showing anything.
+===================================================== -->
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Michael Ee — strategic designer and learning specialist bridging art and analytics. RISD-trained, MOE-tested.">
-<title>mikeeeww.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-  :root{
-    --p:oklch(.96 .028 195);
-    --i:#1f2a2e;
-    --is:#566066;
-    --if:#9aa7ad;
-    --t:oklch(.55 .08 200);
-    --td:oklch(.42 .09 210);
-    --teal:#12aaa1;
-  }
-  *,*::before,*::after{box-sizing:border-box}
-  html,body{
-    margin:0;padding:0;
-    background:var(--p) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-blend-mode:multiply;
-    color:var(--i);
-    font-family:"Cormorant Garamond",Georgia,serif;
-    font-weight:600;font-style:italic;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-    display:flex;flex-direction:column;
-  }
+  <!-- Character encoding: lets the browser read special characters like © and é -->
+  <meta charset="utf-8">
 
-  /* ── page wrapper ── */
-  .mw-page{min-height:100vh;display:flex;flex-direction:column;padding:64px clamp(24px,5vw,80px) 48px;}
-  .mw-wrap{max-width:1240px;margin:0 auto;width:100%;flex:1;display:flex;flex-direction:column;}
+  <!-- Responsive scaling: makes the page fit properly on mobile screens -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  /* ── meta bar ── */
-  .mw-meta{
-    display:flex;justify-content:space-between;
-    font-family:"Nunito",sans-serif;font-style:normal;font-weight:600;
-    font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--is);
-    margin-bottom:clamp(24px,4vh,48px);
-  }
-  .mw-meta .d{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-right:8px;vertical-align:middle;transform:translateY(-1px)}
+  <!-- SEO description: what appears under your link in Google search results -->
+  <meta name="description" content="Mike Ee — strategic designer and learning specialist bridging art and analytics">
 
-  /* ── hero headline ── */
-  .mw-deck{
-    margin-top:clamp(24px,3vh,40px);
-    padding-top:18px;
-    border-top:1.5px solid var(--i);
-    display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;
-  }
-  .mw-hero{
-    font-family:"Cormorant Garamond",Georgia,serif;
-    font-weight:600;font-style:italic;
-    font-size:clamp(28px,8.5vw,130px);
-    line-height:1.12;letter-spacing:-.02em;
-    color:var(--i);margin:0;
-    max-width:22ch;text-wrap:balance;
-    flex:1 1 300px;
-  }
-  .mw-find{
-    font-family:"Nunito",sans-serif;font-style:normal;font-weight:600;
-    font-size:11px;letter-spacing:.18em;color:var(--is);
-    text-transform:uppercase;white-space:nowrap;
-    display:inline;margin-left:.6em;vertical-align:text-middle;
-  }
-  .mw-find i{font-style:normal;margin-right:4px;color:var(--td)}
+  <!-- Browser tab title -->
+  <title>mike ee</title>
 
-  /* ── nav links ── */
-  .mw-links{
-    margin-top:clamp(36px,6vh,72px);
-    display:flex;align-items:baseline;flex-wrap:wrap;gap:14px 18px;
-    font-family:"Cormorant Garamond",Georgia,serif;
-    font-weight:500;font-style:italic;
-    font-size:clamp(22px,2.6vw,32px);
-  }
-  .mw-links a{color:var(--i);text-decoration:none;position:relative;padding-bottom:2px;transition:color .25s}
-  .mw-links a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--i);transition:.25s}
-  .mw-links a:hover,.mw-links a:focus-visible{color:var(--td);outline:none}
-  .mw-links a:hover:after,.mw-links a:focus-visible:after{background:var(--td);height:2px}
-  .mw-links .s{font-style:italic;color:var(--if);font-size:.7em;transform:translateY(-2px)}
+  <!-- Google Fonts: preconnect lines speed up font loading by opening the
+       connection to Google's servers early, before the font is actually requested -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  /* ── footer ── */
-  .mw-foot{
-    margin-top:auto;padding-top:48px;
-    display:flex;justify-content:space-between;
-    font-family:"Nunito",sans-serif;font-style:normal;
-    font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--if);border-top:1px solid var(--if);
-  }
-  .mw-foot em{font-family:"Cormorant Garamond",serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:13px;color:var(--is)}
+  <!-- The actual font request: loads Cormorant Garamond (italic 500 & 600)
+       and Nunito (regular 400 & semibold 600) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 
-  @media(max-width:560px){.mw-meta .r{display:none}}
 
-  /* ──────────────────────────────────────────────
-     cycle word — slot machine
-  ────────────────────────────────────────────── */
-  .cyc{
-    position:relative;
-    display:inline-block;
-    vertical-align:text-middle;
-    color:var(--teal);
-    font-style:italic;font-weight:600;
-    cursor:default;
-  }
-  .cyc .mask{
-    --row:1.2em;
-    --pad-r:.35em;
-    box-sizing:content-box;
-    display:inline-block;
-    vertical-align:text-middle;
-    height:1em;
-    overflow:hidden;
-    padding-right:var(--pad-r);
-    transition:width .45s cubic-bezier(.7,0,.2,1);
-  }
-  .cyc .stack{
-    display:flex;flex-direction:column;
-    transition:transform .45s cubic-bezier(.7,0,.2,1);
-    will-change:transform;
-  }
-  .cyc .stack > span{
-    display:block;line-height:var(--row);height:var(--row);
-    white-space:nowrap;
-  }
+  <style>
 
-  /* SEE — hand-drawn ring */
-  .cyc-see{padding:0 .12em;}
-  .cyc-see .ring{
-    position:absolute;inset:-.22em -.18em -.18em -.12em;
-    width:calc(100% + .3em);height:calc(100% + .4em);
-    overflow:visible;pointer-events:none;
-  }
-  .cyc-see .ring ellipse{
-    fill:none;stroke:var(--teal);stroke-width:1.6;stroke-linecap:round;
-    stroke-dasharray:240;stroke-dashoffset:240;
-    transition:stroke-dashoffset .85s cubic-bezier(.65,0,.35,1);
-    filter:url(#wobble);
-  }
-  .cyc-see.is-active .ring ellipse,
-  .cyc-see:hover .ring ellipse{stroke-dashoffset:0;}
+    /* -------------------------------------------------------
+       DESIGN TOKENS — the colour palette and other reusable values
+       defined as CSS custom properties (variables) on the :root selector
+       ------------------------------------------------------- */
+    :root {
+      --page-bg:    oklch(.96 .02 55);  /* warm, light orange background */
+      --ink:        #1f2a2e;              /* near-black for main text */
+      --ink-mid:    #566066;              /* mid-tone grey for secondary text */
+      --ink-faint:  #9aa7ad;             /* light grey for footer and hints */
+      --teal-mid:   oklch(.55 .08 200);  /* mid teal for accents */
+      --teal-dark:  oklch(.42 .09 210);  /* darker teal for hover states */
+      --teal:       #12aaa1;             /* primary teal for highlights */
+    }
 
-  /* THINK — underline draw */
-  .cyc-think{padding:0 .04em;}
-  .cyc-think::after{
-    content:"";position:absolute;left:0;right:0;bottom:.02em;
-    height:2px;background:var(--teal);
-    transform:scaleX(0);transform-origin:left center;
-    transition:transform .55s cubic-bezier(.7,0,.2,1);
-  }
-  .cyc-think.is-active::after,
-  .cyc-think:hover::after{transform:scaleX(1);}
 
-  .cyc.is-cycling .stack > span{color:var(--td);}
-  .cyc:not(.is-cycling) .stack > span:first-child{color:var(--teal);}
-</style>
+    /* -------------------------------------------------------
+       GLOBAL RESET
+       Browsers have their own default styles that can cause
+       inconsistencies. This zeroes them out for a clean start.
+       ------------------------------------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box; /* padding and border included in element width */
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+
+      /* Noise texture layered over the background colour.
+         The long SVG string is an inline graphic that creates
+         a subtle grain — like paper texture in print design. */
+      background:
+        url("scribble.svg") center / cover no-repeat,
+        var(--page-bg)
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      background-blend-mode: multiply, multiply; /* blends the grain into the colour */
+
+      color: var(--ink);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      font-style: italic;
+      -webkit-font-smoothing: antialiased; /* crisper text rendering on Mac/iOS */
+      min-height: 100vh; /* page always fills the full screen height */
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    /* -------------------------------------------------------
+       PAGE WRAPPER
+       Two nested containers:
+       .mw-page — handles padding from the screen edges
+       .mw-wrap — caps the content width and centres it
+       ------------------------------------------------------- */
+    .mw-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(24px, 4vh, 56px) clamp(40px, 6vw, 96px) 48px;
+        /* clamp(min, preferred, max): padding scales with viewport width
+         between a minimum of 24px and a maximum of 80px */
+    }
+
+    .mw-wrap {
+      max-width: 1240px; /* content never gets wider than this */
+      margin: 0 auto;    /* centres the content horizontally */
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    /* -------------------------------------------------------
+       META BAR — top strip with your name and credentials
+       ------------------------------------------------------- */
+    .mw-meta {
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between; /* name on left, "Hello World" on right */
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: clamp(16px, 2.5vh, 32px);
+    }
+
+    /* The small teal dot before your name */
+    .mw-meta .d {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;          /* makes the square div into a circle */
+      background: var(--teal);
+      margin-right: 8px;
+      vertical-align: middle;
+      transform: translateY(-1px); /* nudges it optically onto the text baseline */
+    }
+
+
+    /* -------------------------------------------------------
+       HERO SECTION — the main headline area
+       .mw-deck is the container (with the top border line)
+       .mw-hero is the headline text itself
+       ------------------------------------------------------- */
+    .mw-deck {
+      margin-top: clamp(12px, 2vh, 18px);
+      padding-top: 10px;
+      border-top: 1px solid var(--ink); /* horizontal rule above the headline */
+      display: flex;
+      align-items: baseline;
+      gap: 32px;
+      flex-wrap: wrap; /* allows content to stack on narrow screens */
+    }
+
+    .mw-hero {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 600;
+      font-style: italic;
+      font-size: clamp(28px, 5.5vw, 72px); /* fluid: scales between 28px and 72px */
+      line-height: 1.25;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin: 0;
+      flex: 1 1 300px;
+    }
+
+    .mw-lastline {
+      display: inline-flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+
+    /* "↓ Find me" — small label inline at the end of the hero */
+    .mw-find {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .18em;
+      color: var(--ink-mid);
+      text-transform: uppercase;
+      white-space: nowrap;
+      display: block;
+      text-align: right;
+      margin-left: 0;
+    }
+
+    .mw-find i {
+      font-style: normal;
+      margin-right: 4px;
+      color: var(--teal-dark);
+    }
+
+
+    /* -------------------------------------------------------
+       NAV LINKS — email, résumé, portfolio, linkedin
+       ------------------------------------------------------- */
+    .mw-links {
+      margin-top: clamp(36px, 6vh, 72px);
+      margin-bottom: clamp(24px, 4vh, 48px);  
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 500;
+      font-style: italic;
+      font-size: clamp(22px, 2.6vw, 32px);
+    }
+
+    /* Default link style — no underline, inherits ink colour */
+    .mw-links a {
+      color: var(--ink);
+      text-decoration: none;
+      position: relative;  /* needed so ::after underline positions correctly */
+      padding-bottom: 2px;
+      transition: color .25s;
+    }
+
+    /* Custom underline via pseudo-element — more control than browser default */
+    .mw-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: var(--ink);
+      transition: .25s;
+    }
+
+    /* Hover and keyboard-focus state */
+    .mw-links a:hover,
+    .mw-links a:focus-visible {
+      color: var(--teal-dark);
+      outline: none;
+    }
+
+    .mw-links a:hover::after,
+    .mw-links a:focus-visible::after {
+      background: var(--teal-dark);
+      height: 2px; /* underline thickens slightly on hover */
+    }
+
+    /* The em-dash separators between links */
+    .mw-links .s {
+      font-style: italic;
+      color: var(--ink-faint);
+      font-size: .7em;
+      transform: translateY(-2px);
+    }
+
+
+    /* -------------------------------------------------------
+       FOOTER
+       margin-top: auto pushes it to the bottom of the page
+       regardless of how much content sits above it
+       ------------------------------------------------------- */
+    .mw-foot {
+      margin-top: auto;
+      padding-top: 48px;
+      display: flex;
+      justify-content: space-between;
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      border-top: 1px solid var(--ink-faint);
+    }
+
+    /* Copyright date — serif italic to contrast the Nunito footer text */
+    .mw-foot em {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 13px;
+      color: var(--ink-mid);
+    }
+
+
+    /* -------------------------------------------------------
+       RESPONSIVE — adjustments for small screens (under 560px)
+       ------------------------------------------------------- */
+    @media (max-width: 560px) {
+      .mw-meta .r { display: none; } /* hides "Hello World" on mobile */
+    }
+
+
+    /* =======================================================
+       ANIMATED CYCLER — the slot-machine words ("see", "think")
+       ======================================================= */
+
+    /* Outer wrapper for each cycling word */
+    .cyc {
+      position: relative;    /* anchor for the absolutely-positioned ring SVG */
+      display: inline-block;
+      vertical-align: baseline;
+      color: var(--teal);
+      font-style: italic;
+      font-weight: 600;
+      cursor: default;
+      transform: translateY(0.08em);
+    }
+
+    /* The clipping window — only one word is visible at a time.
+       Words slide vertically through this like a slot machine reel. */
+    .cyc .mask {
+      --row: 1.2em;   /* height of each word slot */
+      --pad-r: .35em; /* right buffer so italic letters don't clip */
+      box-sizing: content-box;
+      display: inline-block;
+      vertical-align: baseline;
+      height: 1em;
+      overflow: hidden; /* hides all words except the current one */
+      padding-bottom: 0.2em;
+      padding-right: var(--pad-r);
+      margin-bottom: -0.2em; /* optical adjustment to align with baseline */
+      transition: width .45s cubic-bezier(.7, 0, .2, 1); /* smooth width on word change */
+    }
+
+    /* The full vertical stack of words — JS slides this up and down */
+    .cyc .stack {
+      display: flex;
+      flex-direction: column;
+      transition: transform .45s cubic-bezier(.7, 0, .2, 1);
+      will-change: transform; /* performance hint to the browser */
+    }
+
+    .cyc .stack > span {
+      display: block;
+      line-height: var(--row);
+      height: var(--row);
+      white-space: nowrap;
+    }
+
+
+    /* ── "SEE" — hand-drawn ring effect ── */
+
+    .cyc-see { padding: 0 .12em; }
+
+    .cyc-see .ring {
+      position: absolute;
+      top: -0.1em;
+      left: -0.5em;
+      width: calc(100% + 0.6em);
+      height: 1.4em;
+      overflow: visible;
+      pointer-events: none; /* ring doesn't block mouse events */
+    }
+
+    /* Ring starts invisible and draws itself on hover.
+       stroke-dashoffset animates from full length (hidden) to 0 (fully drawn) */
+    .cyc-see .ring ellipse {
+      fill: none;
+      stroke: var(--teal);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-dasharray: 240;   /* total path length of the ellipse */
+      stroke-dashoffset: 240;  /* fully hidden at rest */
+      transition: stroke-dashoffset .85s cubic-bezier(.65, 0, .35, 1);
+      filter: url(#wobble);    /* applies the hand-drawn wobble effect */
+    }
+
+    .cyc-see.is-active .ring ellipse,
+    .cyc-see:hover .ring ellipse {
+      stroke-dashoffset: 0; /* ring draws itself on hover */
+    }
+
+
+    /* ── "THINK" — animated underline effect ── */
+
+    .cyc-think { padding: 0 .04em; }
+
+    /* Underline starts at zero width, expands to full width on hover */
+    .cyc-think::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: .02em;
+      height: clamp(1px, 0.2em, 3px);
+      background: var(--teal);
+      filter: url(#wobble-line);
+      transform: scaleX(0);           /* invisible at rest */
+      transform-origin: left center;  /* grows left to right */
+      transition: transform .55s cubic-bezier(.7, 0, .2, 1);
+    }
+
+    .cyc-think.is-active::after,
+    .cyc-think:hover::after {
+      transform: scaleX(1); /* fully visible on hover */
+    }
+
+
+    /* Colour shifts during the auto-cycling animation */
+    .cyc.is-cycling .stack > span            { color: var(--teal-dark); }
+    .cyc:not(.is-cycling) .stack > span:first-child { color: var(--teal); }
+
+  </style>
 </head>
 
+
+<!-- =====================================================
+  2. BODY — The visible content
+===================================================== -->
 <body>
 
-<!-- SVG filter for hand-drawn ring -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="wobble">
-      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3"/>
-      <feDisplacementMap in="SourceGraphic" scale="2.2"/>
-    </filter>
-  </defs>
-</svg>
+  <!-- SVG Filter — invisible, used only by the ring animation.
+       The wobble filter gives the hand-drawn feel to the ring around "see". -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <filter id="wobble-1"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+  <filter id="wobble-2"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+  <filter id="wobble-3"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="12"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+  <filter id="wobble-4"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="19"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+  <filter id="wobble-5"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+  <filter id="wobble-line"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="8"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
+</defs>
 
-<div class="mw-page"><div class="mw-wrap">
+  </svg>
 
-  <!-- meta bar -->
-  <div class="mw-meta">
-    <span><span class="d"></span>MICHAEL EE · BFA(GRAPHIC DESIGN), PGDE</span>
-    <span class="r">HELLO WORLD</span>
-  </div>
 
-  <!-- hero headline -->
-  <div class="mw-deck">
-    <p class="mw-hero">
-      I spent a decade teaching people how to
-      <span class="cyc cyc-see" data-words="see,observe,perceive,notice,look" aria-label="see">
-        <span class="mask"><span class="stack"><span>see</span></span></span>
-        <svg class="ring" viewBox="0 0 100 60" preserveAspectRatio="none">
-          <ellipse cx="50" cy="30" rx="46" ry="24" transform="rotate(-2.5 50 30)"/>
-        </svg>
-      </span>.<br>
-      Now I help organisations
-      <span class="cyc cyc-think" data-words="think,communicate,adapt" aria-label="think">
-        <span class="mask"><span class="stack"><span>think</span></span></span>
-      </span>
-      better through design — where data meets art. <span class="mw-find"><i>↓</i>Find me</span>
-    </p>
-  </div>
+  <div class="mw-page">
+    <div class="mw-wrap">
 
-  <!-- nav links -->
-  <nav class="mw-links" aria-label="Contact">
-    <a href="http://mikeeeww.squarespace.com/connect">email</a><span class="s">—</span>
-    <a href="https://www.dropbox.com/scl/fi/vag136lkso8mnyd2rzkj1/Michael-Ee-CV-2026.pdf?rlkey=yot0wctlwatsuxaihheea8sgl&st=lgkfefaw&dl=0" target="_blank" rel="noopener">résumé</a><span class="s">—</span>
-    <a href="http://mikeeeww.squarespace.com" target="_blank" rel="noopener">portfolio</a><span class="s">—</span>
-    <a href="http://linkedin.com/in/michael-ee" target="_blank" rel="noopener">linkedin</a>
-  </nav>
 
-  <!-- footer -->
-  <footer class="mw-foot">
-    <span>Set in Cormorant Garamond &amp; Nunito</span>
-    <span><em>© Michael Ee, 05/2026</em></span>
-  </footer>
+      <!-- META BAR ─────────────────────────────────── -->
+      <div class="mw-meta">
+        <span>
+          <span class="d"></span><!-- teal dot -->
+          MICHAEL EE · BFA(GRAPHIC DESIGN), PGDE
+        </span>
+        <span class="r">HELLO WORLD</span><!-- hidden on mobile -->
+      </div>
 
-</div></div>
 
+      <!-- HERO HEADLINE ────────────────────────────── -->
+      <div class="mw-deck">
+        <p class="mw-hero">
+          I spent a decade teaching<br> people how to
+
+          <!-- Cycling word: "see" with hand-drawn ring
+               data-words lists all words it cycles through on hover -->
+          <span class="cyc cyc-see" data-words="see.,observe.,perceive.,notice.,look." 
+          data-filters="wobble-1,wobble-2,wobble-3,wobble-4,wobble-5" 
+          aria-label="see">
+            <span class="mask">
+              <span class="stack">
+                <span>see</span><!-- default word; JS fills in the rest -->
+              </span>
+            </span>
+            <svg class="ring" viewBox="0 0 100 60" preserveAspectRatio="none">
+              <ellipse cx="50" cy="30" rx="46" ry="24" transform="rotate(-2.5 50 30)"/>
+            </svg>
+          </span><br>
+
+          Now I help organisations<br>
+
+          <!-- Cycling word: "think" with underline animation -->
+          <span class="cyc cyc-think" data-words="think,communicate,adapt" aria-label="think">
+            <span class="mask">
+              <span class="stack">
+                <span>think </span><!-- default word -->
+              </span>
+            </span>
+          </span>better through<br>
+          <span class="mw-lastline">design — where data meets art.
+          <span class="mw-find"><i>↓</i>Find me</span></span>
+        </p>
+      </div>
+
+
+      <!-- NAV LINKS ────────────────────────────────── -->
+      <nav class="mw-links" aria-label="Contact">
+        <a href="mailto:michael.ee90@gmail.com">email</a>
+        <span class="s">—</span>
+        <a href="#" target="_blank" rel="noopener">résumé</a>
+        <span class="s">—</span>
+        <a href="http://mikeeeww.com" target="_blank" rel="noopener">portfolio</a>
+        <span class="s">—</span>
+        <a href="http://linkedin.com/in/michael-ee" target="_blank" rel="noopener">linkedin</a>
+      </nav>
+
+
+      <!-- FOOTER ───────────────────────────────────── -->
+      <footer class="mw-foot">
+        <span>Set in Cormorant Garamond &amp; Nunito</span>
+        <span><em>© Michael Ee, 05/2026</em></span>
+      </footer>
+
+
+    </div><!-- end .mw-wrap -->
+  </div><!-- end .mw-page -->
+
+
+<!-- =====================================================
+  3. SCRIPT — Behaviour (the animated cycler logic)
+  Placed at the bottom so HTML loads before JS runs.
+===================================================== -->
 <script>
 (() => {
-  function makeCycler(el, opts = {}){
-    const words = (el.dataset.words || '').split(',').map(s => s.trim()).filter(Boolean);
+  /*
+   * makeCycler(el)
+   * Sets up one cycling word element.
+   * Called once for each .cyc element on the page.
+   */
+  function makeCycler(el, opts = {}) {
+
+    // Read the word list from the data-words attribute in the HTML
+    const words = (el.dataset.words || '')
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean);
+
+    // Need at least 2 words to cycle between
     if (words.length < 2) return null;
 
-    const mask = el.querySelector('.mask');
+    const mask  = el.querySelector('.mask');
     const stack = el.querySelector('.stack');
+
+    // Fill the stack with all words as separate spans
     stack.innerHTML = words.map(w => `<span>${w}</span>`).join('');
 
+    // Measure the pixel width of each word using a hidden "ghost" span.
+    // Needed so the mask can resize smoothly as words change.
     const ghost = document.createElement('span');
-    const cs = getComputedStyle(el);
+    const cs    = getComputedStyle(el);
     Object.assign(ghost.style, {
-      position:'absolute', visibility:'hidden', whiteSpace:'nowrap',
-      font: cs.font, letterSpacing: cs.letterSpacing,
-      fontStyle: cs.fontStyle, fontWeight: cs.fontWeight,
+      position:      'absolute',
+      visibility:    'hidden',  // invisible but still rendered and measurable
+      whiteSpace:    'nowrap',
+      font:          cs.font,
+      letterSpacing: cs.letterSpacing,
+      fontStyle:     cs.fontStyle,
+      fontWeight:    cs.fontWeight,
     });
     document.body.appendChild(ghost);
-    const widths = words.map(w => { ghost.textContent = w; return ghost.getBoundingClientRect().width; });
-    ghost.remove();
+    const widths = words.map(w => {
+      ghost.textContent = w;
+      return ghost.getBoundingClientRect().width;
+    });
+    ghost.remove(); // clean up after measuring
 
-    let idx = 0;
-    let timer = null;
-    const stepMs = opts.stepMs ?? 700;
+    let idx   = 0;    // tracks which word is currently shown
+    let timer = null; // holds the interval so we can stop it later
+    const stepMs = opts.stepMs ?? 1000; // ms between each word change
 
-    function show(i){
-      idx = i;
-      mask.style.width = widths[i] + 'px';
-      stack.style.transform = `translateY(calc(-${i} * var(--row)))`;
+
+    // show(i) — jump to a specific word by index
+function show(i) {
+  idx = i;
+  mask.style.width      = widths[i] + 'px';
+  stack.style.transform = `translateY(calc(-${i} * var(--row)))`;
+
+  const filters = (el.dataset.filters || '').split(',').map(s => s.trim());
+  const ellipse = el.querySelector('.ring ellipse');
+  if (ellipse && filters[i]) ellipse.style.filter = `url(#${filters[i]})`;
+}
+
+
+
+    // next() — advance to the next word, looping back to the start
+    function next() {
+      show((idx + 1) % words.length);
     }
-    function next(){ show((idx + 1) % words.length); }
-    function start(){
-      el.classList.add('is-active','is-cycling');
+
+    // start() — begin cycling (triggered on hover or focus)
+    function start() {
+      el.classList.add('is-active', 'is-cycling');
       next();
       timer = setInterval(next, stepMs);
     }
-    function stop(){
-      clearInterval(timer); timer = null;
-      el.classList.remove('is-active','is-cycling');
+
+    // stop() — end cycling and return to the first word
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+      el.classList.remove('is-active', 'is-cycling');
       show(0);
     }
 
+    // Attach hover and keyboard events
     el.addEventListener('mouseenter', start);
     el.addEventListener('mouseleave', stop);
-    el.addEventListener('focus', start);
-    el.addEventListener('blur', stop);
-    el.tabIndex = 0;
-    show(0);
+    el.addEventListener('focus',      start); // keyboard accessibility
+    el.addEventListener('blur',       stop);
+    el.tabIndex = 0; // makes the element focusable with the Tab key
+
+    show(0); // initialise to first word
+
+    function remeasure() {
+      const ghost2 = document.createElement('span');
+      const cs2 = getComputedStyle(el);
+      Object.assign(ghost2.style, {
+        position:      'absolute',
+        visibility:    'hidden',
+        whiteSpace:    'nowrap',
+        font:          cs2.font,
+        letterSpacing: cs2.letterSpacing,
+        fontStyle:     cs2.fontStyle,
+        fontWeight:    cs2.fontWeight,
+      });
+      document.body.appendChild(ghost2);
+      words.forEach((w, i) => {
+        ghost2.textContent = w;
+        widths[i] = ghost2.getBoundingClientRect().width;
+      });
+      ghost2.remove();
+      show(idx);
+    }
+
+    window.addEventListener('resize', remeasure);
     return { start, stop, el };
   }
 
-  const cyclers = [...document.querySelectorAll('.cyc')].map(el => makeCycler(el)).filter(Boolean);
 
-  // auto-demo on load
-  function demo(){
+  // Initialise a cycler for every .cyc element on the page
+  const cyclers = [...document.querySelectorAll('.cyc')]
+    .map(el => makeCycler(el))
+    .filter(Boolean);
+
+
+  /*
+   * demo()
+   * Auto-plays each cycler once on load so visitors
+   * immediately see that the words are interactive.
+   *
+   * Timing breakdown:
+   *   "see"   starts at 600ms,  runs for 3200ms
+   *   "think" starts at 4400ms, runs for 3200ms
+   *   Formula: start delay = 600 + (index × 3800)ms
+   */
+  function demo() {
     cyclers.forEach((c, i) => {
       setTimeout(() => {
         c.start();
-        setTimeout(() => c.stop(), 4000);
-      }, 600 + i * 5600);
+        setTimeout(() => c.stop(), 5000); // duration each word cycles
+      }, 600 + i * 6000); // staggered start per cycler
     });
   }
+
+  // Wait for full page (including fonts) to load before running demo
   window.addEventListener('load', () => setTimeout(demo, 400));
+
 })();
+// The wrapping (() => { ... })() creates a private scope —
+// like a sealed artboard — so no variables accidentally affect other scripts
 </script>
 
 </body>
