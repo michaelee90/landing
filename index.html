@@ -1,178 +1,169 @@
 <!doctype html>
 <html lang="en">
-
 <!--
-  ========================================================
-  Mike Ee · Landing Page
-  ========================================================
-
-  FILE STRUCTURE (think of it like layers in Illustrator):
-  1. HEAD      — page settings, fonts, and all visual styles
-  2. BODY       — content
-     ├── SVG Filter  — hidden graphic effect for ring animation
-     ├── Meta Bar    — top strip text
-     ├── Hero        — main headline with animated words
-     ├── Nav Links   — email, résumé, portfolio, linkedin
-     └── Footer      — typeset credit and copyright
-  3. SCRIPT    — hover animations
-  ========================================================
+========================================================
+Mike Ee · Portfolio · Scroll Edition
+========================================================
+LAYOUT
+  1. Hero with meta line, headline, and section nav
+  2. Four sections scrolling below the hero
+  3. Footer
+  4. Crushed-paper-ball loader on initial load
+========================================================
 -->
-
-
-<!-- =====================================================
-  1. HEAD — Settings, fonts, and styles
-  Not visible on screen; tells browser how to set up the page before showing anything.
-===================================================== -->
-
 <head>
 
-  <!-- Character encoding: lets the browser read special characters like © and é -->
   <meta charset="utf-8">
-
-  <!-- Responsive scaling: makes the page fit properly on mobile screens -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Michael Ee — strategic designer and learning specialist. A decade of teaching people how to see; now helping organisations think better through design.">
+  <title>Michael Ee</title>
 
-  <!-- SEO description: what appears under your link in Google search results -->
-  <meta name="description" content="Mike Ee — strategic designer and learning specialist bridging art and analytics">
+  <!-- Favicons -->
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="512x512" href="images/favicon-512.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <meta name="theme-color" content="#12aaa1">
 
-  <!-- Browser tab title -->
-  <title>mike ee</title>
+  <!-- Open Graph / social share -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Michael Ee">
+  <meta property="og:title" content="Michael Ee — strategic designer &amp; learning specialist">
+  <meta property="og:description" content="A decade of teaching people how to see. Now helping organisations think better through design — where data meets art.">
+  <meta property="og:image" content="https://mikeee.co/images/og-image.png">
+  <meta property="og:url" content="https://mikeee.co/">
 
-  <!-- Google Fonts: preconnect lines speed up font loading by opening the
-       connection to Google's servers early, before the font is actually requested -->
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Michael Ee — strategic designer &amp; learning specialist">
+  <meta name="twitter:description" content="A decade of teaching people how to see. Now helping organisations think better through design — where data meets art.">
+  <meta name="twitter:image" content="https://mikeee.co/images/og-image.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- The actual font request: loads Cormorant Garamond (italic 500 & 600)
-       and Nunito (regular 400 & semibold 600) -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 
-
   <style>
-
     /* -------------------------------------------------------
-       DESIGN TOKENS — the colour palette and other reusable values
-       defined as CSS custom properties (variables) on the :root selector
+       DESIGN TOKENS
        ------------------------------------------------------- */
     :root {
-      --page-bg:    oklch(.96 .02 55);  /* warm, light orange background */
-      --ink:        #1f2a2e;              /* near-black for main text */
-      --ink-mid:    #566066;              /* mid-tone grey for secondary text */
-      --ink-faint:  #9aa7ad;             /* light grey for footer and hints */
-      --teal-mid:   oklch(.55 .08 200);  /* mid teal for accents */
-      --teal-dark:  oklch(.42 .09 210);  /* darker teal for hover states */
-      --teal:       #12aaa1;             /* primary teal for highlights */
-    }
+      --page-bg:   oklch(.96 .02 55);
+      --card-bg:   oklch(.94 .02 55);
+      --ink:       #1f2a2e;
+      --ink-mid:   #566066;
+      --ink-faint: #9aa7ad;
+      --teal:      #12aaa1;
+      --teal-mid:  oklch(.55 .08 200);
+      --teal-dark: oklch(.42 .09 210);
 
+      --swatch-1: oklch(.88 .03 55);
+      --swatch-2: oklch(.83 .04 60);
+      --swatch-3: oklch(.78 .03 50);
+      --swatch-4: oklch(.82 .06 70);
+      --swatch-5: oklch(.75 .07 35);
+      --swatch-6: oklch(.86 .04 80);
+    }
 
     /* -------------------------------------------------------
-       GLOBAL RESET
-       Browsers have their own default styles that can cause
-       inconsistencies. This zeroes them out for a clean start.
+       RESET
        ------------------------------------------------------- */
-    *, *::before, *::after {
-      box-sizing: border-box; /* padding and border included in element width */
-    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     html, body {
       margin: 0;
       padding: 0;
-
-      /* Noise texture layered over the background colour.
-         The long SVG string is an inline graphic that creates
-         a subtle grain — like paper texture in print design. */
       background:
-        url("scribble.svg") center / cover no-repeat,
-        var(--page-bg)
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-      background-blend-mode: multiply, multiply; /* blends the grain into the colour */
-
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+        var(--page-bg);
+      background-blend-mode: multiply;
       color: var(--ink);
       font-family: "Cormorant Garamond", Georgia, serif;
       font-weight: 600;
       font-style: italic;
-      -webkit-font-smoothing: antialiased; /* crisper text rendering on Mac/iOS */
-      min-height: 100vh; /* page always fills the full screen height */
-      display: flex;
-      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
     }
 
+    a { color: inherit; }
 
-    /* -------------------------------------------------------
-       PAGE WRAPPER
-       Two nested containers:
-       .mw-page — handles padding from the screen edges
-       .mw-wrap — caps the content width and centres it
-       ------------------------------------------------------- */
-    .mw-page {
+    /* =======================================================
+       PAGE WRAP
+       ======================================================= */
+    .section-wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      width: 100%;
+      padding: clamp(56px, 7vh, 88px) clamp(28px, 5vw, 80px);
+    }
+
+    /* =======================================================
+       HERO
+       ======================================================= */
+    .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: clamp(24px, 4vh, 56px) clamp(40px, 6vw, 96px) 48px;
-        /* clamp(min, preferred, max): padding scales with viewport width
-         between a minimum of 24px and a maximum of 80px */
+      justify-content: center;
     }
 
-    .mw-wrap {
-      max-width: 1240px; /* content never gets wider than this */
-      margin: 0 auto;    /* centres the content horizontally */
-      width: 100%;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-
-    /* -------------------------------------------------------
-       META BAR — top strip with your name and credentials
-       ------------------------------------------------------- */
+    /* Meta line — name left, contact links right */
     .mw-meta {
-      margin-top: 5px;
       display: flex;
-      justify-content: space-between; /* name on left, "Hello World" on right */
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 16px;
       font-family: "Nunito", sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: .16em;
       text-transform: uppercase;
       color: var(--ink-mid);
-      margin-bottom: clamp(16px, 2.5vh, 32px);
+      margin-bottom: clamp(20px, 3vh, 36px);
     }
 
-    /* The small teal dot before your name */
     .mw-meta .d {
       display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;          /* makes the square div into a circle */
+      width: 6px; height: 6px;
+      border-radius: 50%;
       background: var(--teal);
       margin-right: 8px;
       vertical-align: middle;
-      transform: translateY(-1px); /* nudges it optically onto the text baseline */
+      transform: translateY(-1px);
     }
 
+    .mw-contacts {
+      display: inline-flex;
+      gap: 14px;
+      align-items: baseline;
+    }
 
-    /* -------------------------------------------------------
-       HERO SECTION — the main headline area
-       .mw-deck is the container (with the top border line)
-       .mw-hero is the headline text itself
-       ------------------------------------------------------- */
+    .mw-contacts a {
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: color .2s;
+    }
+
+    .mw-contacts a:hover { color: var(--teal); }
+    .mw-contacts .dot { color: var(--ink-faint); }
+
+    /* Deck — border-top + headline */
     .mw-deck {
-      margin-top: clamp(12px, 2vh, 18px);
       padding-top: 10px;
-      border-top: 1px solid var(--ink); /* horizontal rule above the headline */
+      border-top: 1px solid var(--ink);
       display: flex;
       align-items: baseline;
       gap: 32px;
-      flex-wrap: wrap; /* allows content to stack on narrow screens */
+      flex-wrap: wrap;
     }
 
     .mw-hero {
       font-family: "Cormorant Garamond", Georgia, serif;
       font-weight: 600;
       font-style: italic;
-      font-size: clamp(28px, 5.5vw, 72px); /* fluid: scales between 28px and 72px */
+      font-size: clamp(28px, 5.5vw, 72px);
       line-height: 1.25;
       letter-spacing: -.02em;
       color: var(--ink);
@@ -180,105 +171,390 @@
       flex: 1 1 300px;
     }
 
-    .mw-lastline {
-      display: inline-flex;
-      width: 100%;
+    /* Section nav at bottom of hero */
+    .hero-nav {
+      margin-top: clamp(28px, 5vh, 56px);
+      padding-top: 14px;
+      border-top: 1px solid var(--ink-faint);
+      display: flex;
       justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: clamp(16px, 3vw, 32px);
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+    }
+
+    .hero-nav-links {
+      display: inline-flex;
+      gap: clamp(14px, 2.5vw, 28px);
+      flex-wrap: wrap;
       align-items: baseline;
     }
 
+    .hero-nav a {
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: color .2s;
+      position: relative;
+      padding-bottom: 2px;
+    }
 
-    /* "↓ Find me" — small label inline at the end of the hero */
-    .mw-find {
+    .hero-nav a:hover { color: var(--teal); }
+
+    .hero-nav .dot { color: var(--ink-faint); }
+
+    .hero-nav-hint {
+      color: var(--ink-faint);
+      white-space: nowrap;
+    }
+
+    .hero-nav-hint i {
+      font-style: normal;
+      color: var(--teal-dark);
+      margin-right: 4px;
+    }
+
+    /* =======================================================
+       SECTIONS
+       ======================================================= */
+    .folio-section {
+      min-height: 80vh;
+      padding-top: clamp(56px, 8vh, 96px);
+      padding-bottom: clamp(56px, 8vh, 96px);
+    }
+
+    /* In-section navigation — same small-caps Nunito treatment */
+    .section-nav {
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink-faint);
+      display: flex;
+      gap: clamp(14px, 2.5vw, 28px);
+      flex-wrap: wrap;
+      align-items: baseline;
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: clamp(36px, 5vh, 64px);
+    }
+
+    .section-nav a {
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: color .2s;
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    .section-nav a:hover { color: var(--teal); }
+
+    .section-nav a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--teal);
+      filter: url(#wobble-line);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform .45s cubic-bezier(.7, 0, .2, 1);
+    }
+
+    .section-nav a.is-active {
+      color: var(--ink);
+    }
+
+    .section-nav a.is-active::after {
+      transform: scaleX(1);
+    }
+
+    .section-nav .dot { color: var(--ink-faint); }
+
+    .section-head {
+      margin-bottom: clamp(28px, 4vh, 48px);
+    }
+
+    .section-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(28px, 4.5vw, 56px);
+      line-height: 1.1;
+      letter-spacing: -.015em;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+
+    .section-sub {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 56ch;
+      margin: 0;
+    }
+
+    /* =======================================================
+       WORK GRID — fine art + design
+       ======================================================= */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: clamp(24px, 3vw, 40px);
+    }
+
+    .work-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: none;
+      border: none;
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+      transition: transform .25s ease;
+    }
+
+    .work-card:hover { transform: translateY(-3px); }
+    .work-card:hover .work-thumb img { transform: scale(1.03); }
+    .work-card:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+
+    .work-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border: 1px solid rgba(31,42,46,.08);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+
+    .work-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .45s cubic-bezier(.5, 0, .1, 1);
+    }
+
+    /* Play overlay on video-led cards */
+    .work-thumb .play-overlay {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(15, 18, 20, .65);
+      color: rgba(255, 255, 255, .95);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 4px; /* nudge the triangle visually centre */
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      transition: background .25s, transform .25s;
+      pointer-events: none;
+    }
+
+    .work-card:hover .play-overlay {
+      background: var(--teal);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .swatch-1 { background: var(--swatch-1); }
+    .swatch-2 { background: var(--swatch-2); }
+    .swatch-3 { background: var(--swatch-3); }
+    .swatch-4 { background: var(--swatch-4); }
+    .swatch-5 { background: var(--swatch-5); }
+    .swatch-6 { background: var(--swatch-6); }
+
+    .work-kicker {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin: 0;
+    }
+
+    .work-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .work-meta {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    /* =======================================================
+       DATA GRID
+       ======================================================= */
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .data-card {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 22px;
+      background: var(--card-bg);
+      border: 1px solid rgba(31,42,46,.08);
+    }
+
+    .data-card-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 12px;
+    }
+
+    .data-card-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 19px;
+      line-height: 1.2;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .data-card-desc {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    .baking-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: oklch(.91 .02 55);
+      border: 1px solid rgba(31,42,46,.1);
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: .06em;
+      color: var(--ink-mid);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tool-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+
+    .tool-tag {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: var(--teal);
+      border: 1px solid rgba(18,170,161,.3);
+      padding: 2px 8px;
+    }
+
+    /* =======================================================
+       L&D
+       ======================================================= */
+    .ld-rail {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(28px, 4vw, 48px);
+      margin-top: clamp(48px, 7vh, 80px);
+      padding-top: clamp(32px, 5vh, 56px);
+      border-top: 1px solid rgba(31, 42, 46, .12);
+    }
+
+    @media (min-width: 720px) {
+      .ld-rail { grid-template-columns: 1fr 1fr; }
+    }
+
+    .rail-head {
       font-family: "Nunito", sans-serif;
       font-style: normal;
       font-weight: 600;
       font-size: 11px;
       letter-spacing: .18em;
-      color: var(--ink-mid);
       text-transform: uppercase;
-      white-space: nowrap;
-      display: block;
-      text-align: right;
-      margin-left: 0;
-    }
-
-    .mw-find i {
-      font-style: normal;
-      margin-right: 4px;
-      color: var(--teal-dark);
-    }
-
-
-    /* -------------------------------------------------------
-       NAV LINKS — email, résumé, portfolio, linkedin
-       ------------------------------------------------------- */
-    .mw-links {
-      margin-top: clamp(36px, 6vh, 72px);
-      margin-bottom: clamp(24px, 4vh, 48px);  
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 14px 18px;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-weight: 500;
-      font-style: italic;
-      font-size: clamp(22px, 2.6vw, 32px);
-    }
-
-    /* Default link style — no underline, inherits ink colour */
-    .mw-links a {
-      color: var(--ink);
-      text-decoration: none;
-      position: relative;  /* needed so ::after underline positions correctly */
-      padding-bottom: 2px;
-      transition: color .25s;
-    }
-
-    /* Custom underline via pseudo-element — more control than browser default */
-    .mw-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 1px;
-      background: var(--ink);
-      transition: .25s;
-    }
-
-    /* Hover and keyboard-focus state */
-    .mw-links a:hover,
-    .mw-links a:focus-visible {
-      color: var(--teal-dark);
-      outline: none;
-    }
-
-    .mw-links a:hover::after,
-    .mw-links a:focus-visible::after {
-      background: var(--teal-dark);
-      height: 2px; /* underline thickens slightly on hover */
-    }
-
-    /* The em-dash separators between links */
-    .mw-links .s {
-      font-style: italic;
       color: var(--ink-faint);
-      font-size: .7em;
-      transform: translateY(-2px);
+      margin: 0 0 14px;
     }
 
+    .career-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 10px;
+    }
 
-    /* -------------------------------------------------------
+    .career-list li {
+      display: flex; gap: 12px;
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--ink-mid);
+    }
+
+    .career-list li::before { content: "—"; color: var(--teal); flex-shrink: 0; }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .skill-tag {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: oklch(.91 .02 55);
+      border: 1px solid rgba(31,42,46,.1);
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--ink);
+    }
+
+    /* =======================================================
        FOOTER
-       margin-top: auto pushes it to the bottom of the page
-       regardless of how much content sits above it
-       ------------------------------------------------------- */
+       ======================================================= */
     .mw-foot {
-      margin-top: auto;
-      padding-top: 48px;
+      padding: 48px clamp(28px, 5vw, 80px);
+      max-width: 1240px;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
       font-family: "Nunito", sans-serif;
       font-style: normal;
       font-size: 10px;
@@ -286,9 +562,9 @@
       text-transform: uppercase;
       color: var(--ink-faint);
       border-top: 1px solid var(--ink-faint);
+      margin-top: clamp(48px, 8vh, 96px);
     }
 
-    /* Copyright date — serif italic to contrast the Nunito footer text */
     .mw-foot em {
       font-family: "Cormorant Garamond", serif;
       font-style: italic;
@@ -298,22 +574,11 @@
       color: var(--ink-mid);
     }
 
-
-    /* -------------------------------------------------------
-       RESPONSIVE — adjustments for small screens (under 560px)
-       ------------------------------------------------------- */
-    @media (max-width: 560px) {
-      .mw-meta .r { display: none; } /* hides "Hello World" on mobile */
-    }
-
-
     /* =======================================================
-       ANIMATED CYCLER — the slot-machine words ("see", "think")
+       CYCLING WORDS
        ======================================================= */
-
-    /* Outer wrapper for each cycling word */
     .cyc {
-      position: relative;    /* anchor for the absolutely-positioned ring SVG */
+      position: relative;
       display: inline-block;
       vertical-align: baseline;
       color: var(--teal);
@@ -323,28 +588,25 @@
       transform: translateY(0.08em);
     }
 
-    /* The clipping window — only one word is visible at a time.
-       Words slide vertically through this like a slot machine reel. */
     .cyc .mask {
-      --row: 1.2em;   /* height of each word slot */
-      --pad-r: .35em; /* right buffer so italic letters don't clip */
+      --row: 1.2em;
+      --pad-r: .35em;
       box-sizing: content-box;
       display: inline-block;
       vertical-align: baseline;
       height: 1em;
-      overflow: hidden; /* hides all words except the current one */
+      overflow: hidden;
       padding-bottom: 0.2em;
       padding-right: var(--pad-r);
-      margin-bottom: -0.2em; /* optical adjustment to align with baseline */
-      transition: width .45s cubic-bezier(.7, 0, .2, 1); /* smooth width on word change */
+      margin-bottom: -0.2em;
+      transition: width .45s cubic-bezier(.7, 0, .2, 1);
     }
 
-    /* The full vertical stack of words — JS slides this up and down */
     .cyc .stack {
       display: flex;
       flex-direction: column;
       transition: transform .45s cubic-bezier(.7, 0, .2, 1);
-      will-change: transform; /* performance hint to the browser */
+      will-change: transform;
     }
 
     .cyc .stack > span {
@@ -353,9 +615,6 @@
       height: var(--row);
       white-space: nowrap;
     }
-
-
-    /* ── "SEE" — hand-drawn ring effect ── */
 
     .cyc-see { padding: 0 .12em; }
 
@@ -366,307 +625,964 @@
       width: calc(100% + 0.6em);
       height: 1.4em;
       overflow: visible;
-      pointer-events: none; /* ring doesn't block mouse events */
+      pointer-events: none;
     }
 
-    /* Ring starts invisible and draws itself on hover.
-       stroke-dashoffset animates from full length (hidden) to 0 (fully drawn) */
     .cyc-see .ring ellipse {
       fill: none;
       stroke: var(--teal);
       stroke-width: 1.6;
       stroke-linecap: round;
-      stroke-dasharray: 240;   /* total path length of the ellipse */
-      stroke-dashoffset: 240;  /* fully hidden at rest */
+      stroke-dasharray: 240;
+      stroke-dashoffset: 240;
       transition: stroke-dashoffset .85s cubic-bezier(.65, 0, .35, 1);
-      filter: url(#wobble);    /* applies the hand-drawn wobble effect */
+      filter: url(#wobble-1);
     }
 
     .cyc-see.is-active .ring ellipse,
-    .cyc-see:hover .ring ellipse {
-      stroke-dashoffset: 0; /* ring draws itself on hover */
-    }
-
-
-    /* ── "THINK" — animated underline effect ── */
+    .cyc-see:hover .ring ellipse { stroke-dashoffset: 0; }
 
     .cyc-think { padding: 0 .04em; }
 
-    /* Underline starts at zero width, expands to full width on hover */
     .cyc-think::after {
       content: "";
       position: absolute;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       bottom: .02em;
       height: clamp(1px, 0.2em, 3px);
       background: var(--teal);
       filter: url(#wobble-line);
-      transform: scaleX(0);           /* invisible at rest */
-      transform-origin: left center;  /* grows left to right */
+      transform: scaleX(0);
+      transform-origin: left center;
       transition: transform .55s cubic-bezier(.7, 0, .2, 1);
     }
 
     .cyc-think.is-active::after,
-    .cyc-think:hover::after {
-      transform: scaleX(1); /* fully visible on hover */
-    }
+    .cyc-think:hover::after { transform: scaleX(1); }
 
-
-    /* Colour shifts during the auto-cycling animation */
-    .cyc.is-cycling .stack > span            { color: var(--teal-dark); }
+    .cyc.is-cycling .stack > span { color: var(--teal-dark); }
     .cyc:not(.is-cycling) .stack > span:first-child { color: var(--teal); }
 
+    /* =======================================================
+       CRUSHED PAPER BALL LOADER
+       ======================================================= */
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: var(--page-bg);
+      transition: opacity .55s ease, visibility .55s;
+    }
+
+    .loader.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .paper-ball {
+      width: 84px;
+      height: 84px;
+      filter: drop-shadow(2px 3px 6px rgba(58, 42, 24, .22));
+      animation: ballCrinkle 1.6s cubic-bezier(.5,0,.5,1) infinite;
+      transform-origin: 50% 55%;
+    }
+
+    @keyframes ballCrinkle {
+      0%, 100% { transform: rotate(-2deg) scale(1); }
+      20%      { transform: rotate(3deg)  scale(0.97); }
+      45%      { transform: rotate(-1deg) scale(1.02); }
+      70%      { transform: rotate(2.5deg) scale(0.98); }
+    }
+
+    .loader-label {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* =======================================================
+       LIGHTBOX — gallery viewer
+       ======================================================= */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(15, 18, 20, .94);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .lightbox[data-open="true"] {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lb-stage {
+      max-width: 92vw;
+      max-height: 82vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .lb-stage img {
+      max-width: 92vw;
+      max-height: 82vh;
+      object-fit: contain;
+      display: block;
+      background: #000;
+    }
+
+    .lb-stage .lb-video-wrap {
+      width: min(92vw, 1200px);
+      aspect-ratio: 16 / 9;
+      max-height: 82vh;
+      position: relative;
+    }
+
+    .lb-stage iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .lb-close, .lb-prev, .lb-next {
+      position: absolute;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .25);
+      color: rgba(255, 255, 255, .85);
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, border-color .2s, color .2s;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .lb-close:hover, .lb-prev:hover, .lb-next:hover {
+      background: rgba(255, 255, 255, .15);
+      border-color: rgba(255, 255, 255, .5);
+      color: white;
+    }
+
+    .lb-close { top: 22px; right: 22px; font-size: 20px; }
+    .lb-prev  { left: 22px;  top: 50%; transform: translateY(-50%); }
+    .lb-next  { right: 22px; top: 50%; transform: translateY(-50%); }
+
+    .lb-foot {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      color: rgba(255, 255, 255, .8);
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      max-width: 80vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb-counter { color: rgba(255, 255, 255, .5); }
+
+    .lb-single .lb-prev, .lb-single .lb-next { display: none; }
+
+    @media (max-width: 560px) {
+      .lb-close { width: 38px; height: 38px; top: 14px; right: 14px; }
+      .lb-prev, .lb-next { width: 38px; height: 38px; left: 12px; }
+      .lb-next { left: auto; right: 12px; }
+      .lb-foot { bottom: 14px; font-size: 10px; }
+    }
+
+    /* =======================================================
+       RESPONSIVE
+       ======================================================= */
+    @media (max-width: 560px) {
+      .mw-meta { font-size: 11px; }
+      .hero-nav { font-size: 11px; }
+      .section-nav { font-size: 11px; }
+      .hero-nav-hint { display: none; }
+    }
   </style>
 </head>
 
-
-<!-- =====================================================
-  2. BODY — The visible content
-===================================================== -->
 <body>
 
-  <!-- SVG Filter — invisible, used only by the ring animation.
-       The wobble filter gives the hand-drawn feel to the ring around "see". -->
+  <!-- ===================================================
+       SVG FILTERS — wobble for cycling-word ring + underline
+       =================================================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-<defs>
-  <filter id="wobble-1"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
-  <filter id="wobble-2"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
-  <filter id="wobble-3"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="12"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
-  <filter id="wobble-4"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="19"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
-  <filter id="wobble-5"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
-  <filter id="wobble-line"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="8"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
-</defs>
+    <defs>
+      <filter id="wobble-1"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+      <filter id="wobble-2"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+      <filter id="wobble-3"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="12"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+      <filter id="wobble-4"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="19"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+      <filter id="wobble-5"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
+      <filter id="wobble-line"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="8"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
 
+      <filter id="ball-crinkle" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="6"/>
+        <feDisplacementMap in="SourceGraphic" scale="2.8"/>
+      </filter>
+    </defs>
   </svg>
 
+  <!-- ===================================================
+       LOADER — crushed paper ball
+       =================================================== -->
+  <div class="loader" id="loader" role="status" aria-label="Loading">
+    <svg class="paper-ball" viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <radialGradient id="paper-shade" cx="40%" cy="35%" r="65%">
+          <stop offset="0%"  stop-color="oklch(.86 .06 75)"/>
+          <stop offset="55%" stop-color="oklch(.74 .07 65)"/>
+          <stop offset="100%" stop-color="oklch(.52 .06 50)"/>
+        </radialGradient>
+      </defs>
+      <g filter="url(#ball-crinkle)">
+        <path d="M52,10 L72,16 L86,28 L92,46 L88,66 L76,82 L58,90 L38,88 L20,78 L10,60 L8,38 L18,20 L34,12 Z"
+              fill="url(#paper-shade)" stroke="#5a4220" stroke-width="0.7"/>
+        <path d="M34,12 L52,50 M86,28 L52,50 M88,66 L52,50 M10,60 L52,50 M58,90 L52,50"
+              stroke="#5a4220" stroke-width="0.5" fill="none" opacity="0.55"/>
+        <path d="M44,22 L62,40 M70,38 L48,56 M40,68 L62,58 M24,40 L46,46"
+              stroke="#5a4220" stroke-width="0.4" fill="none" opacity="0.4"/>
+        <path d="M30,28 L40,18" stroke="rgba(255,238,210,.6)" stroke-width="0.8" fill="none"/>
+      </g>
+    </svg>
+    <div class="loader-label">unfolding</div>
+  </div>
 
-  <div class="mw-page">
-    <div class="mw-wrap">
+  <!-- ===================================================
+       HERO
+       =================================================== -->
+  <section id="hero" class="hero section-wrap">
 
+    <div class="mw-meta">
+      <span>
+        <span class="d"></span>
+        MICHAEL EE · BFA (GRAPHIC DESIGN), PGDE
+      </span>
+      <span class="mw-contacts">
+        <a href="mailto:michael@example.com">EMAIL</a>
+        <span class="dot">·</span>
+        <a href="https://www.dropbox.com/scl/fi/vag136lkso8mnyd2rzkj1/Michael-Ee-CV-2026.pdf?rlkey=yot0wctlwatsuxaihheea8sgl&st=44hdyj1h&dl=0" target="_blank" rel="noopener">CV</a>
+        <span class="dot">·</span>
+        <a href="https://linkedin.com/in/michael-ee" target="_blank" rel="noopener">LINKEDIN</a>
+      </span>
+    </div>
 
-      <!-- META BAR ─────────────────────────────────── -->
-      <div class="mw-meta">
-        <span>
-          <span class="d"></span><!-- teal dot -->
-          MICHAEL EE · BFA(GRAPHIC DESIGN), PGDE
-        </span>
-        <span class="r">HELLO WORLD</span><!-- hidden on mobile -->
+    <div class="mw-deck">
+      <p class="mw-hero">
+        I spent a decade teaching<br> people how to
+        <span class="cyc cyc-see"
+              data-words="see.,observe.,perceive.,notice.,look."
+              data-filters="wobble-1,wobble-2,wobble-3,wobble-4,wobble-5"
+              aria-label="see">
+          <span class="mask">
+            <span class="stack"><span>see</span></span>
+          </span>
+          <svg class="ring" viewBox="0 0 100 60" preserveAspectRatio="none">
+            <ellipse cx="50" cy="30" rx="46" ry="24" transform="rotate(-2.5 50 30)"/>
+          </svg>
+        </span><br>
+        Now I help organisations<br>
+        <span class="cyc cyc-think" data-words="think,communicate,adapt" aria-label="think">
+          <span class="mask">
+            <span class="stack"><span>think </span></span>
+          </span>
+        </span>better through<br>
+        design — where data meets art.
+      </p>
+    </div>
+
+    <nav class="hero-nav" aria-label="Sections">
+      <span class="hero-nav-links">
+        <a href="#fineart">FINE ART &amp; EXHIBITION</a>
+        <span class="dot">·</span>
+        <a href="#design">DESIGN</a>
+        <span class="dot">·</span>
+        <a href="#data">DATA</a>
+        <span class="dot">·</span>
+        <a href="#learning">LEARNING &amp; DEVELOPMENT</a>
+      </span>
+      <span class="hero-nav-hint"><i>↓</i>FIND ME</span>
+    </nav>
+
+  </section>
+
+  <!-- ===================================================
+       SECTION 1 — FINE ART & EXHIBITION
+       =================================================== -->
+  <section id="fineart" class="folio-section section-wrap">
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
+      <a href="#design" data-target="design">Design</a>
+      <a href="#data" data-target="data">Data</a>
+      <a href="#learning" data-target="learning">Learning &amp; Development</a>
+    </nav>
+
+    <div class="section-head">
+      <h2 class="section-title">Fine Art &amp; Exhibition</h2>
+      <p class="section-sub">A decade of studio practice — painting, printmaking, installation, and lens-based work.</p>
+    </div>
+
+    <div class="work-grid">
+      <button class="work-card" type="button" data-key="fineart01" aria-label="Open Printmaking">
+        <div class="work-thumb"><img src="images/fineart01-print/fineart01-print1.webp" alt="" loading="lazy"></div>
+        <p class="work-title">Printmaking</p>
+        <p class="work-meta">2014 · Printmaking</p>
+      </button>
+      <button class="work-card" type="button" data-key="fineart02" aria-label="Open Personal Zine">
+        <div class="work-thumb"><img src="images/fineart02-zine/fineart02-zine1.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">Personal Zine</p>
+        <p class="work-meta">2018 · Zine</p>
+      </button>
+      <button class="work-card" type="button" data-key="fineart03" aria-label="Open Painting">
+        <div class="work-thumb"><img src="images/fineart03-paint/fineart03-paint1.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">Painting</p>
+        <p class="work-meta">2018 · Painting</p>
+      </button>
+      <button class="work-card" type="button" data-key="fineart04" aria-label="Open Exhibition">
+        <div class="work-thumb"><img src="images/fineart04-exhib/fineart04-exhib1.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">Exhibition</p>
+        <p class="work-meta">2014 – 2025 · Exhibition</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       SECTION 2 — DESIGN
+       =================================================== -->
+  <section id="design" class="folio-section section-wrap">
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
+      <a href="#design" data-target="design">Design</a>
+      <a href="#data" data-target="data">Data</a>
+      <a href="#learning" data-target="learning">Learning &amp; Development</a>
+    </nav>
+
+    <div class="section-head">
+      <h2 class="section-title">Design</h2>
+      <p class="section-sub">Strategic design work spanning identity, publication, wayfinding, and information design.</p>
+    </div>
+
+    <div class="work-grid">
+      <button class="work-card" type="button" data-key="design01" aria-label="Open Logotypes">
+        <div class="work-thumb"><img src="images/design01-logo/design01-logo1.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">Logotypes</p>
+        <p class="work-meta">2015 – 2025 · Visual Identity</p>
+      </button>
+      <button class="work-card" type="button" data-key="design02" aria-label="Open Meissen Recast Catalogue">
+        <div class="work-thumb"><img src="images/design02-meissen/design02-meissen1.webp" alt="" loading="lazy"></div>
+        <p class="work-title">Meissen Recast Catalogue</p>
+        <p class="work-meta">2014 · Publication</p>
+      </button>
+      <button class="work-card" type="button" data-key="design03" aria-label="Open aedge Catalogue">
+        <div class="work-thumb"><img src="images/design03-aedge/design03-aedge1.webp" alt="" loading="lazy"></div>
+        <p class="work-title">aedge Catalogue</p>
+        <p class="work-meta">2019 · Publication</p>
+      </button>
+      <button class="work-card work-card--video" type="button" data-key="design04" aria-label="Open Fill the Vamp's House is Open">
+        <div class="work-thumb">
+          <img src="https://img.youtube.com/vi/CLPEEwfyMbo/maxresdefault.jpg" alt="" loading="lazy">
+          <span class="play-overlay" aria-hidden="true">▶</span>
+        </div>
+        <p class="work-title">Fill the Vamp&rsquo;s House is Open</p>
+        <p class="work-meta">2021 · Website</p>
+      </button>
+      <button class="work-card" type="button" data-key="design05" aria-label="Open Singapore Biennale Coping Mechanisms">
+        <div class="work-thumb"><img src="images/design05-biennale/design05-biennale1.webp" alt="" loading="lazy"></div>
+        <p class="work-title">Singapore Biennale – Coping Mechanisms</p>
+        <p class="work-meta">2019 · Mural</p>
+      </button>
+      <button class="work-card work-card--video" type="button" data-key="design06" aria-label="Open Paperboats">
+        <div class="work-thumb">
+          <img src="https://img.youtube.com/vi/TvyIn5Hq28U/maxresdefault.jpg" alt="" loading="lazy">
+          <span class="play-overlay" aria-hidden="true">▶</span>
+        </div>
+        <p class="work-title">Paperboats</p>
+        <p class="work-meta">2021 · Music Video</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       SECTION 3 — DATA
+       =================================================== -->
+  <section id="data" class="folio-section section-wrap">
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
+      <a href="#design" data-target="design">Design</a>
+      <a href="#data" data-target="data">Data</a>
+      <a href="#learning" data-target="learning">Learning &amp; Development</a>
+    </nav>
+
+    <div class="section-head">
+      <h2 class="section-title">Data</h2>
+      <p class="section-sub">Applying analytical thinking to education, culture, and organisational problems. More projects arriving by August 2026.</p>
+    </div>
+
+    <div class="data-grid">
+      <article class="data-card">
+        <div class="data-card-head"><p class="data-card-title">Learning Outcomes Visualiser</p></div>
+        <p class="data-card-desc">Interactive dashboard mapping curriculum competencies to assessment data across 12 schools.</p>
+        <div class="tool-tags"><span class="tool-tag">PYTHON</span><span class="tool-tag">TABLEAU</span><span class="tool-tag">SQL</span></div>
+      </article>
+      <article class="data-card">
+        <div class="data-card-head"><p class="data-card-title">Teacher Workload Analysis</p></div>
+        <p class="data-card-desc">Quantitative study of administrative burden vs instructional time in secondary education.</p>
+        <div class="tool-tags"><span class="tool-tag">R</span><span class="tool-tag">GGPLOT2</span><span class="tool-tag">EXCEL</span></div>
+      </article>
+      <article class="data-card">
+        <div class="data-card-head"><p class="data-card-title">Alumni Network Mapping</p><span class="baking-badge">🥐 baking</span></div>
+        <p class="data-card-desc">Graph analysis of career pathways and professional networks for school alumni cohorts.</p>
+        <div class="tool-tags"><span class="tool-tag">NETWORKX</span><span class="tool-tag">D3.JS</span><span class="tool-tag">GEPHI</span></div>
+      </article>
+      <article class="data-card">
+        <div class="data-card-head"><p class="data-card-title">Curriculum Sentiment Analysis</p><span class="baking-badge">🥐 baking</span></div>
+        <p class="data-card-desc">NLP analysis of student feedback to surface themes in course satisfaction data.</p>
+        <div class="tool-tags"><span class="tool-tag">PYTHON</span><span class="tool-tag">NLTK</span><span class="tool-tag">STREAMLIT</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       SECTION 4 — LEARNING & DEVELOPMENT
+       =================================================== -->
+  <section id="learning" class="folio-section section-wrap">
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
+      <a href="#design" data-target="design">Design</a>
+      <a href="#data" data-target="data">Data</a>
+      <a href="#learning" data-target="learning">Learning &amp; Development</a>
+    </nav>
+
+    <div class="section-head">
+      <h2 class="section-title">Learning &amp; Development</h2>
+      <p class="section-sub">Designing and delivering learning experiences that shift how people think.</p>
+    </div>
+
+    <div class="work-grid">
+      <button class="work-card" type="button" data-key="ld01" aria-label="Open STAR Article">
+        <div class="work-thumb"><img src="images/ld01-drawing/ld01-drawing1.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">STAR Article</p>
+        <p class="work-meta">2025 · Article</p>
+      </button>
+      <button class="work-card" type="button" data-key="ld02" aria-label="Open Teachers' Conference and ExCEL Fest">
+        <div class="work-thumb"><img src="images/ld02-tcef/ld02-tcef1.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">Teachers&rsquo; Conference and ExCEL Fest</p>
+        <p class="work-meta">2025 · Article</p>
+      </button>
+      <button class="work-card" type="button" data-key="ld03" aria-label="Open Today Article">
+        <div class="work-thumb"><img src="images/ld03-today/ld03-today.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">Today Article</p>
+        <p class="work-meta">2018 · Article</p>
+      </button>
+      <button class="work-card work-card--video" type="button" data-key="ld04" aria-label="Open ArtHacks">
+        <div class="work-thumb">
+          <img src="https://vumbnail.com/706772235.jpg" alt="" loading="lazy">
+          <span class="play-overlay" aria-hidden="true">▶</span>
+        </div>
+        <p class="work-title">ArtHacks – Fostering Critical Art Appreciation</p>
+        <p class="work-meta">2022 · Presentation</p>
+      </button>
+      <button class="work-card work-card--video" type="button" data-key="ld05" aria-label="Open Networked Learning Community Drawing">
+        <div class="work-thumb">
+          <img src="https://vumbnail.com/900817024.jpg" alt="" loading="lazy">
+          <span class="play-overlay" aria-hidden="true">▶</span>
+        </div>
+        <p class="work-title">Networked Learning Community: Drawing</p>
+        <p class="work-meta">2023 · Presentation</p>
+      </button>
+      <button class="work-card work-card--video" type="button" data-key="ld06" aria-label="Open Critical Inquiry Differentiated Learning">
+        <div class="work-thumb">
+          <img src="https://vumbnail.com/653958609.jpg" alt="" loading="lazy">
+          <span class="play-overlay" aria-hidden="true">▶</span>
+        </div>
+        <p class="work-title">Critical Inquiry: Differentiated Learning</p>
+        <p class="work-meta">2021 · Presentation</p>
+      </button>
+    </div>
+
+    <div class="ld-rail">
+      <div>
+        <p class="rail-head">Career Highlights</p>
+        <ul class="career-list">
+          <li>10+ years as an educator and department head in Singapore secondary schools</li>
+          <li>BFA (Graphic Design) + PGDE — bridging art practice with pedagogical rigour</li>
+          <li>Led school-wide design thinking initiatives adopted as national best practice</li>
+          <li>Delivered professional development to 500+ educators regionally</li>
+          <li>Strategic designer with experience in government, cultural, and NGO sectors</li>
+          <li>Currently building competency in data analytics and visualisation</li>
+        </ul>
       </div>
-
-
-      <!-- HERO HEADLINE ────────────────────────────── -->
-      <div class="mw-deck">
-        <p class="mw-hero">
-          I spent a decade teaching<br> people how to
-
-          <!-- Cycling word: "see" with hand-drawn ring
-               data-words lists all words it cycles through on hover -->
-          <span class="cyc cyc-see" data-words="see.,observe.,perceive.,notice.,look." 
-          data-filters="wobble-1,wobble-2,wobble-3,wobble-4,wobble-5" 
-          aria-label="see">
-            <span class="mask">
-              <span class="stack">
-                <span>see</span><!-- default word; JS fills in the rest -->
-              </span>
-            </span>
-            <svg class="ring" viewBox="0 0 100 60" preserveAspectRatio="none">
-              <ellipse cx="50" cy="30" rx="46" ry="24" transform="rotate(-2.5 50 30)"/>
-            </svg>
-          </span><br>
-
-          Now I help organisations<br>
-
-          <!-- Cycling word: "think" with underline animation -->
-          <span class="cyc cyc-think" data-words="think,communicate,adapt" aria-label="think">
-            <span class="mask">
-              <span class="stack">
-                <span>think </span><!-- default word -->
-              </span>
-            </span>
-          </span>better through<br>
-          <span class="mw-lastline">design — where data meets art.
-          <span class="mw-find"><i>↓</i>Find me</span></span>
-        </p>
+      <div>
+        <p class="rail-head">Professional Delivery Skills</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Curriculum &amp; Programme Design</span>
+          <span class="skill-tag">Visual Communication</span>
+          <span class="skill-tag">Facilitation &amp; Coaching</span>
+          <span class="skill-tag">Design Thinking</span>
+          <span class="skill-tag">Data Visualisation</span>
+          <span class="skill-tag">Strategic Communication</span>
+          <span class="skill-tag">Change Management</span>
+          <span class="skill-tag">Cross-functional Collaboration</span>
+        </div>
       </div>
+    </div>
+  </section>
 
+  <!-- ===================================================
+       FOOTER
+       =================================================== -->
+  <footer class="mw-foot">
+    <span>Set in Cormorant Garamond &amp; Nunito</span>
+    <span><em>© Michael Ee, 2026</em></span>
+  </footer>
 
-      <!-- NAV LINKS ────────────────────────────────── -->
-      <nav class="mw-links" aria-label="Contact">
-        <a href="http://mikeeeww.squarespace.com/connect">email</a>
-        <span class="s">—</span>
-        <a href="https://www.dropbox.com/scl/fi/vag136lkso8mnyd2rzkj1/Michael-Ee-CV-2026.pdf?rlkey=yot0wctlwatsuxaihheea8sgl&st=44hdyj1h&dl=0" target="_blank" rel="noopener">résumé</a>
-        <span class="s">—</span>
-        <a href="http://mikeeeww.squarespace.com" target="_blank" rel="noopener">portfolio</a>
-        <span class="s">—</span>
-        <a href="http://linkedin.com/in/michael-ee" target="_blank" rel="noopener">linkedin</a>
-      </nav>
+  <!-- ===================================================
+       LIGHTBOX — gallery viewer
+       =================================================== -->
+  <div class="lightbox" id="lightbox" data-open="false" role="dialog" aria-modal="true" aria-label="Gallery viewer" aria-hidden="true">
+    <button class="lb-close" id="lbClose" aria-label="Close gallery" type="button">×</button>
+    <button class="lb-prev"  id="lbPrev"  aria-label="Previous"      type="button">‹</button>
+    <button class="lb-next"  id="lbNext"  aria-label="Next"          type="button">›</button>
+    <div class="lb-stage" id="lbStage"></div>
+    <div class="lb-foot">
+      <span class="lb-title" id="lbTitle"></span>
+      <span class="lb-counter" id="lbCounter"></span>
+    </div>
+  </div>
 
+  <!-- ===================================================
+       SCRIPTS
+       =================================================== -->
+  <script>
+  (() => {
 
-      <!-- FOOTER ───────────────────────────────────── -->
-      <footer class="mw-foot">
-        <span>Set in Cormorant Garamond &amp; Nunito</span>
-        <span><em>© Michael Ee, 05/2026</em></span>
-      </footer>
+    /* ─────────────────────────────────────────────────────
+       1. CYCLING WORDS
+       ───────────────────────────────────────────────────── */
+    function makeCycler(el, opts = {}) {
+      const words = (el.dataset.words || '').split(',').map(s => s.trim()).filter(Boolean);
+      if (words.length < 2) return null;
 
+      const mask = el.querySelector('.mask');
+      const stack = el.querySelector('.stack');
+      stack.innerHTML = words.map(w => `<span>${w}</span>`).join('');
 
-    </div><!-- end .mw-wrap -->
-  </div><!-- end .mw-page -->
+      const ghost = document.createElement('span');
+      const cs = getComputedStyle(el);
+      Object.assign(ghost.style, {
+        position: 'absolute', visibility: 'hidden', whiteSpace: 'nowrap',
+        font: cs.font, letterSpacing: cs.letterSpacing,
+        fontStyle: cs.fontStyle, fontWeight: cs.fontWeight,
+      });
+      document.body.appendChild(ghost);
+      const widths = words.map(w => { ghost.textContent = w; return ghost.getBoundingClientRect().width; });
+      ghost.remove();
 
+      let idx = 0, timer = null;
+      const stepMs = opts.stepMs ?? 1000;
 
-<!-- =====================================================
-  3. SCRIPT — Behaviour (the animated cycler logic)
-  Placed at the bottom so HTML loads before JS runs.
-===================================================== -->
-<script>
-(() => {
-  /*
-   * makeCycler(el)
-   * Sets up one cycling word element.
-   * Called once for each .cyc element on the page.
-   */
-  function makeCycler(el, opts = {}) {
+      function show(i) {
+        idx = i;
+        mask.style.width = widths[i] + 'px';
+        stack.style.transform = `translateY(calc(-${i} * var(--row)))`;
+        const filters = (el.dataset.filters || '').split(',').map(s => s.trim());
+        const ellipse = el.querySelector('.ring ellipse');
+        if (ellipse && filters[i]) ellipse.style.filter = `url(#${filters[i]})`;
+      }
 
-    // Read the word list from the data-words attribute in the HTML
-    const words = (el.dataset.words || '')
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
+      function next()  { show((idx + 1) % words.length); }
+      function start() { el.classList.add('is-active', 'is-cycling'); next(); timer = setInterval(next, stepMs); }
+      function stop()  { clearInterval(timer); timer = null; el.classList.remove('is-active', 'is-cycling'); show(0); }
 
-    // Need at least 2 words to cycle between
-    if (words.length < 2) return null;
-
-    const mask  = el.querySelector('.mask');
-    const stack = el.querySelector('.stack');
-
-    // Fill the stack with all words as separate spans
-    stack.innerHTML = words.map(w => `<span>${w}</span>`).join('');
-
-    // Measure the pixel width of each word using a hidden "ghost" span.
-    // Needed so the mask can resize smoothly as words change.
-    const ghost = document.createElement('span');
-    const cs    = getComputedStyle(el);
-    Object.assign(ghost.style, {
-      position:      'absolute',
-      visibility:    'hidden',  // invisible but still rendered and measurable
-      whiteSpace:    'nowrap',
-      font:          cs.font,
-      letterSpacing: cs.letterSpacing,
-      fontStyle:     cs.fontStyle,
-      fontWeight:    cs.fontWeight,
-    });
-    document.body.appendChild(ghost);
-    const widths = words.map(w => {
-      ghost.textContent = w;
-      return ghost.getBoundingClientRect().width;
-    });
-    ghost.remove(); // clean up after measuring
-
-    let idx   = 0;    // tracks which word is currently shown
-    let timer = null; // holds the interval so we can stop it later
-    const stepMs = opts.stepMs ?? 1000; // ms between each word change
-
-
-    // show(i) — jump to a specific word by index
-function show(i) {
-  idx = i;
-  mask.style.width      = widths[i] + 'px';
-  stack.style.transform = `translateY(calc(-${i} * var(--row)))`;
-
-  const filters = (el.dataset.filters || '').split(',').map(s => s.trim());
-  const ellipse = el.querySelector('.ring ellipse');
-  if (ellipse && filters[i]) ellipse.style.filter = `url(#${filters[i]})`;
-}
-
-
-
-    // next() — advance to the next word, looping back to the start
-    function next() {
-      show((idx + 1) % words.length);
-    }
-
-    // start() — begin cycling (triggered on hover or focus)
-    function start() {
-      el.classList.add('is-active', 'is-cycling');
-      next();
-      timer = setInterval(next, stepMs);
-    }
-
-    // stop() — end cycling and return to the first word
-    function stop() {
-      clearInterval(timer);
-      timer = null;
-      el.classList.remove('is-active', 'is-cycling');
+      el.addEventListener('mouseenter', start);
+      el.addEventListener('mouseleave', stop);
+      el.addEventListener('focus', start);
+      el.addEventListener('blur', stop);
+      el.tabIndex = 0;
       show(0);
+
+      window.addEventListener('resize', () => {
+        const g2 = document.createElement('span');
+        const cs2 = getComputedStyle(el);
+        Object.assign(g2.style, { position:'absolute', visibility:'hidden', whiteSpace:'nowrap',
+          font: cs2.font, letterSpacing: cs2.letterSpacing, fontStyle: cs2.fontStyle, fontWeight: cs2.fontWeight });
+        document.body.appendChild(g2);
+        words.forEach((w, i) => { g2.textContent = w; widths[i] = g2.getBoundingClientRect().width; });
+        g2.remove();
+        show(idx);
+      });
+
+      return { start, stop, el };
     }
 
-    // Attach hover and keyboard events
-    el.addEventListener('mouseenter', start);
-    el.addEventListener('mouseleave', stop);
-    el.addEventListener('focus',      start); // keyboard accessibility
-    el.addEventListener('blur',       stop);
-    el.tabIndex = 0; // makes the element focusable with the Tab key
+    const cyclers = [...document.querySelectorAll('.cyc')].map(el => makeCycler(el)).filter(Boolean);
 
-    show(0); // initialise to first word
+    function demo() {
+      cyclers.forEach((c, i) => {
+        setTimeout(() => { c.start(); setTimeout(() => c.stop(), 5000); }, 600 + i * 6000);
+      });
+    }
+    window.addEventListener('load', () => setTimeout(demo, 800));
 
-    function remeasure() {
-      const ghost2 = document.createElement('span');
-      const cs2 = getComputedStyle(el);
-      Object.assign(ghost2.style, {
-        position:      'absolute',
-        visibility:    'hidden',
-        whiteSpace:    'nowrap',
-        font:          cs2.font,
-        letterSpacing: cs2.letterSpacing,
-        fontStyle:     cs2.fontStyle,
-        fontWeight:    cs2.fontWeight,
+    /* ─────────────────────────────────────────────────────
+       2. ACTIVE SECTION TRACKING — sliding underline
+       Uses IntersectionObserver to detect which section is
+       most prominently in view, then highlights its nav links
+       across all section navs.
+       ───────────────────────────────────────────────────── */
+    const sections = ['fineart', 'design', 'data', 'learning'];
+    const navLinks = document.querySelectorAll('.section-nav a[data-target]');
+
+    function setActive(target) {
+      navLinks.forEach(a => {
+        a.classList.toggle('is-active', a.dataset.target === target);
       });
-      document.body.appendChild(ghost2);
-      words.forEach((w, i) => {
-        ghost2.textContent = w;
-        widths[i] = ghost2.getBoundingClientRect().width;
-      });
-      ghost2.remove();
-      show(idx);
     }
 
-    window.addEventListener('resize', remeasure);
-    return { start, stop, el };
-  }
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        // Find the entry with the highest intersection ratio currently in view
+        let best = null;
+        entries.forEach(e => {
+          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
+            best = e;
+          }
+        });
+        if (best) setActive(best.target.id);
+      }, {
+        rootMargin: '-30% 0px -50% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      });
 
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }
 
-  // Initialise a cycler for every .cyc element on the page
-  const cyclers = [...document.querySelectorAll('.cyc')]
-    .map(el => makeCycler(el))
-    .filter(Boolean);
+    /* ─────────────────────────────────────────────────────
+       3. LOADER — hide when fonts/DOM are ready
+       ───────────────────────────────────────────────────── */
+    const loaderEl = document.getElementById('loader');
+    function hideLoader() { loaderEl.classList.add('is-hidden'); }
+    function showLoader() { loaderEl.classList.remove('is-hidden'); }
+    window.hideLoader = hideLoader;
+    window.showLoader = showLoader;
 
+    const minDisplay = 650;
+    const start = performance.now();
+    function maybeHide() {
+      const elapsed = performance.now() - start;
+      const wait = Math.max(0, minDisplay - elapsed);
+      setTimeout(hideLoader, wait);
+    }
 
-  /*
-   * demo()
-   * Auto-plays each cycler once on load so visitors
-   * immediately see that the words are interactive.
-   *
-   * Timing breakdown:
-   *   "see"   starts at 600ms,  runs for 3200ms
-   *   "think" starts at 4400ms, runs for 3200ms
-   *   Formula: start delay = 600 + (index × 3800)ms
-   */
-  function demo() {
-    cyclers.forEach((c, i) => {
-      setTimeout(() => {
-        c.start();
-        setTimeout(() => c.stop(), 5000); // duration each word cycles
-      }, 600 + i * 6000); // staggered start per cycler
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(maybeHide);
+    } else {
+      window.addEventListener('load', maybeHide);
+    }
+
+    // Safety net
+    setTimeout(hideLoader, 5000);
+
+    /* ─────────────────────────────────────────────────────
+       4. GALLERIES + LIGHTBOX
+       ───────────────────────────────────────────────────── */
+
+    // Helper to build image item arrays compactly
+    const img = (src) => ({ type: 'image', src });
+    const yt  = (id)  => ({ type: 'youtube', id });
+    const vm  = (id)  => ({ type: 'vimeo',   id });
+
+    const galleries = {
+      // ===== FINE ART =====
+      fineart01: {
+        title: 'Printmaking · 2014',
+        items: [
+          img('images/fineart01-print/fineart01-print1.webp'),
+          img('images/fineart01-print/fineart01-print2.webp'),
+        ]
+      },
+      fineart02: {
+        title: 'Personal Zine · 2018',
+        items: [
+          img('images/fineart02-zine/fineart02-zine1.jpg'),
+          img('images/fineart02-zine/fineart02-zine2.jpg'),
+          img('images/fineart02-zine/fineart02-zine3.jpg'),
+          img('images/fineart02-zine/fineart02-zine4.jpg'),
+          img('images/fineart02-zine/fineart02-zine5.jpg'),
+          img('images/fineart02-zine/fineart02-zine6.jpg'),
+          img('images/fineart02-zine/fineart02-zine7.jpg'),
+          img('images/fineart02-zine/fineart02-zine8.jpg'),
+          img('images/fineart02-zine/fineart02-zine9.jpg'),
+          img('images/fineart02-zine/fineart02-zine10.jpg'),
+          img('images/fineart02-zine/fineart02-zine11.jpg'),
+        ]
+      },
+      fineart03: {
+        title: 'Painting · 2018',
+        items: [
+          img('images/fineart03-paint/fineart03-paint1.jpg'),
+          img('images/fineart03-paint/fineart03-paint2.jpg'),
+          img('images/fineart03-paint/fineart03-paint3.jpg'),
+          img('images/fineart03-paint/fineart03-paint4.jpg'),
+          img('images/fineart03-paint/fineart03-paint5.jpg'),
+        ]
+      },
+      fineart04: {
+        title: 'Exhibition · 2014–2025',
+        items: [
+          img('images/fineart04-exhib/fineart04-exhib1.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib2.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib3.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib4.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib5.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib6.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib7.JPG'),
+          img('images/fineart04-exhib/fineart04-exhib8.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib9.jpg'),
+        ]
+      },
+
+      // ===== DESIGN =====
+      design01: {
+        title: 'Logotypes · 2015–2025',
+        items: [
+          img('images/design01-logo/design01-logo1.jpg'),
+          img('images/design01-logo/design01-logo2.jpg'),
+          img('images/design01-logo/design01-logo3.jpg'),
+          img('images/design01-logo/design01-logo4.jpg'),
+          img('images/design01-logo/design01-logo5.jpg'),
+        ]
+      },
+      design02: {
+        title: 'Meissen Recast Catalogue · 2014',
+        items: [
+          img('images/design02-meissen/design02-meissen1.webp'),
+          img('images/design02-meissen/design02-meissen2.webp'),
+          img('images/design02-meissen/design02-meissen3.webp'),
+          img('images/design02-meissen/design02-meissen4.webp'),
+          img('images/design02-meissen/design02-meissen5.webp'),
+          img('images/design02-meissen/design02-meissen6.gif'),
+        ]
+      },
+      design03: {
+        title: 'aedge Catalogue · 2019',
+        items: [
+          img('images/design03-aedge/design03-aedge1.webp'),
+          img('images/design03-aedge/design03-aedge2.webp'),
+          img('images/design03-aedge/design03-aedge3.webp'),
+          img('images/design03-aedge/design03-aedge4.webp'),
+          img('images/design03-aedge/design03-aedge5.webp'),
+          img('images/design03-aedge/design03-aedge6.webp'),
+          img('images/design03-aedge/design03-aedge7.gif'),
+        ]
+      },
+      design04: {
+        title: 'Fill the Vamp\u2019s House is Open · 2021',
+        items: [
+          yt('CLPEEwfyMbo'),
+          img('images/design04-ftv/design04-ftv1.webp'),
+          img('images/design04-ftv/design04-ftv2.webp'),
+          img('images/design04-ftv/design04-ftv3.webp'),
+          img('images/design04-ftv/design04-ftv4.webp'),
+        ]
+      },
+      design05: {
+        title: 'Singapore Biennale – Coping Mechanisms · 2019',
+        items: [
+          img('images/design05-biennale/design05-biennale1.webp'),
+          img('images/design05-biennale/design05-biennale2.webp'),
+          img('images/design05-biennale/design05-biennale3.webp'),
+          img('images/design05-biennale/design05-biennale4.webp'),
+          img('images/design05-biennale/design05-biennale5.webp'),
+          img('images/design05-biennale/design05-biennale6.webp'),
+          img('images/design05-biennale/design05-biennale7.webp'),
+          img('images/design05-biennale/design05-biennale8.webp'),
+          img('images/design05-biennale/design05-biennale9.webp'),
+        ]
+      },
+      design06: {
+        title: 'Paperboats · 2021',
+        items: [
+          yt('TvyIn5Hq28U'),
+          img('images/design06-paperboats/design06-paperboats1.webp'),
+          img('images/design06-paperboats/design06-paperboats2.webp'),
+          img('images/design06-paperboats/design06-paperboats3.webp'),
+          img('images/design06-paperboats/design06-paperboats4.webp'),
+          img('images/design06-paperboats/design06-paperboats5.webp'),
+          img('images/design06-paperboats/design06-paperboats6.webp'),
+        ]
+      },
+
+      // ===== L&D =====
+      ld01: {
+        title: 'STAR Article · 2025',
+        items: [
+          img('images/ld01-drawing/ld01-drawing1.jpg'),
+          img('images/ld01-drawing/ld01-drawing2.jpg'),
+        ]
+      },
+      ld02: {
+        title: 'Teachers\u2019 Conference and ExCEL Fest · 2025',
+        items: [
+          img('images/ld02-tcef/ld02-tcef1.jpg'),
+          img('images/ld02-tcef/ld02-tcef2.jpg'),
+          img('images/ld02-tcef/ld02-tcef3.jpg'),
+          img('images/ld02-tcef/ld02-tcef4.jpg'),
+        ]
+      },
+      ld03: {
+        title: 'Today Article · 2018',
+        items: [
+          img('images/ld03-today/ld03-today.jpg'),
+        ]
+      },
+      ld04: {
+        title: 'ArtHacks – Fostering Critical Art Appreciation · 2022',
+        items: [ vm('706772235') ]
+      },
+      ld05: {
+        title: 'Networked Learning Community: Drawing · 2023',
+        items: [ vm('900817024') ]
+      },
+      ld06: {
+        title: 'Critical Inquiry: Differentiated Learning · 2021',
+        items: [ vm('653958609') ]
+      },
+    };
+
+    const lightbox = document.getElementById('lightbox');
+    const lbStage  = document.getElementById('lbStage');
+    const lbTitle  = document.getElementById('lbTitle');
+    const lbCounter = document.getElementById('lbCounter');
+    const lbClose  = document.getElementById('lbClose');
+    const lbPrev   = document.getElementById('lbPrev');
+    const lbNext   = document.getElementById('lbNext');
+
+    let current = null;
+    let cursor = 0;
+
+    function renderItem() {
+      if (!current) return;
+      const item = current.items[cursor];
+      lbStage.innerHTML = '';
+
+      if (item.type === 'image') {
+        const el = document.createElement('img');
+        el.src = item.src;
+        el.alt = '';
+        lbStage.appendChild(el);
+      } else if (item.type === 'youtube') {
+        const wrap = document.createElement('div');
+        wrap.className = 'lb-video-wrap';
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${item.id}?autoplay=1&rel=0`;
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        iframe.allowFullscreen = true;
+        wrap.appendChild(iframe);
+        lbStage.appendChild(wrap);
+      } else if (item.type === 'vimeo') {
+        const wrap = document.createElement('div');
+        wrap.className = 'lb-video-wrap';
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://player.vimeo.com/video/${item.id}?autoplay=1`;
+        iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+        iframe.allowFullscreen = true;
+        wrap.appendChild(iframe);
+        lbStage.appendChild(wrap);
+      }
+
+      lbCounter.textContent = current.items.length > 1
+        ? `${cursor + 1} / ${current.items.length}`
+        : '';
+    }
+
+    function openGallery(key) {
+      const g = galleries[key];
+      if (!g) return;
+      current = g;
+      cursor = 0;
+      lbTitle.textContent = g.title || '';
+      lightbox.classList.toggle('lb-single', g.items.length <= 1);
+      lightbox.setAttribute('data-open', 'true');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      renderItem();
+    }
+
+    function closeGallery() {
+      lightbox.setAttribute('data-open', 'false');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lbStage.innerHTML = ''; // stop any video playback
+      current = null;
+    }
+
+    function nav(dir) {
+      if (!current) return;
+      const n = current.items.length;
+      cursor = (cursor + dir + n) % n;
+      renderItem();
+    }
+
+    document.querySelectorAll('.work-card[data-key]').forEach(card => {
+      card.addEventListener('click', () => openGallery(card.dataset.key));
     });
-  }
 
-  // Wait for full page (including fonts) to load before running demo
-  window.addEventListener('load', () => setTimeout(demo, 400));
+    lbClose.addEventListener('click', closeGallery);
+    lbPrev.addEventListener('click', () => nav(-1));
+    lbNext.addEventListener('click', () => nav(1));
 
-})();
-// The wrapping (() => { ... })() creates a private scope —
-// like a sealed artboard — so no variables accidentally affect other scripts
-</script>
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeGallery();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.getAttribute('data-open') !== 'true') return;
+      if      (e.key === 'Escape')     closeGallery();
+      else if (e.key === 'ArrowLeft')  nav(-1);
+      else if (e.key === 'ArrowRight') nav(1);
+    });
+
+  })();
+  </script>
 
 </body>
 </html>
