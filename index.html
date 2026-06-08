@@ -74,8 +74,11 @@ LAYOUT
       margin: 0;
       padding: 0;
       background:
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
-        var(--page-bg);
+      url("scribble.svg"),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .18 0 0 0 0 .26 0 0 0 0 .28 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+      var(--page-bg);
+      background-size: 1200px auto, auto, auto;
+      background-repeat: repeat, repeat, no-repeat;
       background-blend-mode: multiply;
       color: var(--ink);
       font-family: "Cormorant Garamond", Georgia, serif;
