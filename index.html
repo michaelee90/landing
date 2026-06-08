@@ -104,7 +104,7 @@ LAYOUT
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
     }
 
     /* Meta line — name left, contact links right */
@@ -212,9 +212,36 @@ LAYOUT
     .hero-nav-hint {
       color: var(--ink-faint);
       white-space: nowrap;
+      text-decoration: none;
+      transition: color .2s;
     }
 
+    .hero-nav-hint:hover { color: var(--teal); }
+
     .hero-nav-hint i {
+      font-style: normal;
+      color: var(--teal-dark);
+      margin-right: 4px;
+    }
+
+    .section-back {
+      display: inline-block;
+      margin-top: clamp(40px, 6vh, 72px);
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      text-decoration: none;
+      float: right;
+      transition: color .2s;
+    }
+
+    .section-back:hover { color: var(--teal); }
+
+    .section-back i {
       font-style: normal;
       color: var(--teal-dark);
       margin-right: 4px;
@@ -421,6 +448,7 @@ LAYOUT
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 18px;
+      max-width: 360px;
     }
 
     .data-card {
@@ -428,6 +456,7 @@ LAYOUT
       padding: 22px;
       background: var(--card-bg);
       border: 1px solid rgba(31,42,46,.08);
+      text-decoration:none;
     }
 
     .data-card-head {
@@ -887,14 +916,14 @@ LAYOUT
        HERO
        =================================================== -->
   <section id="hero" class="hero section-wrap">
-
+  <div>
     <div class="mw-meta">
       <span>
         <span class="d"></span>
         MICHAEL EE · BFA (GRAPHIC DESIGN), PGDE
       </span>
       <span class="mw-contacts">
-        <a href="mailto:michael@example.com">EMAIL</a>
+        <a href="mailto:michael.ee90@gmail.com?subject=Hello%20Michael">EMAIL</a>
         <span class="dot">·</span>
         <a href="https://www.dropbox.com/scl/fi/vag136lkso8mnyd2rzkj1/Michael-Ee-CV-2026.pdf?rlkey=yot0wctlwatsuxaihheea8sgl&st=44hdyj1h&dl=0" target="_blank" rel="noopener">CV</a>
         <span class="dot">·</span>
@@ -925,6 +954,7 @@ LAYOUT
         design — where data meets art.
       </p>
     </div>
+   </div>
 
     <nav class="hero-nav" aria-label="Sections">
       <span class="hero-nav-links">
@@ -936,7 +966,7 @@ LAYOUT
         <span class="dot">·</span>
         <a href="#learning">LEARNING &amp; DEVELOPMENT</a>
       </span>
-      <span class="hero-nav-hint"><i>↓</i>FIND ME</span>
+      <a class="hero-nav-hint" href="#fineart"><i>←</i>See my work</a>
     </nav>
 
   </section>
@@ -979,6 +1009,9 @@ LAYOUT
         <p class="work-meta">2014 – 2025 · Exhibition</p>
       </button>
     </div>
+
+    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
+  </section>
   </section>
 
   <!-- ===================================================
@@ -1035,6 +1068,7 @@ LAYOUT
         <p class="work-meta">2021 · Music Video</p>
       </button>
     </div>
+        <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
   </section>
 
   <!-- ===================================================
@@ -1050,31 +1084,20 @@ LAYOUT
 
     <div class="section-head">
       <h2 class="section-title">Data</h2>
-      <p class="section-sub">Applying analytical thinking to education, culture, and organisational problems. More projects arriving by August 2026.</p>
+      <p class="section-sub">A first study in data visualisation. More projects arriving by August 2026.</p>
     </div>
 
     <div class="data-grid">
-      <article class="data-card">
-        <div class="data-card-head"><p class="data-card-title">Learning Outcomes Visualiser</p></div>
-        <p class="data-card-desc">Interactive dashboard mapping curriculum competencies to assessment data across 12 schools.</p>
-        <div class="tool-tags"><span class="tool-tag">PYTHON</span><span class="tool-tag">TABLEAU</span><span class="tool-tag">SQL</span></div>
-      </article>
-      <article class="data-card">
-        <div class="data-card-head"><p class="data-card-title">Teacher Workload Analysis</p></div>
-        <p class="data-card-desc">Quantitative study of administrative burden vs instructional time in secondary education.</p>
-        <div class="tool-tags"><span class="tool-tag">R</span><span class="tool-tag">GGPLOT2</span><span class="tool-tag">EXCEL</span></div>
-      </article>
-      <article class="data-card">
-        <div class="data-card-head"><p class="data-card-title">Alumni Network Mapping</p><span class="baking-badge">🥐 baking</span></div>
-        <p class="data-card-desc">Graph analysis of career pathways and professional networks for school alumni cohorts.</p>
-        <div class="tool-tags"><span class="tool-tag">NETWORKX</span><span class="tool-tag">D3.JS</span><span class="tool-tag">GEPHI</span></div>
-      </article>
-      <article class="data-card">
-        <div class="data-card-head"><p class="data-card-title">Curriculum Sentiment Analysis</p><span class="baking-badge">🥐 baking</span></div>
-        <p class="data-card-desc">NLP analysis of student feedback to surface themes in course satisfaction data.</p>
-        <div class="tool-tags"><span class="tool-tag">PYTHON</span><span class="tool-tag">NLTK</span><span class="tool-tag">STREAMLIT</span></div>
-      </article>
+      <a class="data-card" href="https://public.tableau.com/app/profile/michael.ee2583/viz/Lab2-1-3/Dashboard1" target="_blank" rel="noopener" aria-label="Open Tableau dashboard">
+        <div class="work-thumb"><img src="images/data01-tableau/data01-tableau1.png" alt="" loading="lazy"></div>
+        <div class="data-card-head"><p class="data-card-title">Visualising a Decade of Electric Vehicle Sales</p></div>
+        <p class="data-card-desc">Interactive Tableau dashboard showing sales trends over the past decade.</p>
+        <div class="tool-tags"><span class="tool-tag">TABLEAU</span></div>
+        <p class="work-meta">2026 · Data Visualisation</p>  
+      </a>
+      
     </div>
+    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
   </section>
 
   <!-- ===================================================
@@ -1161,6 +1184,7 @@ LAYOUT
         </div>
       </div>
     </div>
+    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
   </section>
 
   <!-- ===================================================
