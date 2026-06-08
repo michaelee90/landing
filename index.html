@@ -55,13 +55,6 @@ LAYOUT
       --teal:      #12aaa1;
       --teal-mid:  oklch(.55 .08 200);
       --teal-dark: oklch(.42 .09 210);
-
-      --swatch-1: oklch(.88 .03 55);
-      --swatch-2: oklch(.83 .04 60);
-      --swatch-3: oklch(.78 .03 50);
-      --swatch-4: oklch(.82 .06 70);
-      --swatch-5: oklch(.75 .07 35);
-      --swatch-6: oklch(.86 .04 80);
     }
 
     /* -------------------------------------------------------
@@ -408,24 +401,6 @@ LAYOUT
       transform: translate(-50%, -50%) scale(1.08);
     }
 
-    .swatch-1 { background: var(--swatch-1); }
-    .swatch-2 { background: var(--swatch-2); }
-    .swatch-3 { background: var(--swatch-3); }
-    .swatch-4 { background: var(--swatch-4); }
-    .swatch-5 { background: var(--swatch-5); }
-    .swatch-6 { background: var(--swatch-6); }
-
-    .work-kicker {
-      font-family: "Nunito", sans-serif;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin: 0;
-    }
-
     .work-title {
       font-family: "Cormorant Garamond", Georgia, serif;
       font-style: italic;
@@ -486,24 +461,6 @@ LAYOUT
       line-height: 1.65;
       color: var(--ink-mid);
       margin: 0;
-    }
-
-    .baking-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: oklch(.91 .02 55);
-      border: 1px solid rgba(31,42,46,.1);
-      font-family: "Nunito", sans-serif;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 10px;
-      letter-spacing: .06em;
-      color: var(--ink-mid);
-      white-space: nowrap;
-      flex-shrink: 0;
     }
 
     .tool-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
@@ -847,6 +804,26 @@ LAYOUT
     .lb-prev  { left: 22px;  top: 50%; transform: translateY(-50%); }
     .lb-next  { right: 22px; top: 50%; transform: translateY(-50%); }
 
+    .lb-caption {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 80vw;
+      text-align: center;
+      color: rgba(255, 255, 255, .85);
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .lb-caption.is-visible {
+      display: block;
+    }
+
     .lb-foot {
       position: absolute;
       bottom: 22px;
@@ -874,15 +851,17 @@ LAYOUT
 
     @media (max-width: 560px) {
       .lb-close { width: 38px; height: 38px; top: 14px; right: 14px; }
-      .lb-prev, .lb-next { width: 38px; height: 38px; left: 12px; }
-      .lb-next { left: auto; right: 12px; }
-      .lb-foot { bottom: 14px; font-size: 10px; }
-    }
-
-    /* =======================================================
-       RESPONSIVE
-       ======================================================= */
-    @media (max-width: 560px) {
+      .lb-foot { bottom: 60px; font-size: 10px; }
+      .lb-prev, .lb-next {
+        width: 38px;
+        height: 38px;
+        top: auto;
+        bottom: 14px;
+        transform: none;
+      }
+      .lb-prev { left: 50%; margin-left: -64px; }
+      .lb-next { right: 50%; margin-right: -64px; }
+      .lb-caption { bottom: 110px; }
       .mw-meta { font-size: 11px; }
       .hero-nav { font-size: 11px; }
       .section-nav { font-size: 11px; }
@@ -904,11 +883,6 @@ LAYOUT
       <filter id="wobble-4"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="19"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
       <filter id="wobble-5"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
       <filter id="wobble-line"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="8"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
-
-      <filter id="ball-crinkle" x="-10%" y="-10%" width="120%" height="120%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="6"/>
-        <feDisplacementMap in="SourceGraphic" scale="2.8"/>
-      </filter>
     </defs>
   </svg>
 
@@ -1142,6 +1116,7 @@ LAYOUT
       </button>
       <button class="work-card" type="button" data-key="ld03" aria-label="Open Today Article">
         <div class="work-thumb"><img src="images/ld03-today/ld03-today.jpg" alt="" loading="lazy" style="object-position: top; transform: scale(1.15);"></div>
+        <p class="work-title">Today Article</p>
         <p class="work-meta">2018 · Article</p>
       </button>
       <button class="work-card work-card--video" type="button" data-key="ld04" aria-label="Open ArtHacks">
@@ -1215,6 +1190,7 @@ LAYOUT
     <button class="lb-prev"  id="lbPrev"  aria-label="Previous"      type="button">‹</button>
     <button class="lb-next"  id="lbNext"  aria-label="Next"          type="button">›</button>
     <div class="lb-stage" id="lbStage"></div>
+    <div class="lb-caption" id="lbCaption"></div>
     <div class="lb-foot">
       <span class="lb-title" id="lbTitle"></span>
       <span class="lb-counter" id="lbCounter"></span>
@@ -1390,9 +1366,9 @@ LAYOUT
        ───────────────────────────────────────────────────── */
 
     // Helper to build image item arrays compactly
-    const img = (src) => ({ type: 'image', src });
-    const yt  = (id)  => ({ type: 'youtube', id });
-    const vm  = (id)  => ({ type: 'vimeo',   id });
+    const img = (src, caption) => ({ type: 'image', src, caption });
+    const yt  = (id, caption)  => ({ type: 'youtube', id, caption });
+    const vm  = (id, caption)  => ({ type: 'vimeo',   id, caption });
 
     const galleries = {
       // ===== FINE ART =====
@@ -1432,15 +1408,17 @@ LAYOUT
       fineart04: {
         title: 'Exhibition · 2014–2025',
         items: [
-          img('images/fineart04-exhib/fineart04-exhib1.jpg'),
-          img('images/fineart04-exhib/fineart04-exhib2.jpg'),
-          img('images/fineart04-exhib/fineart04-exhib3.jpg'),
-          img('images/fineart04-exhib/fineart04-exhib4.jpg'),
-          img('images/fineart04-exhib/fineart04-exhib5.jpg'),
-          img('images/fineart04-exhib/fineart04-exhib6.jpg'),
-          img('images/fineart04-exhib/fineart04-exhib7.JPG'),
-          img('images/fineart04-exhib/fineart04-exhib8.jpg'),
-          img('images/fineart04-exhib/fineart04-exhib9.jpg'),
+          img('images/fineart04-exhib/fineart04-exhib1.jpg', 'SMRT Comics Connect Murals 2024 @ Kembangan MRT Station with students from SJI.'),
+          img('images/fineart04-exhib/fineart04-exhib2.jpg', 'Receiving partnership award from SMRT Corporation and Senior Parliamentary Secretary for Ministry of Transport, Mr Baey Yam Keng.'),
+          img('images/fineart04-exhib/fineart04-exhib3.jpg', 'With inter-religious collaborators, SJI students, SMRT officials and Minister for for Culture, Community and Youth Mr Edwin Tong in 2023.'),
+          img('images/fineart04-exhib/fineart04-exhib4.jpg', 'With SJI art students and Buddhist Union and SMRT officials at unveiling ceremony in 2023.'),
+          img('images/fineart04-exhib/fineart04-exhib5.jpg', 'ArtSG 2025 Art Prize Singapore exhibition at Marina Bay Sands.'),
+          img('images/fineart04-exhib/fineart04-exhib6.jpg', 'SG60 Re-envisioning Singapore Together art exhibition at United Square with Member of Parliament for Moulmein-Cairnhill ward Mr Alvin Tan in 2025'),
+          img('images/fineart04-exhib/fineart04-exhib7.JPG', 'Waning Waxing art exhibition vernissage with Mr Tang Dawu, pioneer of contemporary performance and installation art in Singapore, in 2018'),
+          img('images/fineart04-exhib/fineart04-exhib8.jpg', 'Faith Hope Love art exhibition at Visual Arts Centre with Senior Minister of State Ms Sim Ann in 2017.'),
+          img('images/fineart04-exhib/fineart04-exhib9.jpg', 'With fellow creatives behind "A Walk in the Light of Lasalle", an experiential art trail celebrating the life of St. John Baptist de La Salle in 2023.'),
+          img('images/fineart04-exhib/fineart04-exhib10.jpg', 'With fellow RISD artists at "root" exhibition at Ocean Financial Centre in 2014.'),
+          img('images/fineart04-exhib/fineart04-exhib11.jpg', '"root" exhibition at Ocean Financial Centre featured diverse work from Singaporeans studying abroad at the Rhode Island School of Design between the years of 2010 to 2015.')
         ]
       },
       fineart05: {
@@ -1485,13 +1463,13 @@ LAYOUT
       design03: {
         title: 'aedge Catalogue · 2019',
         items: [
-          img('images/design03-aedge/design03-aedge1.webp'),
-          img('images/design03-aedge/design03-aedge2.webp'),
-          img('images/design03-aedge/design03-aedge3.webp'),
-          img('images/design03-aedge/design03-aedge4.webp'),
-          img('images/design03-aedge/design03-aedge5.webp'),
-          img('images/design03-aedge/design03-aedge6.webp'),
-          img('images/design03-aedge/design03-aedge7.gif'),
+          img('images/design03-aedge/design03-aedge1.webp', 'Collaboration with Priscilla Tey'),
+          img('images/design03-aedge/design03-aedge2.webp', 'Collaboration with Priscilla Tey'),
+          img('images/design03-aedge/design03-aedge3.webp', 'Collaboration with Priscilla Tey'),
+          img('images/design03-aedge/design03-aedge4.webp', 'Collaboration with Priscilla Tey'),
+          img('images/design03-aedge/design03-aedge5.webp', 'Collaboration with Priscilla Tey'),
+          img('images/design03-aedge/design03-aedge6.webp', 'Collaboration with Priscilla Tey'),
+          img('images/design03-aedge/design03-aedge7.gif', 'Collaboration with Priscilla Tey'),
         ]
       },
       design04: {
@@ -1507,27 +1485,27 @@ LAYOUT
       design05: {
         title: 'Singapore Biennale – Coping Mechanisms · 2019',
         items: [
-          img('images/design05-biennale/design05-biennale1.webp'),
-          img('images/design05-biennale/design05-biennale2.webp'),
-          img('images/design05-biennale/design05-biennale3.webp'),
-          img('images/design05-biennale/design05-biennale4.webp'),
-          img('images/design05-biennale/design05-biennale5.webp'),
-          img('images/design05-biennale/design05-biennale6.webp'),
-          img('images/design05-biennale/design05-biennale7.webp'),
-          img('images/design05-biennale/design05-biennale8.webp'),
-          img('images/design05-biennale/design05-biennale9.webp'),
+          img('images/design05-biennale/design05-biennale1.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale2.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale3.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale4.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale5.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale6.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale7.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale8.webp', 'Collaboration with Pooja Nansi'),
+          img('images/design05-biennale/design05-biennale9.webp', 'Collaboration with Pooja Nansi'),
         ]
       },
       design06: {
         title: 'Paperboats · 2021',
         items: [
           yt('TvyIn5Hq28U'),
-          img('images/design06-paperboats/design06-paperboats1.webp'),
-          img('images/design06-paperboats/design06-paperboats2.webp'),
-          img('images/design06-paperboats/design06-paperboats3.webp'),
-          img('images/design06-paperboats/design06-paperboats4.webp'),
-          img('images/design06-paperboats/design06-paperboats5.webp'),
-          img('images/design06-paperboats/design06-paperboats6.webp'),
+          img('images/design06-paperboats/design06-paperboats1.webp', 'Collaboration with Anjana Vasan'),
+          img('images/design06-paperboats/design06-paperboats2.webp', 'Collaboration with Anjana Vasan'),
+          img('images/design06-paperboats/design06-paperboats3.webp', 'Collaboration with Anjana Vasan'),
+          img('images/design06-paperboats/design06-paperboats4.webp', 'Collaboration with Anjana Vasan'),
+          img('images/design06-paperboats/design06-paperboats5.webp', 'Collaboration with Anjana Vasan'),
+          img('images/design06-paperboats/design06-paperboats6.webp', 'Collaboration with Anjana Vasan'),
         ]
       },
 
@@ -1609,6 +1587,10 @@ LAYOUT
         lbStage.appendChild(wrap);
       }
 
+      const lbCaption = document.getElementById('lbCaption');
+      lbCaption.textContent = item.caption || '';
+      lbCaption.classList.toggle('is-visible', !!item.caption);
+      
       lbCounter.textContent = current.items.length > 1
         ? `${cursor + 1} / ${current.items.length}`
         : '';
