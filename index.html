@@ -717,8 +717,8 @@ LAYOUT
 
     .typewriter {
       font-family: "Cormorant Garamond", Georgia, serif;
-      font-style: italic;
-      font-weight: 600;
+      font-style: normal;
+      font-weight: 700;
       font-size: clamp(48px, 9vw, 96px);
       color: var(--teal);
       letter-spacing: -.01em;
@@ -729,6 +729,23 @@ LAYOUT
     .tw-text {
       white-space: pre;
     }
+
+    .tw-letter {
+      font-style: normal;
+    }
+
+    .tw-letter--italic {
+      font-style: italic;
+    }
+
+.tw-letter--small-caps {
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--teal-dark);
+  font-size: 0.63em;
+  vertical-align: baseline;
+}
 
     .tw-cursor {
       display: inline-block;
@@ -893,6 +910,15 @@ LAYOUT
   </svg>
 
   <!-- ===================================================
+       LOADER
+       =================================================== -->
+  <div class="loader" id="loader" role="status" aria-label="Loading">
+    <div class="typewriter">
+      <span class="tw-text" id="twText"></span><span class="tw-cursor" id="twCursor">|</span>
+    </div>
+  </div>
+
+  <!-- ===================================================
        HERO
        =================================================== -->
   <section id="hero" class="hero section-wrap">
@@ -996,7 +1022,6 @@ LAYOUT
     </div>
 
     <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
-  </section>
   </section>
 
   <!-- ===================================================
@@ -1312,7 +1337,7 @@ LAYOUT
     window.hideLoader = hideLoader;
     window.showLoader = showLoader;
 
-    const minDisplay = 10000;
+    const minDisplay = 3500;
     const start = performance.now();
     function maybeHide() {
       const elapsed = performance.now() - start;
@@ -1327,7 +1352,35 @@ LAYOUT
     }
 
     // Safety net
-    setTimeout(hideLoader, 5000);
+    setTimeout(hideLoader, 3500);
+
+    /* ─────────────────────────────────────────────────────
+       3b. TYPEWRITER — type out "Mikeee" letter by letter
+       ───────────────────────────────────────────────────── */
+    const twText = document.getElementById('twText');
+    const word = [
+      { char: 'M', cls: 'tw-letter' },
+      { char: 'i', cls: 'tw-letter tw-letter--italic' },
+      { char: 'k', cls: 'tw-letter' },
+      { char: 'e', cls: 'tw-letter' },
+      { char: 'e', cls: 'tw-letter tw-letter--small-caps' },
+      { char: 'e', cls: 'tw-letter tw-letter--small-caps' },
+    ];
+    let i = 0;
+
+    function typeNext() {
+      if (i >= word.length) return;
+      setTimeout(() => {
+        const span = document.createElement('span');
+        span.className = word[i].cls;
+        span.textContent = word[i].char;
+        twText.appendChild(span);
+        i++;
+        typeNext();
+      }, 280);
+    }
+
+    setTimeout(typeNext, 400);
 
     /* ─────────────────────────────────────────────────────
        4. GALLERIES + LIGHTBOX
