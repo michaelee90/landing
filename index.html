@@ -1255,16 +1255,21 @@ LAYOUT
       const stack = el.querySelector('.stack');
       stack.innerHTML = words.map(w => `<span>${w}</span>`).join('');
 
-      const ghost = document.createElement('span');
-      const cs = getComputedStyle(el);
-      Object.assign(ghost.style, {
-        position: 'absolute', visibility: 'hidden', whiteSpace: 'nowrap',
-        font: cs.font, letterSpacing: cs.letterSpacing,
-        fontStyle: cs.fontStyle, fontWeight: cs.fontWeight,
-      });
-      document.body.appendChild(ghost);
-      const widths = words.map(w => { ghost.textContent = w; return ghost.getBoundingClientRect().width; });
-      ghost.remove();
+      // Measure inside the element so the ghost inherits the exact font.
+      // Must re-run once web fonts load — measuring against the fallback
+      // font (Georgia) leaves the mask, ring and underline too wide.
+      let widths = [];
+      function measure() {
+        const ghost = document.createElement('span');
+        Object.assign(ghost.style, {
+          position: 'absolute', left: '0', top: '0',
+          visibility: 'hidden', whiteSpace: 'nowrap', pointerEvents: 'none',
+        });
+        el.appendChild(ghost);
+        widths = words.map(w => { ghost.textContent = w; return ghost.getBoundingClientRect().width; });
+        ghost.remove();
+      }
+      measure();
 
       let idx = 0, timer = null;
       const stepMs = opts.stepMs ?? 1000;
@@ -1289,16 +1294,12 @@ LAYOUT
       el.tabIndex = 0;
       show(0);
 
-      window.addEventListener('resize', () => {
-        const g2 = document.createElement('span');
-        const cs2 = getComputedStyle(el);
-        Object.assign(g2.style, { position:'absolute', visibility:'hidden', whiteSpace:'nowrap',
-          font: cs2.font, letterSpacing: cs2.letterSpacing, fontStyle: cs2.fontStyle, fontWeight: cs2.fontWeight });
-        document.body.appendChild(g2);
-        words.forEach((w, i) => { g2.textContent = w; widths[i] = g2.getBoundingClientRect().width; });
-        g2.remove();
-        show(idx);
-      });
+      const remeasure = () => { measure(); show(idx); };
+      window.addEventListener('resize', remeasure);
+      if (document.fonts) {
+        document.fonts.ready.then(remeasure);
+        document.fonts.addEventListener?.('loadingdone', remeasure);
+      }
 
       return { start, stop, el };
     }
