@@ -2,13 +2,16 @@
 <html lang="en">
 <!--
 ========================================================
-Mike Ee · Portfolio · Scroll Edition
+Mike Ee · Portfolio · Scroll Edition (DRAFT LAYOUT)
 ========================================================
 LAYOUT
   1. Hero with meta line, headline, and section nav
-  2. Four sections scrolling below the hero
+  2. Three sections scrolling below the hero
+     - Fine Art & Design
+     - Data Highlights
+     - About Me (+ Career Highlights and Delivery Skills)
   3. Footer
-  4. Crushed-paper-ball loader on initial load
+  4. Typewriter loader on initial load
 ========================================================
 -->
 <head>
@@ -103,7 +106,6 @@ LAYOUT
       justify-content: space-between;
     }
 
-    /* Meta line — name left, contact links right */
     .mw-meta {
       display: flex;
       justify-content: space-between;
@@ -145,7 +147,6 @@ LAYOUT
     .mw-contacts a:hover { color: var(--teal); }
     .mw-contacts .dot { color: var(--ink-faint); }
 
-    /* Deck — border-top + headline */
     .mw-deck {
       padding-top: 10px;
       border-top: 1px solid var(--ink);
@@ -167,7 +168,6 @@ LAYOUT
       flex: 1 1 300px;
     }
 
-    /* Section nav at bottom of hero */
     .hero-nav {
       margin-top: clamp(28px, 5vh, 56px);
       padding-top: 14px;
@@ -202,7 +202,6 @@ LAYOUT
     }
 
     .hero-nav a:hover { color: var(--teal); }
-
     .hero-nav .dot { color: var(--ink-faint); }
 
     .hero-nav-hint {
@@ -252,7 +251,6 @@ LAYOUT
       padding-bottom: clamp(56px, 8vh, 96px);
     }
 
-    /* In-section navigation — same small-caps Nunito treatment */
     .section-nav {
       padding-bottom: 12px;
       border-bottom: 1px solid var(--ink-faint);
@@ -293,19 +291,11 @@ LAYOUT
       transition: transform .45s cubic-bezier(.7, 0, .2, 1);
     }
 
-    .section-nav a.is-active {
-      color: var(--ink);
-    }
-
-    .section-nav a.is-active::after {
-      transform: scaleX(1);
-    }
-
+    .section-nav a.is-active { color: var(--ink); }
+    .section-nav a.is-active::after { transform: scaleX(1); }
     .section-nav .dot { color: var(--ink-faint); }
 
-    .section-head {
-      margin-bottom: clamp(28px, 4vh, 48px);
-    }
+    .section-head { margin-bottom: clamp(28px, 4vh, 48px); }
 
     .section-title {
       font-family: "Cormorant Garamond", Georgia, serif;
@@ -325,12 +315,12 @@ LAYOUT
       font-size: 14px;
       line-height: 1.6;
       color: var(--ink-mid);
-      max-width: 56ch;
+      max-width: none;
       margin: 0;
     }
 
     /* =======================================================
-       WORK GRID — fine art + design
+       WORK GRID (fine art + design)
        ======================================================= */
     .work-grid {
       display: grid;
@@ -375,7 +365,6 @@ LAYOUT
       transition: transform .45s cubic-bezier(.5, 0, .1, 1);
     }
 
-    /* Play overlay on video-led cards */
     .work-thumb .play-overlay {
       position: absolute;
       top: 50%; left: 50%;
@@ -389,7 +378,7 @@ LAYOUT
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-left: 4px; /* nudge the triangle visually centre */
+      padding-left: 4px;
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
       transition: background .25s, transform .25s;
@@ -421,35 +410,41 @@ LAYOUT
     }
 
     /* =======================================================
-       DATA GRID
+       DATA HIGHLIGHTS (four cards)
        ======================================================= */
     .data-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: 1fr;
       gap: clamp(18px, 2vw, 32px);
     }
 
+    @media (min-width: 560px)  { .data-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1000px) { .data-grid { grid-template-columns: repeat(4, 1fr); } }
+
     .data-card {
       display: flex; flex-direction: column; gap: 10px;
-      padding: 22px;
+      padding: 18px;
       background: var(--card-bg);
       border: 1px solid rgba(31,42,46,.08);
-      text-decoration:none;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+      text-decoration: none;
+      transition: transform .25s ease, border-color .25s;
     }
 
-    .data-card-head {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 12px;
-    }
+    .data-card:hover { transform: translateY(-3px); border-color: rgba(18,170,161,.45); }
+    .data-card:hover .work-thumb img { transform: scale(1.03); }
 
     .data-card-title {
       font-family: "Cormorant Garamond", Georgia, serif;
       font-style: italic;
       font-weight: 600;
-      font-size: 19px;
+      font-size: 20px;
       line-height: 1.2;
       color: var(--ink);
-      margin: 0;
+      margin: 4px 0 0;
     }
 
     .data-card-desc {
@@ -462,21 +457,79 @@ LAYOUT
       margin: 0;
     }
 
-    .tool-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-
-    .tool-tag {
-      font-family: "Nunito", sans-serif;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 10px;
-      letter-spacing: .08em;
-      color: var(--teal);
-      border: 1px solid rgba(18,170,161,.3);
-      padding: 2px 8px;
+    /* =======================================================
+       ABOUT ME
+       ======================================================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: center;
     }
 
+    @media (min-width: 860px) {
+      .about-grid { grid-template-columns: 1fr 1.15fr; }
+    }
+
+    .about-text {
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      margin: 0;
+      max-width: 52ch;
+    }
+
+    /* Auto-cycling carousel: simple crossfade */
+    .carousel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 1px solid rgba(31,42,46,.08);
+    }
+
+    .carousel .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .carousel .slide.is-active { opacity: 1; }
+
+    .carousel .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-dots {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .carousel-dots span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.6);
+      box-shadow: 0 0 0 1px rgba(31,42,46,.2);
+      transition: background .3s;
+    }
+
+    .carousel-dots span.is-active { background: var(--teal); }
+
     /* =======================================================
-       L&D
+       CAREER HIGHLIGHTS + SKILLS RAIL
        ======================================================= */
     .ld-rail {
       display: grid;
@@ -685,26 +738,18 @@ LAYOUT
       align-items: baseline;
     }
 
-    .tw-text {
-      white-space: pre;
-    }
+    .tw-text { white-space: pre; }
+    .tw-letter { font-style: normal; }
+    .tw-letter--italic { font-style: italic; }
 
-    .tw-letter {
+    .tw-letter--small-caps {
+      text-transform: uppercase;
       font-style: normal;
+      font-weight: 700;
+      color: var(--teal-dark);
+      font-size: 0.63em;
+      vertical-align: baseline;
     }
-
-    .tw-letter--italic {
-      font-style: italic;
-    }
-
-.tw-letter--small-caps {
-  text-transform: uppercase;
-  font-style: normal;
-  font-weight: 700;
-  color: var(--teal-dark);
-  font-size: 0.63em;
-  vertical-align: baseline;
-}
 
     .tw-cursor {
       display: inline-block;
@@ -719,9 +764,8 @@ LAYOUT
       50.01%, 100% { opacity: 0; }
     }
 
-
     /* =======================================================
-       LIGHTBOX — gallery viewer
+       LIGHTBOX
        ======================================================= */
     .lightbox {
       position: fixed;
@@ -735,10 +779,7 @@ LAYOUT
       transition: opacity .25s ease;
     }
 
-    .lightbox[data-open="true"] {
-      display: flex;
-      opacity: 1;
-    }
+    .lightbox[data-open="true"] { display: flex; opacity: 1; }
 
     .lb-stage {
       max-width: 92vw;
@@ -819,9 +860,7 @@ LAYOUT
       display: none;
     }
 
-    .lb-caption.is-visible {
-      display: block;
-    }
+    .lb-caption.is-visible { display: block; }
 
     .lb-foot {
       position: absolute;
@@ -845,7 +884,6 @@ LAYOUT
     }
 
     .lb-counter { color: rgba(255, 255, 255, .5); }
-
     .lb-single .lb-prev, .lb-single .lb-next { display: none; }
 
     @media (max-width: 560px) {
@@ -866,14 +904,12 @@ LAYOUT
       .section-nav { font-size: 11px; }
       .hero-nav-hint { display: none; }
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- ===================================================
-       SVG FILTERS — wobble for cycling-word ring + underline
-       =================================================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <filter id="wobble-1"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter>
@@ -885,9 +921,7 @@ LAYOUT
     </defs>
   </svg>
 
-  <!-- ===================================================
-       LOADER
-       =================================================== -->
+  <!-- LOADER -->
   <div class="loader" id="loader" role="status" aria-label="Loading">
     <div class="typewriter">
       <span class="tw-text" id="twText"></span><span class="tw-cursor" id="twCursor">|</span>
@@ -940,41 +974,40 @@ LAYOUT
     </div>
    </div>
 
+    <!-- CHANGED: three sections -->
     <nav class="hero-nav" aria-label="Sections">
       <span class="hero-nav-links">
-        <a href="#fineart">FINE ART &amp; EXHIBITION</a>
+        <a href="#work">FINE ART &amp; DESIGN</a>
         <span class="dot">·</span>
-        <a href="#design">DESIGN</a>
+        <a href="#data">DATA HIGHLIGHTS</a>
         <span class="dot">·</span>
-        <a href="#data">DATA</a>
-        <span class="dot">·</span>
-        <a href="#learning">LEARNING &amp; DEVELOPMENT</a>
+        <a href="#about">ABOUT ME</a>
       </span>
-      <a class="hero-nav-hint" href="#fineart"><i>←</i>See my work</a>
+      <a class="hero-nav-hint" href="#work"><i>←</i>See my work</a>
     </nav>
 
   </section>
 
   <!-- ===================================================
-       SECTION 1 — FINE ART & EXHIBITION
+       SECTION 1: FINE ART & DESIGN
        =================================================== -->
-  <section id="fineart" class="folio-section section-wrap">
+  <section id="work" class="folio-section section-wrap">
     <nav class="section-nav" aria-label="Sections">
-      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
-      <a href="#design" data-target="design">Design</a>
-      <a href="#data" data-target="data">Data</a>
-      <a href="#learning" data-target="learning">Learning &amp; Development</a>
+      <a href="#work" data-target="work">Fine Art &amp; Design</a>
+      <a href="#data" data-target="data">Data Highlights</a>
+      <a href="#about" data-target="about">About Me</a>
     </nav>
 
     <div class="section-head">
-      <h2 class="section-title">Fine Art &amp; Exhibition</h2>
-      <p class="section-sub">A decade of studio practice — painting, printmaking, installation, and lens-based work.</p>
+      <h2 class="section-title">Fine Art &amp; Design</h2>
+      <p class="section-sub">A decade of studio practice engaging with fine art mediums such as painting, printmaking, installation and lens-based work, as well as strategic design work spanning identity, publication, and information design.</p>
     </div>
 
     <div class="work-grid">
-      <button class="work-card" type="button" data-key="fineart01" aria-label="Open Printmaking">
+      <!-- Fine art -->
+      <button class="work-card" type="button" data-key="fineart01" aria-label="Open I Belong Here Too">
         <div class="work-thumb"><img src="images/fineart01-print/fineart01-print1.webp" alt="" loading="lazy" style="transform: scale(1.3);"></div>
-        <p class="work-title">Printmaking</p>
+        <p class="work-title">I Belong Here Too</p>
         <p class="work-meta">2014 · Printmaking</p>
       </button>
       <button class="work-card" type="button" data-key="fineart02" aria-label="Open Personal Zine">
@@ -982,47 +1015,27 @@ LAYOUT
         <p class="work-title">Personal Zine</p>
         <p class="work-meta">2018 · Zine</p>
       </button>
-      <button class="work-card" type="button" data-key="fineart03" aria-label="Open Painting">
+      <button class="work-card" type="button" data-key="fineart03" aria-label="Open His Four Sides">
         <div class="work-thumb"><img src="images/fineart03-paint/fineart03-paint1.jpg" alt="" loading="lazy"></div>
-        <p class="work-title">Painting</p>
+        <p class="work-title">His Four Sides</p>
         <p class="work-meta">2018 · Painting</p>
-      </button>
-      <button class="work-card" type="button" data-key="fineart04" aria-label="Open Exhibition">
-        <div class="work-thumb"><img src="images/fineart04-exhib/fineart04-exhib11.jpg" alt="" loading="lazy" style="transform: scale(1.3);"></div>
-        <p class="work-title">Exhibition</p>
-        <p class="work-meta">2014 – 2025 · Exhibition</p>
       </button>
       <button class="work-card" type="button" data-key="fineart05" aria-label="PolitiContext">
         <div class="work-thumb"><img src="images/fineart05-politi/fineart05-politi1.jpg" alt="" loading="lazy" style="transform: scale(1.1);"></div>
         <p class="work-title">PolitiContext</p>
         <p class="work-meta"> 2019 · Postcards</p>
       </button>
-    </div>
+      <button class="work-card" type="button" data-key="fineart06" aria-label="Open Hello">
+        <div class="work-thumb"><img src="images/fineart06-hello/fineart06-hello_05.webp" alt="" loading="lazy"></div>
+        <p class="work-title">Hello</p>
+        <p class="work-meta">2013 · Installation</p>
+      </button>
 
-    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
-  </section>
-
-  <!-- ===================================================
-       SECTION 2 — DESIGN
-       =================================================== -->
-  <section id="design" class="folio-section section-wrap">
-    <nav class="section-nav" aria-label="Sections">
-      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
-      <a href="#design" data-target="design">Design</a>
-      <a href="#data" data-target="data">Data</a>
-      <a href="#learning" data-target="learning">Learning &amp; Development</a>
-    </nav>
-
-    <div class="section-head">
-      <h2 class="section-title">Design</h2>
-      <p class="section-sub">Strategic design work spanning identity, publication, wayfinding, and information design.</p>
-    </div>
-
-    <div class="work-grid">
-      <button class="work-card" type="button" data-key="design01" aria-label="Open Logotypes">
-        <div class="work-thumb"><img src="images/design01-logo/design01-logo6.jpg" alt="" loading="lazy"></div>
-        <p class="work-title">Logotypes</p>
-        <p class="work-meta">2015 – 2025 · Visual Identity</p>
+      <!-- Design -->
+      <button class="work-card" type="button" data-key="design01" aria-label="Open CEC">
+        <div class="work-thumb"><img src="images/design01-cec/design01-cec-06.PNG" alt="" loading="lazy" style="transform: scale(1.2); transform-origin: 50% 70%;"></div>
+        <p class="work-title">CEC</p>
+        <p class="work-meta">2021 · Identity</p>
       </button>
       <button class="work-card" type="button" data-key="design02" aria-label="Open Meissen Recast Catalogue">
         <div class="work-thumb"><img src="images/design02-meissen/design02-meissen1.webp" alt="" loading="lazy"></div>
@@ -1060,135 +1073,105 @@ LAYOUT
         <p class="work-title">Words Worth</p>
         <p class="work-meta">2017 · Branding & Environment</p>
       </button>
-      <button class="work-card" type="button" data-key="design08" aria-label="Open Posters and Brochures">
-        <div class="work-thumb"><img src="images/design08-posters/design08-poster1.jpg" alt="" loading="lazy"></div>
-        <p class="work-title">Posters and Brochures</p>
-        <p class="work-meta">2016&ndash;Present · Print Design</p>
+      <button class="work-card" type="button" data-key="design08" aria-label="Open Candide">
+        <div class="work-thumb"><img src="images/design08-candide/design08-poster2.jpg" alt="" loading="lazy" style="object-position: 50% 0%;"></div>
+        <p class="work-title">Candide</p>
+        <p class="work-meta">2019 · Poster</p>
       </button>
       <button class="work-card" type="button" data-key="design09" aria-label="Open Lewis Carroll's Alice in Wonderland">
         <div class="work-thumb"><img src="images/design09-alice/design09-alice01.jpg" alt="" loading="lazy"></div>
         <p class="work-title">Lewis Carroll's Alice in Wonderland</p>
         <p class="work-meta">2015 · Publication</p>
       </button>
+      <button class="work-card" type="button" data-key="design10" aria-label="Open The Light">
+        <div class="work-thumb"><img src="images/design10-light/design10-light-01.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">The Light</p>
+        <p class="work-meta">2015 · Identity</p>
+      </button>
+      <button class="work-card" type="button" data-key="design11" aria-label="Open SJI Learning Festival">
+        <div class="work-thumb"><img src="images/design11-sjilf/design11-sjilf-03.jpg" alt="" loading="lazy"></div>
+        <p class="work-title">SJI Learning Festival</p>
+        <p class="work-meta">2024 · Identity</p>
+      </button>
+      <button class="work-card" type="button" data-key="design12" aria-label="Open The Rising Sun">
+        <div class="work-thumb"><img src="images/design12-rising/design08-poster1.jpg" alt="" loading="lazy" style="object-position: 50% 100%;"></div>
+        <p class="work-title">The Rising Sun</p>
+        <p class="work-meta">2024 · Poster</p>
+      </button>
+      <button class="work-card" type="button" data-key="design13" aria-label="Open Invention of Photography">
+        <div class="work-thumb"><img src="images/design13-photog/design08-poster6.jpg" alt="" loading="lazy" style="object-position: 50% 5%;"></div>
+        <p class="work-title">Invention of Photography</p>
+        <p class="work-meta">2012 · Poster</p>
+      </button>
     </div>
-        <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
-  </section>
 
-  <!-- ===================================================
-       SECTION 3 — DATA
-       =================================================== -->
-  <section id="data" class="folio-section section-wrap">
-    <nav class="section-nav" aria-label="Sections">
-      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
-      <a href="#design" data-target="design">Design</a>
-      <a href="#data" data-target="data">Data</a>
-      <a href="#learning" data-target="learning">Learning &amp; Development</a>
-    </nav>
-
-    <div class="section-head">
-      <h2 class="section-title">Data</h2>
-      <p class="section-sub">A sampling of my data science and visualisation projects can be found here. View the Python coded notebooks in full via Github <a href="https://github.com/michaelee90/data-science-portfolio" target="_blank" rel="noopener">here</a>.</p>
-    </div>
-
-    <div class="data-grid">
-      <a class="data-card" href="https://public.tableau.com/app/profile/michael.ee2583/viz/Lab2-1-3/Dashboard1" target="_blank" rel="noopener" aria-label="Open Tableau dashboard">
-        <div class="work-thumb"><img src="images/data01-tableau/data01-tableau.png" alt="" loading="lazy"></div>
-        <div class="data-card-head"><p class="data-card-title">Visualising a Decade of Electric Vehicle Sales</p></div>
-        <p class="data-card-desc">Interactive Tableau dashboard showing sales trends over the past decade.</p>
-        <div class="tool-tags"><span class="tool-tag">TABLEAU</span></div>
-        <p class="work-meta">2026 · Data Visualisation</p>  
-      </a>
-      <a class="data-card" href="https://www.mikeee.co/projects/bus-load-analysis.html" target="_blank" rel="noopener" aria-label="Open Bus Load Analysis project">
-        <div class="work-thumb"><img src="images/data02-bus/data02-bus1.png" alt="" loading="lazy"></div>
-        <div class="data-card-head"><p class="data-card-title">Singapore Public Transport Load Patterns</p></div>
-        <p class="data-card-desc">Analysis of May 2026 bus passenger load patterns using LTA Datamall & One Map server data</p>
-        <div class="tool-tags"><span class="tool-tag">PYTHON</span></div>
-        <p class="work-meta">2026 · Exploratory Data Analysis</p>  
-      </a>
-      
-      <a class="data-card" href="https://workforce-analytics-nxg7k55.gamma.site/" target="_blank" rel="noopener" aria-label="Open Workforce Analytics project">
-        <div class="work-thumb"><img src="images/data03-workforce/data03-workforce.jpg" alt="" loading="lazy"></div>
-        <div class="data-card-head"><p class="data-card-title">Workforce Analytics</p></div>
-        <p class="data-card-desc">Multi-class machine learning approach for business employee engagement</p>
-        <div class="tool-tags"><span class="tool-tag">PYTHON</span><span class="tool-tag">GAMMA</span></div>
-        <p class="work-meta">2026 · Predictive Modeling</p>
-      </a>
-
-      <a class="data-card" href="https://pitch.com/v/toxicity-cif7k4" target="_blank" rel="noopener" aria-label="Open Triaging Toxicity project">
-        <div class="work-thumb"><img src="images/data04-toxicity/data04-toxicity.jpg" alt="" loading="lazy"></div>
-        <div class="data-card-head"><p class="data-card-title">Triaging Toxicity</p></div>
-        <p class="data-card-desc">Sentiment analysis of online discussions to identify and prioritize toxic content</p>
-        <div class="tool-tags"><span class="tool-tag">PYTHON</span><span class="tool-tag">PITCH</span></div>
-        <p class="work-meta">2026 · Deep Learning Neural Network Processing</p>
-      </a>
-
-      <a class="data-card" href="https://commonplace-data.vercel.app/" target="_blank" rel="noopener" aria-label="Open Commonplace: Interactive Bookmarks project">
-        <div class="work-thumb"><img src="images/data05-commonplace/data05-commonplace.jpg" alt="" loading="lazy"></div>
-        <div class="data-card-head"><p class="data-card-title">Commonplace: Interactive Bookmarks</p></div>
-        <p class="data-card-desc">Visualising learning progress through an interactive repository of weblinks</p>
-        <div class="tool-tags"><span class="tool-tag">JAVASCRIPT (D3.JS)</span><span class="tool-tag">REACT</span><span class="tool-tag">VITE</span></div>
-        <p class="work-meta">2026 · Data Visualisation</p>
-      </a>
-    </div>
     <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
   </section>
 
   <!-- ===================================================
-       SECTION 4 — LEARNING & DEVELOPMENT
+       SECTION 2: DATA HIGHLIGHTS
        =================================================== -->
-  <section id="learning" class="folio-section section-wrap">
+  <section id="data" class="folio-section section-wrap">
     <nav class="section-nav" aria-label="Sections">
-      <a href="#fineart" data-target="fineart">Fine Art &amp; Exhibition</a>
-      <a href="#design" data-target="design">Design</a>
-      <a href="#data" data-target="data">Data</a>
-      <a href="#learning" data-target="learning">Learning &amp; Development</a>
+      <a href="#work" data-target="work">Fine Art &amp; Design</a>
+      <a href="#data" data-target="data">Data Highlights</a>
+      <a href="#about" data-target="about">About Me</a>
     </nav>
 
     <div class="section-head">
-      <h2 class="section-title">Learning &amp; Development</h2>
-      <p class="section-sub">Designing and delivering learning experiences that shift how people think.</p>
+      <h2 class="section-title">Data Highlights</h2>
+      <p class="section-sub">A sampling of my data science and visualisation projects. View the Python coded notebooks in full via Github <a href="https://github.com/michaelee90/data-science-portfolio" target="_blank" rel="noopener">here</a>.</p>
     </div>
 
-    <div class="work-grid">
-      <a class="work-card" href="https://issuu.com/moe_star/docs/pages_starpost_jan25_final_compression/24" target="_blank" rel="noopener" aria-label="Open STAR Article">
-        <div class="work-thumb"><img src="images/ld01-drawing/ld01-drawing1.jpg" alt="" loading="lazy"></div>
-        <p class="work-title">STAR Article</p>
-        <p class="work-meta">2025 · Article</p>
-    </a>
-      <button class="work-card" type="button" data-key="ld02" aria-label="Open Teachers' Conference and ExCEL Fest">
-        <div class="work-thumb"><img src="images/ld02-tcef/ld02-tcef1.jpg" alt="" loading="lazy"></div>
-        <p class="work-title">Teachers&rsquo; Conference and ExCEL Fest</p>
-        <p class="work-meta">2025 · Workshop</p>
+    <div class="data-grid">
+      <button class="data-card" type="button" data-key="data01" aria-label="Open Data Storytelling">
+        <div class="work-thumb"><img src="images/data01-highlights/data01-highlights01.png" alt="" loading="lazy"></div>
+        <p class="data-card-title">Data Storytelling</p>
       </button>
-      <button class="work-card" type="button" data-key="ld03" aria-label="Open Today Article">
-        <div class="work-thumb"><img src="images/ld03-today/ld03-today.jpg" alt="" loading="lazy" style="object-position: top; transform: scale(1.15);"></div>
-        <p class="work-title">Today Article</p>
-        <p class="work-meta">2018 · Article</p>
+      <button class="data-card" type="button" data-key="data02" aria-label="Open Predictive Modelling">
+        <div class="work-thumb"><img src="images/data01-highlights/data01-highlights02.png" alt="" loading="lazy"></div>
+        <p class="data-card-title">Predictive Modelling</p>
       </button>
-      <button class="work-card work-card--video" type="button" data-key="ld04" aria-label="Open ArtHacks">
-        <div class="work-thumb">
-          <img src="https://vumbnail.com/706772235.jpg" alt="" loading="lazy">
-          <span class="play-overlay" aria-hidden="true">▶</span>
-        </div>
-        <p class="work-title">ArtHacks – Fostering Critical Art Appreciation</p>
-        <p class="work-meta">2022 · Presentation</p>
+      <button class="data-card" type="button" data-key="data03" aria-label="Open Natural Language Processing">
+        <div class="work-thumb"><img src="images/data01-highlights/data01-highlights03.jpg" alt="" loading="lazy"></div>
+        <p class="data-card-title">Natural Language Processing</p>
       </button>
-      <button class="work-card work-card--video" type="button" data-key="ld05" aria-label="Open Networked Learning Community Drawing">
-        <div class="work-thumb">
-          <img src="https://vumbnail.com/900817024.jpg" alt="" loading="lazy">
-          <span class="play-overlay" aria-hidden="true">▶</span>
-        </div>
-        <p class="work-title">Networked Learning Community: Drawing</p>
-        <p class="work-meta">2023 · Presentation</p>
+      <button class="data-card" type="button" data-key="data04" aria-label="Open Real-world Client Engagement">
+        <div class="work-thumb"><img src="images/data01-highlights/data01-highlights04.png" alt="" loading="lazy"></div>
+        <p class="data-card-title">Real-world Client Engagement</p>
       </button>
-      <button class="work-card work-card--video" type="button" data-key="ld06" aria-label="Open Critical Inquiry Differentiated Learning">
-        <div class="work-thumb">
-          <img src="https://vumbnail.com/653958609.jpg" alt="" loading="lazy">
-          <span class="play-overlay" aria-hidden="true">▶</span>
-        </div>
-        <p class="work-title">Critical Inquiry: Differentiated Learning</p>
-        <p class="work-meta">2021 · Presentation</p>
-      </button>
+    </div>
+
+    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
+  </section>
+
+  <!-- ===================================================
+       SECTION 3: ABOUT ME
+       =================================================== -->
+  <section id="about" class="folio-section section-wrap">
+    <nav class="section-nav" aria-label="Sections">
+      <a href="#work" data-target="work">Fine Art &amp; Design</a>
+      <a href="#data" data-target="data">Data Highlights</a>
+      <a href="#about" data-target="about">About Me</a>
+    </nav>
+
+    <div class="section-head">
+      <h2 class="section-title">About Me</h2>
+    </div>
+
+    <div class="about-grid">
+      <p class="about-text">People-driven Leader and Data Specialist bridging technical analytical mastery with human-centric organizational development. Proven expertise in transforming complex socio-economic and operational data into strategic capability frameworks, scalable adult learning initiatives, and high-impact stakeholder partnerships. Able to apply predictive modeling (Python, SQL) and robust governance alongside years of people experience to drive workforce growth, cross-functional collaboration, and enterprise performance.</p>
+
+            <div class="carousel" id="aboutCarousel" aria-label="Photos of Michael at work">
+        <div class="slide is-active"><img src="images/about-me/about-me-00.jpg" alt=""></div>
+        <div class="slide"><img src="images/about-me/about-me-01.jpg" alt=""></div>
+        <div class="slide"><img src="images/about-me/about-me-02.jpg" alt=""></div>
+        <div class="slide"><img src="images/about-me/about-me-03.jpg" alt="" style="object-position: 50% 20%;"></div>
+        <div class="slide"><img src="images/about-me/about-me-04.jpg" alt=""></div>
+        <div class="slide"><img src="images/about-me/about-me-05.jpg" alt=""></div>
+        <div class="slide"><img src="images/about-me/about-me-06.jpg" alt=""></div>
+        <div class="carousel-dots" aria-hidden="true"></div>
+      </div>
     </div>
 
     <div class="ld-rail">
@@ -1200,7 +1183,7 @@ LAYOUT
           <li>Collaborated on leading teams for organisational review and re-envisioning exercises</li>
           <li>Regular driver of partnerships across industries for social change</li>
           <li>Experienced in leading and managing cross-functional teams</li>
-          <li>Currently building competency in data analytics and visualisation</li>
+          <li>Advanced data analytics and visualisation skills with Python coding</li>
         </ul>
       </div>
       <div>
@@ -1220,17 +1203,13 @@ LAYOUT
     <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
   </section>
 
-  <!-- ===================================================
-       FOOTER
-       =================================================== -->
+  <!-- FOOTER -->
   <footer class="mw-foot">
     <span>Set in Cormorant Garamond &amp; Nunito</span>
     <span><em>© Michael Ee, 2026</em></span>
   </footer>
 
-  <!-- ===================================================
-       LIGHTBOX — gallery viewer
-       =================================================== -->
+  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" data-open="false" role="dialog" aria-modal="true" aria-label="Gallery viewer" aria-hidden="true">
     <button class="lb-close" id="lbClose" aria-label="Close gallery" type="button">×</button>
     <button class="lb-prev"  id="lbPrev"  aria-label="Previous"      type="button">‹</button>
@@ -1243,15 +1222,10 @@ LAYOUT
     </div>
   </div>
 
-  <!-- ===================================================
-       SCRIPTS
-       =================================================== -->
   <script>
   (() => {
 
-    /* ─────────────────────────────────────────────────────
-       1. CYCLING WORDS
-       ───────────────────────────────────────────────────── */
+    /* 1. CYCLING WORDS */
     function makeCycler(el, opts = {}) {
       const words = (el.dataset.words || '').split(',').map(s => s.trim()).filter(Boolean);
       if (words.length < 2) return null;
@@ -1260,9 +1234,6 @@ LAYOUT
       const stack = el.querySelector('.stack');
       stack.innerHTML = words.map(w => `<span>${w}</span>`).join('');
 
-      // Measure inside the element so the ghost inherits the exact font.
-      // Must re-run once web fonts load — measuring against the fallback
-      // font (Georgia) leaves the mask, ring and underline too wide.
       let widths = [];
       function measure() {
         const ghost = document.createElement('span');
@@ -1318,29 +1289,19 @@ LAYOUT
     }
     window.addEventListener('load', () => setTimeout(demo, 800));
 
-    /* ─────────────────────────────────────────────────────
-       2. ACTIVE SECTION TRACKING — sliding underline
-       Uses IntersectionObserver to detect which section is
-       most prominently in view, then highlights its nav links
-       across all section navs.
-       ───────────────────────────────────────────────────── */
-    const sections = ['fineart', 'design', 'data', 'learning'];
+    /* 2. ACTIVE SECTION TRACKING (CHANGED: three sections) */
+    const sections = ['work', 'data', 'about'];
     const navLinks = document.querySelectorAll('.section-nav a[data-target]');
 
     function setActive(target) {
-      navLinks.forEach(a => {
-        a.classList.toggle('is-active', a.dataset.target === target);
-      });
+      navLinks.forEach(a => a.classList.toggle('is-active', a.dataset.target === target));
     }
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
-        // Find the entry with the highest intersection ratio currently in view
         let best = null;
         entries.forEach(e => {
-          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
-            best = e;
-          }
+          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) best = e;
         });
         if (best) setActive(best.target.id);
       }, {
@@ -1354,9 +1315,7 @@ LAYOUT
       });
     }
 
-    /* ─────────────────────────────────────────────────────
-       3. LOADER — hide when fonts/DOM are ready
-       ───────────────────────────────────────────────────── */
+    /* 3. LOADER */
     const loaderEl = document.getElementById('loader');
     function hideLoader() { loaderEl.classList.add('is-hidden'); }
     function showLoader() { loaderEl.classList.remove('is-hidden'); }
@@ -1364,10 +1323,9 @@ LAYOUT
     window.showLoader = showLoader;
 
     const minDisplay = 3500;
-    const start = performance.now();
+    const t0 = performance.now();
     function maybeHide() {
-      const elapsed = performance.now() - start;
-      const wait = Math.max(0, minDisplay - elapsed);
+      const wait = Math.max(0, minDisplay - (performance.now() - t0));
       setTimeout(hideLoader, wait);
     }
 
@@ -1376,13 +1334,9 @@ LAYOUT
     } else {
       window.addEventListener('load', maybeHide);
     }
-
-    // Safety net
     setTimeout(hideLoader, 3500);
 
-    /* ─────────────────────────────────────────────────────
-       3b. TYPEWRITER — type out "Mikeee" letter by letter
-       ───────────────────────────────────────────────────── */
+    /* 3b. TYPEWRITER */
     const twText = document.getElementById('twText');
     const word = [
       { char: 'M', cls: 'tw-letter' },
@@ -1393,7 +1347,6 @@ LAYOUT
       { char: 'e', cls: 'tw-letter tw-letter--small-caps' },
     ];
     let i = 0;
-
     function typeNext() {
       if (i >= word.length) return;
       setTimeout(() => {
@@ -1405,14 +1358,33 @@ LAYOUT
         typeNext();
       }, 280);
     }
-
     setTimeout(typeNext, 400);
 
-    /* ─────────────────────────────────────────────────────
-       4. GALLERIES + LIGHTBOX
-       ───────────────────────────────────────────────────── */
+    /* 3c. ABOUT CAROUSEL (NEW): auto crossfade every 4s */
+    const carousel = document.getElementById('aboutCarousel');
+    if (carousel) {
+      const slides = [...carousel.querySelectorAll('.slide')];
+      const dotsWrap = carousel.querySelector('.carousel-dots');
+      const dots = slides.map((_, n) => {
+        const d = document.createElement('span');
+        if (n === 0) d.classList.add('is-active');
+        dotsWrap.appendChild(d);
+        return d;
+      });
+      let active = 0;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion && slides.length > 1) {
+        setInterval(() => {
+          slides[active].classList.remove('is-active');
+          dots[active].classList.remove('is-active');
+          active = (active + 1) % slides.length;
+          slides[active].classList.add('is-active');
+          dots[active].classList.add('is-active');
+        }, 4000);
+      }
+    }
 
-    // Helper to build image item arrays compactly
+    /* 4. GALLERIES + LIGHTBOX */
     const img = (src, caption) => ({ type: 'image', src, caption });
     const yt  = (id, caption)  => ({ type: 'youtube', id, caption });
     const vm  = (id, caption)  => ({ type: 'vimeo',   id, caption });
@@ -1420,7 +1392,7 @@ LAYOUT
     const galleries = {
       // ===== FINE ART =====
       fineart01: {
-        title: 'Printmaking · 2014',
+        title: 'I Belong Here Too · 2014',
         items: [
           img('images/fineart01-print/fineart01-print1.webp'),
           img('images/fineart01-print/fineart01-print2.webp'),
@@ -1443,29 +1415,13 @@ LAYOUT
         ]
       },
       fineart03: {
-        title: 'Painting · 2018',
+        title: 'His Four Sides · 2018',
         items: [
           img('images/fineart03-paint/fineart03-paint1.jpg'),
           img('images/fineart03-paint/fineart03-paint2.jpg'),
           img('images/fineart03-paint/fineart03-paint3.jpg'),
           img('images/fineart03-paint/fineart03-paint4.jpg'),
           img('images/fineart03-paint/fineart03-paint5.jpg'),
-        ]
-      },
-      fineart04: {
-        title: 'Exhibition · 2014–2025',
-        items: [
-          img('images/fineart04-exhib/fineart04-exhib1.jpg', 'SMRT Comics Connect Murals 2024 @ Kembangan MRT Station with students from SJI.'),
-          img('images/fineart04-exhib/fineart04-exhib2.jpg', 'Receiving partnership award from SMRT Corporation and Senior Parliamentary Secretary for Ministry of Transport, Mr Baey Yam Keng.'),
-          img('images/fineart04-exhib/fineart04-exhib3.jpg', 'With inter-religious collaborators, SJI students, SMRT officials and Minister for for Culture, Community and Youth Mr Edwin Tong in 2023.'),
-          img('images/fineart04-exhib/fineart04-exhib4.jpg', 'With SJI art students and Buddhist Union and SMRT officials at unveiling ceremony in 2023.'),
-          img('images/fineart04-exhib/fineart04-exhib5.jpg', 'ArtSG 2025 Art Prize Singapore exhibition at Marina Bay Sands.'),
-          img('images/fineart04-exhib/fineart04-exhib6.jpg', 'SG60 Re-envisioning Singapore Together art exhibition at United Square with Member of Parliament for Moulmein-Cairnhill ward Mr Alvin Tan in 2025'),
-          img('images/fineart04-exhib/fineart04-exhib7.JPG', 'Waning Waxing art exhibition vernissage with Mr Tang Dawu, pioneer of contemporary performance and installation art in Singapore, in 2018'),
-          img('images/fineart04-exhib/fineart04-exhib8.jpg', 'Faith Hope Love art exhibition at Visual Arts Centre with Senior Minister of State Ms Sim Ann in 2017.'),
-          img('images/fineart04-exhib/fineart04-exhib9.jpg', 'With fellow creatives behind "A Walk in the Light of Lasalle", an experiential art trail celebrating the life of St. John Baptist de La Salle in 2023.'),
-          img('images/fineart04-exhib/fineart04-exhib10.jpg', 'With fellow RISD artists at "root" exhibition at Ocean Financial Centre in 2014.'),
-          img('images/fineart04-exhib/fineart04-exhib11.jpg', '"root" exhibition at Ocean Financial Centre featured diverse work from Singaporeans studying abroad at the Rhode Island School of Design between the years of 2010 to 2015.')
         ]
       },
       fineart05: {
@@ -1484,15 +1440,31 @@ LAYOUT
           img('images/fineart05-politi/fineart05-politi11.jpg'),
         ]
       },
+      fineart06: {
+        title: 'Hello · 2013',
+        items: [
+          img('images/fineart06-hello/fineart06-hello_01.webp'),
+          img('images/fineart06-hello/fineart06-hello_02.jpg'),
+          img('images/fineart06-hello/fineart06-hello_03.webp'),
+          img('images/fineart06-hello/fineart06-hello_04.webp'),
+          img('images/fineart06-hello/fineart06-hello_05.webp'),
+          img('images/fineart06-hello/fineart06-hello_06.webp'),
+          img('images/fineart06-hello/fineart06-hello_07.webp'),
+          img('images/fineart06-hello/fineart06-hello_08.webp'),
+        ]
+      },
 
       // ===== DESIGN =====
       design01: {
-        title: 'Logotypes · 2015–2025',
+        title: 'CEC · 2021',
         items: [
-          img('images/design01-logo/design01-logo1.jpg'),
-          img('images/design01-logo/design01-logo2.jpg'),
-          img('images/design01-logo/design01-logo3.jpg'),
-          img('images/design01-logo/design01-logo4.jpg'),
+          img('images/design01-cec/design01-cec-00.jpg'),
+          img('images/design01-cec/design01-cec-01.PNG'),
+          img('images/design01-cec/design01-cec-02.PNG'),
+          img('images/design01-cec/design01-cec-03.PNG'),
+          img('images/design01-cec/design01-cec-04.PNG'),
+          img('images/design01-cec/design01-cec-05.PNG'),
+          img('images/design01-cec/design01-cec-06.PNG'),
         ]
       },
       design02: {
@@ -1562,18 +1534,9 @@ LAYOUT
         ]
       },
       design08: {
-        title: 'Posters and Brochures · 2016–Present',
+        title: 'Candide · 2019',
         items: [
-          img('images/design08-posters/design08-poster1.jpg', 'The Rising Sun — MOJO x Yong Siew Toh Conservatory of Music'),
-          img('images/design08-posters/design08-poster2.jpg', 'Candide — State Theatre, Arts Centre Melbourne'),
-          img('images/design08-posters/design08-poster3.jpg', 'Creation — SJI Old Boys exhibition, Singapore Art Museum'),
-          img('images/design08-posters/design08-poster4.jpg', 'Waning, Waxing — ION Art Gallery'),
-          img('images/design08-posters/design08-poster5.jpg', 'Dear Marble & Mortality — RISD Museum lecture series'),
-          img('images/design08-posters/design08-poster6.jpg', 'Invention of Photography, collaboration with Colin Frazier'),
-          img('images/design08-posters/design08-poster7.jpg', 'Boundaries'),
-          img('images/design08-posters/design08-brochure1.jpg', 'Selected exhibition catalogues and event collateral'),
-          img('images/design08-posters/design08-brochure2.jpg', 'A Date with Dwayne — programme door-hanger'),
-          img('images/design08-posters/design08-brochure3.jpg', 'A Date with Dwayne — programme door-hanger, reverse'),
+          img('images/design08-candide/design08-poster2.jpg', 'Candide — State Theatre, Arts Centre Melbourne'),
         ]
       },
       design09: {
@@ -1588,42 +1551,65 @@ LAYOUT
           img('images/design09-alice/design09-alice07.gif'),
         ]
       },
+      design10: {
+        title: 'The Light · 2015',
+        items: [
+          img('images/design10-light/design10-light-00.jpg'),
+          img('images/design10-light/design10-light-01.jpg'),
+          img('images/design10-light/design10-light-02.jpg'),
+          img('images/design10-light/design10-light-03.jpg'),
+          img('images/design10-light/design10-light-04.jpg'),
+        ]
+      },
+      design11: {
+        title: 'SJI Learning Festival · 2024',
+        items: [
+          img('images/design11-sjilf/design11-sjilf-00.jpg'),
+          img('images/design11-sjilf/design11-sjilf-01.png'),
+          img('images/design11-sjilf/design11-sjilf-02.jpg'),
+          img('images/design11-sjilf/design11-sjilf-03.jpg'),
+        ]
+      },
+      design12: {
+        title: 'The Rising Sun · 2024',
+        items: [
+          img('images/design12-rising/design08-poster1.jpg', 'The Rising Sun — MOJO x Yong Siew Toh Conservatory of Music'),
+        ]
+      },
+      design13: {
+        title: 'Invention of Photography · 2012',
+        items: [
+          img('images/design13-photog/design08-poster6.jpg', 'Invention of Photography, collaboration with Colin Frazier'),
+        ]
+      },
 
-      // ===== L&D =====
-      ld01: {
-        title: 'STAR Article · 2025',
+      // ===== DATA =====
+      data01: {
+        title: 'Data Storytelling',
         items: [
-          img('images/ld01-drawing/ld01-drawing1.jpg'),
-          img('images/ld01-drawing/ld01-drawing2.jpg'),
+          img('images/data01-highlights/data01-highlights01.png'),
         ]
       },
-      ld02: {
-        title: 'Teachers\u2019 Conference and ExCEL Fest · 2025',
+      data02: {
+        title: 'Predictive Modelling',
         items: [
-          img('images/ld02-tcef/ld02-tcef1.jpg'),
-          img('images/ld02-tcef/ld02-tcef2.jpg'),
-          img('images/ld02-tcef/ld02-tcef3.jpg'),
-          img('images/ld02-tcef/ld02-tcef4.jpg'),
+          img('images/data01-highlights/data01-highlights02.png'),
         ]
       },
-      ld03: {
-        title: 'Today Article · 2018',
+      data03: {
+        title: 'Natural Language Processing',
         items: [
-          img('images/ld03-today/ld03-today.jpg'),
+          img('images/data01-highlights/data01-highlights03.jpg'),
         ]
       },
-      ld04: {
-        title: 'ArtHacks – Fostering Critical Art Appreciation · 2022',
-        items: [ vm('706772235') ]
+      data04: {
+        title: 'Real-world Client Engagement',
+        items: [
+          img('images/data01-highlights/data01-highlights04.png'),
+        ]
       },
-      ld05: {
-        title: 'Networked Learning Community: Drawing · 2023',
-        items: [ vm('900817024') ]
-      },
-      ld06: {
-        title: 'Critical Inquiry: Differentiated Learning · 2021',
-        items: [ vm('653958609') ]
-      },
+      // L&D gallery entries (ld01 to ld06) removed with the L&D work grid.
+      // Restore from index.html if you bring those cards back.
     };
 
     const lightbox = document.getElementById('lightbox');
@@ -1670,7 +1656,7 @@ LAYOUT
       const lbCaption = document.getElementById('lbCaption');
       lbCaption.textContent = item.caption || '';
       lbCaption.classList.toggle('is-visible', !!item.caption);
-      
+
       lbCounter.textContent = current.items.length > 1
         ? `${cursor + 1} / ${current.items.length}`
         : '';
@@ -1693,7 +1679,7 @@ LAYOUT
       lightbox.setAttribute('data-open', 'false');
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      lbStage.innerHTML = ''; // stop any video playback
+      lbStage.innerHTML = '';
       current = null;
     }
 
@@ -1704,7 +1690,7 @@ LAYOUT
       renderItem();
     }
 
-    document.querySelectorAll('.work-card[data-key]').forEach(card => {
+    document.querySelectorAll('.work-card[data-key], .data-card[data-key]').forEach(card => {
       card.addEventListener('click', () => openGallery(card.dataset.key));
     });
 
