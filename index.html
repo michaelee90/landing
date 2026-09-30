@@ -8,7 +8,7 @@ LAYOUT
   1. Hero with meta line, headline, and section nav
   2. Three sections scrolling below the hero
      - Fine Art & Design
-     - Data Highlights
+     - Data
      - About Me (+ Career Highlights and Delivery Skills)
   3. Footer
   4. Typewriter loader on initial load
@@ -43,7 +43,7 @@ LAYOUT
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     /* -------------------------------------------------------
@@ -130,6 +130,11 @@ LAYOUT
       margin-right: 8px;
       vertical-align: middle;
       transform: translateY(-1px);
+    }
+
+    .mw-name {
+      font-weight: 800;
+      color: var(--ink);
     }
 
     .mw-contacts {
@@ -470,6 +475,19 @@ LAYOUT
     @media (min-width: 860px) {
       .about-grid { grid-template-columns: 1fr 1.15fr; }
     }
+
+    .about-text p { margin: 0 0 1em; }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-cta {
+      font-weight: 800;
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color .2s;
+    }
+
+    .about-cta:hover { color: var(--teal); }
 
     .about-text {
       font-family: "Nunito", sans-serif;
@@ -905,6 +923,19 @@ LAYOUT
       .hero-nav-hint { display: none; }
     }
 
+    /* Phones: hero line fills the space between the top and bottom bars */
+    @media (max-width: 640px) {
+      .hero { min-height: 100svh; }
+      .hero-main { flex: 1; display: flex; flex-direction: column; }
+      .mw-deck { flex: 1; align-items: center; padding-block: 24px; }
+      .mw-hero {
+        font-size: clamp(30px, min(11vw, 6svh), 56px);
+        line-height: 1.2;
+      }
+      .mw-hero br:not(.keep) { display: none; }
+      .hero-nav { margin-top: 0; }
+    }
+
   </style>
 </head>
 
@@ -932,11 +963,11 @@ LAYOUT
        HERO
        =================================================== -->
   <section id="hero" class="hero section-wrap">
-  <div>
+  <div class="hero-main">
     <div class="mw-meta">
       <span>
         <span class="d"></span>
-        MICHAEL EE · BFA (GRAPHIC DESIGN), PGDE
+        <strong class="mw-name">MICHAEL EE</strong> · BFA (GRAPHIC DESIGN), PGDE
       </span>
       <span class="mw-contacts">
         <a href="mailto:michael.ee90@gmail.com?subject=Hello%20Michael">EMAIL</a>
@@ -962,7 +993,7 @@ LAYOUT
           <svg class="ring" viewBox="0 0 100 60" preserveAspectRatio="none">
             <ellipse cx="50" cy="30" rx="46" ry="24" transform="rotate(-2.5 50 30)"/>
           </svg>
-        </span><br>
+        </span><br class="keep">
         Now I help organisations<br>
         <span class="cyc cyc-think" data-words="think,communicate,adapt" aria-label="think">
           <span class="mask">
@@ -979,7 +1010,7 @@ LAYOUT
       <span class="hero-nav-links">
         <a href="#work">FINE ART &amp; DESIGN</a>
         <span class="dot">·</span>
-        <a href="#data">DATA HIGHLIGHTS</a>
+        <a href="#data">DATA</a>
         <span class="dot">·</span>
         <a href="#about">ABOUT ME</a>
       </span>
@@ -994,7 +1025,7 @@ LAYOUT
   <section id="work" class="folio-section section-wrap">
     <nav class="section-nav" aria-label="Sections">
       <a href="#work" data-target="work">Fine Art &amp; Design</a>
-      <a href="#data" data-target="data">Data Highlights</a>
+      <a href="#data" data-target="data">Data</a>
       <a href="#about" data-target="about">About Me</a>
     </nav>
 
@@ -1105,21 +1136,21 @@ LAYOUT
       </button>
     </div>
 
-    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
+    <a class="section-back" href="#hero"><i>↑</i>Let&rsquo;s collaborate</a>
   </section>
 
   <!-- ===================================================
-       SECTION 2: DATA HIGHLIGHTS
+       SECTION 2: DATA
        =================================================== -->
   <section id="data" class="folio-section section-wrap">
     <nav class="section-nav" aria-label="Sections">
       <a href="#work" data-target="work">Fine Art &amp; Design</a>
-      <a href="#data" data-target="data">Data Highlights</a>
+      <a href="#data" data-target="data">Data</a>
       <a href="#about" data-target="about">About Me</a>
     </nav>
 
     <div class="section-head">
-      <h2 class="section-title">Data Highlights</h2>
+      <h2 class="section-title">Data</h2>
       <p class="section-sub">A sampling of my data science and visualisation projects. View the Python coded notebooks in full via Github <a href="https://github.com/michaelee90/data-science-portfolio" target="_blank" rel="noopener">here</a>.</p>
     </div>
 
@@ -1142,7 +1173,7 @@ LAYOUT
       </button>
     </div>
 
-    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
+    <a class="section-back" href="#hero"><i>↑</i>Let&rsquo;s collaborate</a>
   </section>
 
   <!-- ===================================================
@@ -1151,16 +1182,19 @@ LAYOUT
   <section id="about" class="folio-section section-wrap">
     <nav class="section-nav" aria-label="Sections">
       <a href="#work" data-target="work">Fine Art &amp; Design</a>
-      <a href="#data" data-target="data">Data Highlights</a>
+      <a href="#data" data-target="data">Data</a>
       <a href="#about" data-target="about">About Me</a>
     </nav>
 
     <div class="section-head">
-      <h2 class="section-title">About Me</h2>
+      <h2 class="section-title">Hi there!</h2>
     </div>
 
     <div class="about-grid">
-      <p class="about-text">People-driven Leader and Data Specialist bridging technical analytical mastery with human-centric organizational development. Proven expertise in transforming complex socio-economic and operational data into strategic capability frameworks, scalable adult learning initiatives, and high-impact stakeholder partnerships. Able to apply predictive modeling (Python, SQL) and robust governance alongside years of people experience to drive workforce growth, cross-functional collaboration, and enterprise performance.</p>
+      <div class="about-text">
+        <p>Mike is a people-focused designer committed to transforming socio-economic and operational data into strategic capability frameworks, scalable adult learning initiatives, and high-impact stakeholder partnerships. With a Bachelor of Fine Arts (Graphic Design) from the Rhode Island School of Design, he enjoys working at the intersection of creativity and structural rigour to resolve complex communication challenges. As an active freelance designer and commission artist, he welcomes collaborations with organisations and clients demanding visual sophistication and detailed nuance for their projects.</p>
+        <p><a class="about-cta" href="#hero">Let&rsquo;s collaborate</a> &rarr; Reach out through the landing page contact information!</p>
+      </div>
 
             <div class="carousel" id="aboutCarousel" aria-label="Photos of Michael at work">
         <div class="slide is-active"><img src="images/about-me/about-me-00.jpg" alt=""></div>
@@ -1200,7 +1234,7 @@ LAYOUT
         </div>
       </div>
     </div>
-    <a class="section-back" href="#hero"><i>↑</i>Find Me</a>
+    <a class="section-back" href="#hero"><i>↑</i>Let&rsquo;s collaborate</a>
   </section>
 
   <!-- FOOTER -->
