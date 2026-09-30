@@ -525,7 +525,19 @@ LAYOUT
     .about-cta:hover .ring ellipse,
     .about-cta:focus-visible .ring ellipse { stroke-dashoffset: 0; }
 
-    .about-cta-note { display: block; margin-top: 2em; }
+    /* same type as the contact links in the landing page header */
+    .about-contacts {
+      display: flex;
+      margin-top: 2em;
+      font-family: "Nunito", sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .about-cta-note { display: block; margin-top: 1em; }
 
     /* breathing room above the strengths chart (outside the pasted snippet) */
     #about .sc { margin-top: clamp(48px, 7vh, 80px); }
@@ -1187,6 +1199,13 @@ LAYOUT
         <p>Mike is a people-focused designer committed to transforming socio-economic and operational data into strategic capability frameworks, scalable adult learning initiatives, and high-impact stakeholder partnerships. With a Bachelor of Fine Arts (Graphic Design) from the Rhode Island School of Design, he enjoys working at the intersection of creativity and structural rigour to resolve complex communication challenges. As an active freelance designer and commission artist, he welcomes collaborations with organisations and clients demanding visual sophistication and detailed nuance for their projects.</p>
         <p class="about-cta-wrap">
           <a class="about-cta" href="#hero">Let&rsquo;s collaborate<svg class="ring" viewBox="0 0 290 60" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="145" cy="30" rx="143" ry="28" transform="rotate(-1.5 145 30)"/></svg></a>
+          <span class="about-contacts mw-contacts">
+            <a href="mailto:michael.ee90@gmail.com?subject=Hello%20Michael">EMAIL</a>
+            <span class="dot">·</span>
+            <a href="https://www.dropbox.com/scl/fi/aa6ia8kwxsmdkt9gf2x65/Michael_Ee_CV_ATS_20260908.docx?rlkey=kk6jqrux6x1jenxgwgupws1cu&st=omcxukp8&dl=0" target="_blank" rel="noopener">CV</a>
+            <span class="dot">·</span>
+            <a href="https://linkedin.com/in/michael-ee" target="_blank" rel="noopener">LINKEDIN</a>
+          </span>
           <span class="about-cta-note">Reach out through the landing page contact information!</span>
         </p>
       </div>
@@ -1944,7 +1963,7 @@ LAYOUT
       design13: {
         title: 'Invention of Photography · 2012',
         items: [
-          img('images/design13-photog/design08-poster6.jpg', 'Invention of Photography, collaboration with Colin Frazier'),
+          img('images/design13-photog/design08-poster6.jpg'),
         ]
       },
 
