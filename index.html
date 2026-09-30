@@ -494,7 +494,11 @@ LAYOUT
       letter-spacing: -.015em;
       color: var(--teal);
       text-decoration: none;
+      transition: color .3s;
     }
+
+    .about-cta:hover,
+    .about-cta:focus-visible { color: var(--teal-dark); }
 
     /* same hand-drawn ring as "see." in the hero, sized for a wider phrase */
     .about-cta .ring {
@@ -1155,6 +1159,10 @@ LAYOUT
         <div class="work-thumb"><img src="images/data01-highlights/data01-highlights04.png" alt="" loading="lazy"></div>
         <p class="data-card-title">Real-world Client Engagement</p>
       </button>
+      <a class="data-card" href="https://commonplace-data.vercel.app/" target="_blank" rel="noopener" aria-label="Open Interactive: Commonplace bookmarks app (new tab)">
+        <div class="work-thumb"><img src="images/data02-commonplace/data05-commonplace.jpg" alt="" loading="lazy"></div>
+        <p class="data-card-title">Interactive</p>
+      </a>
     </div>
 
     <a class="section-back" href="#hero"><i>↑</i>Let&rsquo;s collaborate</a>
