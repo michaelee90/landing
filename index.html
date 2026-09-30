@@ -9,7 +9,7 @@ LAYOUT
   2. Three sections scrolling below the hero
      - Fine Art & Design
      - Data
-     - About Me (+ Career Highlights and Delivery Skills)
+     - About Me (+ strengths chart)
   3. Footer
   4. Typewriter loader on initial load
 ========================================================
@@ -43,7 +43,7 @@ LAYOUT
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
     /* -------------------------------------------------------
@@ -310,18 +310,18 @@ LAYOUT
       line-height: 1.1;
       letter-spacing: -.015em;
       color: var(--ink);
-      margin: 0 0 8px;
+      margin: 0;
     }
 
     .section-sub {
       font-family: "Nunito", sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 14px;
+      font-size: 18px;
       line-height: 1.6;
       color: var(--ink-mid);
       max-width: none;
-      margin: 0;
+      margin: 1.6em 0 0;
     }
 
     /* =======================================================
@@ -469,7 +469,7 @@ LAYOUT
       display: grid;
       grid-template-columns: 1fr;
       gap: clamp(28px, 4vw, 56px);
-      align-items: center;
+      align-items: start;
     }
 
     @media (min-width: 860px) {
@@ -479,15 +479,52 @@ LAYOUT
     .about-text p { margin: 0 0 1em; }
     .about-text p:last-child { margin-bottom: 0; }
 
+    .section-head--tight { margin-bottom: clamp(8px, 1.5vh, 16px); }
+
+    .about-text p.about-cta-wrap { margin-top: 2em; }
+
     .about-cta {
-      font-weight: 800;
-      color: var(--ink);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      transition: color .2s;
+      position: relative;
+      display: inline-block;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(28px, 4.5vw, 56px);
+      line-height: 1.1;
+      letter-spacing: -.015em;
+      color: var(--teal);
+      text-decoration: none;
     }
 
-    .about-cta:hover { color: var(--teal); }
+    /* same hand-drawn ring as "see." in the hero, sized for a wider phrase */
+    .about-cta .ring {
+      position: absolute;
+      top: -0.42em;
+      left: -0.62em;
+      width: calc(100% + 1.24em);
+      height: 1.94em;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .about-cta .ring ellipse {
+      fill: none;
+      stroke: var(--teal);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-dasharray: 660;
+      stroke-dashoffset: 660;
+      transition: stroke-dashoffset .85s cubic-bezier(.65, 0, .35, 1);
+      filter: url(#wobble-1);
+    }
+
+    .about-cta:hover .ring ellipse,
+    .about-cta:focus-visible .ring ellipse { stroke-dashoffset: 0; }
+
+    .about-cta-note { display: block; margin-top: 2em; }
+
+    /* breathing room above the strengths chart (outside the pasted snippet) */
+    #about .sc { margin-top: clamp(48px, 7vh, 80px); }
 
     .about-text {
       font-family: "Nunito", sans-serif;
@@ -545,64 +582,6 @@ LAYOUT
     }
 
     .carousel-dots span.is-active { background: var(--teal); }
-
-    /* =======================================================
-       CAREER HIGHLIGHTS + SKILLS RAIL
-       ======================================================= */
-    .ld-rail {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(28px, 4vw, 48px);
-      margin-top: clamp(48px, 7vh, 80px);
-      padding-top: clamp(32px, 5vh, 56px);
-      border-top: 1px solid rgba(31, 42, 46, .12);
-    }
-
-    @media (min-width: 720px) {
-      .ld-rail { grid-template-columns: 1fr 1fr; }
-    }
-
-    .rail-head {
-      font-family: "Nunito", sans-serif;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 11px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin: 0 0 14px;
-    }
-
-    .career-list {
-      list-style: none; padding: 0; margin: 0;
-      display: flex; flex-direction: column; gap: 10px;
-    }
-
-    .career-list li {
-      display: flex; gap: 12px;
-      font-family: "Nunito", sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--ink-mid);
-    }
-
-    .career-list li::before { content: "—"; color: var(--teal); flex-shrink: 0; }
-
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    .skill-tag {
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: oklch(.91 .02 55);
-      border: 1px solid rgba(31,42,46,.1);
-      font-family: "Nunito", sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      color: var(--ink);
-    }
 
     /* =======================================================
        FOOTER
@@ -923,16 +902,21 @@ LAYOUT
       .hero-nav-hint { display: none; }
     }
 
-    /* Phones: hero line fills the space between the top and bottom bars */
-    @media (max-width: 640px) {
+    /* Hero line: two fixed arrangements. Desktop keeps its four line breaks and
+       scales down; at 720px and narrower the mobile-only breaks (br.m) switch on and
+       the line grows to fill the space between the top and bottom bars. */
+    @media (min-width: 721px) {
+      .mw-hero br.m { display: none; }
+    }
+
+    @media (max-width: 720px) {
       .hero { min-height: 100svh; }
       .hero-main { flex: 1; display: flex; flex-direction: column; }
       .mw-deck { flex: 1; align-items: center; padding-block: 24px; }
       .mw-hero {
-        font-size: clamp(30px, min(11vw, 6svh), 56px);
-        line-height: 1.2;
+        font-size: clamp(30px, min(12vw, 5.2svh), 64px);
+        line-height: 1.15;
       }
-      .mw-hero br:not(.keep) { display: none; }
       .hero-nav { margin-top: 0; }
     }
 
@@ -982,7 +966,7 @@ LAYOUT
 
     <div class="mw-deck">
       <p class="mw-hero">
-        I spent a decade teaching<br> people how to
+        I spent a<br class="m"> decade teaching<br> people how to<br class="m">
         <span class="cyc cyc-see"
               data-words="see.,observe.,perceive.,notice.,look."
               data-filters="wobble-1,wobble-2,wobble-3,wobble-4,wobble-5"
@@ -993,14 +977,14 @@ LAYOUT
           <svg class="ring" viewBox="0 0 100 60" preserveAspectRatio="none">
             <ellipse cx="50" cy="30" rx="46" ry="24" transform="rotate(-2.5 50 30)"/>
           </svg>
-        </span><br class="keep">
-        Now I help organisations<br>
+        </span><br>
+        Now I help<br class="m"> organisations<br>
         <span class="cyc cyc-think" data-words="think,communicate,adapt" aria-label="think">
           <span class="mask">
             <span class="stack"><span>think </span></span>
           </span>
-        </span>better through<br>
-        design — where data meets art.
+        </span><br class="m">better through<br>
+        design&nbsp;&mdash;<br class="m"> where data<br class="m"> meets art.
       </p>
     </div>
    </div>
@@ -1056,16 +1040,16 @@ LAYOUT
         <p class="work-title">PolitiContext</p>
         <p class="work-meta"> 2019 · Postcards</p>
       </button>
-      <button class="work-card" type="button" data-key="fineart06" aria-label="Open Hello">
+      <button class="work-card" type="button" data-key="fineart06" aria-label="Open Hello, My Name Is">
         <div class="work-thumb"><img src="images/fineart06-hello/fineart06-hello_05.webp" alt="" loading="lazy"></div>
-        <p class="work-title">Hello</p>
+        <p class="work-title">Hello, My Name Is</p>
         <p class="work-meta">2013 · Installation</p>
       </button>
 
       <!-- Design -->
-      <button class="work-card" type="button" data-key="design01" aria-label="Open CEC">
+      <button class="work-card" type="button" data-key="design01" aria-label="Open Catholic Education Conference">
         <div class="work-thumb"><img src="images/design01-cec/design01-cec-06.PNG" alt="" loading="lazy" style="transform: scale(1.2); transform-origin: 50% 70%;"></div>
-        <p class="work-title">CEC</p>
+        <p class="work-title">Catholic Education Conference</p>
         <p class="work-meta">2021 · Identity</p>
       </button>
       <button class="work-card" type="button" data-key="design02" aria-label="Open Meissen Recast Catalogue">
@@ -1151,7 +1135,7 @@ LAYOUT
 
     <div class="section-head">
       <h2 class="section-title">Data</h2>
-      <p class="section-sub">A sampling of my data science and visualisation projects. View the Python coded notebooks in full via Github <a href="https://github.com/michaelee90/data-science-portfolio" target="_blank" rel="noopener">here</a>.</p>
+      <p class="section-sub">Highlights of my data science and visualisation projects. View the Python coded notebooks and full suite of analytical skillsets via Github <a href="https://github.com/michaelee90/data-science-portfolio" target="_blank" rel="noopener">here</a>.</p>
     </div>
 
     <div class="data-grid">
@@ -1186,14 +1170,17 @@ LAYOUT
       <a href="#about" data-target="about">About Me</a>
     </nav>
 
-    <div class="section-head">
+    <div class="section-head section-head--tight">
       <h2 class="section-title">Hi there!</h2>
     </div>
 
     <div class="about-grid">
       <div class="about-text">
         <p>Mike is a people-focused designer committed to transforming socio-economic and operational data into strategic capability frameworks, scalable adult learning initiatives, and high-impact stakeholder partnerships. With a Bachelor of Fine Arts (Graphic Design) from the Rhode Island School of Design, he enjoys working at the intersection of creativity and structural rigour to resolve complex communication challenges. As an active freelance designer and commission artist, he welcomes collaborations with organisations and clients demanding visual sophistication and detailed nuance for their projects.</p>
-        <p><a class="about-cta" href="#hero">Let&rsquo;s collaborate</a> &rarr; Reach out through the landing page contact information!</p>
+        <p class="about-cta-wrap">
+          <a class="about-cta" href="#hero">Let&rsquo;s collaborate<svg class="ring" viewBox="0 0 290 60" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="145" cy="30" rx="143" ry="28" transform="rotate(-1.5 145 30)"/></svg></a>
+          <span class="about-cta-note">Reach out through the landing page contact information!</span>
+        </p>
       </div>
 
             <div class="carousel" id="aboutCarousel" aria-label="Photos of Michael at work">
@@ -1204,36 +1191,372 @@ LAYOUT
         <div class="slide"><img src="images/about-me/about-me-04.jpg" alt=""></div>
         <div class="slide"><img src="images/about-me/about-me-05.jpg" alt=""></div>
         <div class="slide"><img src="images/about-me/about-me-06.jpg" alt=""></div>
+        <div class="slide"><img src="images/about-me/about-me-07.jpg" alt=""></div>
         <div class="carousel-dots" aria-hidden="true"></div>
       </div>
     </div>
 
-    <div class="ld-rail">
-      <div>
-        <p class="rail-head">Career Highlights</p>
-        <ul class="career-list">
-          <li>Strategic learning and development professional with over a decade of experience</li>
-          <li>Delivered professional development workshops for adult learners at national level</li>
-          <li>Collaborated on leading teams for organisational review and re-envisioning exercises</li>
-          <li>Regular driver of partnerships across industries for social change</li>
-          <li>Experienced in leading and managing cross-functional teams</li>
-          <li>Advanced data analytics and visualisation skills with Python coding</li>
-        </ul>
-      </div>
-      <div>
-        <p class="rail-head">Professional Delivery Skills</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Curriculum &amp; Programme Design</span>
-          <span class="skill-tag">Information Architecture</span>
-          <span class="skill-tag">Facilitation &amp; Coaching</span>
-          <span class="skill-tag">Design Thinking &amp; Co-creation</span>
-          <span class="skill-tag">Data Visualisation</span>
-          <span class="skill-tag">Change Management</span>
-          <span class="skill-tag">Strategic Messaging</span>
-          <span class="skill-tag">Cross-functional Collaboration</span>
-        </div>
-      </div>
-    </div>
+<!-- ============ Strengths chart (About Me) ============
+     Paste this block where the Professional Delivery Skills pills were.
+     Assumes Cormorant Garamond (italic 600 and 700) and Nunito (600) are already loaded on the page.
+     560px and wider: full radial chart. Below 560px: a phone-sized chart with short Impact phrases,
+     followed by the list grouped by domain.
+     Icons: Lucide (lucide.dev), ISC licence, free to use without attribution.
+-->
+<style>
+  .sc {
+    --sc-ink: var(--ink, #1f2a2e);
+    --sc-ink-mid: var(--ink-mid, #566066);
+    --sc-ink-faint: var(--ink-faint, #9aa7ad);
+    --sc-teal: var(--teal, #12aaa1);
+    --sc-teal-dark: var(--teal-dark, oklch(.42 .09 210));
+    --sc-bg: oklch(.96 .02 55);
+    margin: 0;
+  }
+  .sc-svg { display: block; width: 100%; max-width: 760px; height: auto; margin: 0 auto; overflow: visible; }
+
+  /* hairlines */
+  .sc-ring { fill: none; stroke: var(--sc-ink-faint); stroke-width: 0.8; opacity: .7; }
+  .sc-axis { fill: none; stroke: var(--sc-ink-faint); stroke-width: 1.1; stroke-dasharray: 0.1 5; stroke-linecap: round; opacity: .55; }
+  .sc-spoke { stroke: var(--sc-ink-mid); stroke-width: 0.6; opacity: .75; }
+
+  /* text */
+  .sc-halo { paint-order: stroke; stroke: var(--sc-bg); stroke-width: 4px; stroke-linejoin: round; }
+  .sc-halo-lg { paint-order: stroke; stroke: var(--sc-bg); stroke-width: 8px; stroke-linejoin: round; }
+  .sc-domain { font: 600 12px 'Nunito', sans-serif; text-transform: uppercase; letter-spacing: .24em; fill: var(--sc-ink-mid); transition: fill .25s; }
+  .sc-icon { fill: none; stroke: var(--sc-teal); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: .4; transition: opacity .25s, stroke .25s; }
+  .sc-label { font: italic 600 19px 'Cormorant Garamond', serif; fill: var(--sc-ink); }
+  .sc-dot-num { font: 600 10.5px 'Nunito', sans-serif; fill: var(--sc-bg); text-anchor: middle; pointer-events: none; }
+  .sc-lvnum { font: 600 12px 'Nunito', sans-serif; fill: var(--sc-ink-faint); text-anchor: middle; }
+  .sc-knock { fill: var(--sc-bg); }
+  .sc-exp { font: italic 600 14px 'Cormorant Garamond', serif; fill: var(--sc-ink-mid); }
+  .sc-you { font-weight: 700; fill: var(--sc-teal); }
+  .sc-pad-flood { flood-color: var(--sc-bg); flood-opacity: 1; }
+  .sc-legend { font: 600 10px 'Nunito', sans-serif; text-transform: uppercase; letter-spacing: .16em; fill: var(--sc-ink-mid); }
+  .sc-credit { font: italic 600 14px 'Cormorant Garamond', serif; fill: var(--sc-ink-faint); }
+
+  /* marks */
+  .sc-dot { fill: var(--sc-teal); }
+  .sc-hollow { fill: var(--sc-bg); stroke: var(--sc-teal-dark); stroke-width: 1.4; stroke-dasharray: 2.2 2; }
+  .sc-hollow-strong { fill: var(--sc-teal); fill-opacity: .45; stroke: var(--sc-teal); stroke-width: 1.6; stroke-dasharray: none; }
+  .sc-shape { fill: var(--sc-teal); fill-opacity: .12; stroke: var(--sc-teal); stroke-width: 1.3; stroke-linejoin: round; }
+  .sc-wedge { fill: var(--sc-teal); fill-opacity: 0; transition: fill-opacity .25s; }
+
+  /* hover: highlight a domain quadrant, fade the others */
+  .sc-dom { cursor: default; }
+  .sc-dom > *, .sc-padg text { transition: opacity .25s, fill-opacity .25s; }
+  /* faded quadrants dim their marks and text; label backings stay solid so no boxes show */
+  .sc-svg:has(.sc-dom:hover) .sc-dom:not(:hover) > :not(.sc-wedge):not(.sc-padg):not(.sc-knock) { opacity: .35; }
+  .sc-svg:has(.sc-dom:hover) .sc-dom:not(:hover) .sc-padg text { fill-opacity: .35; }
+  .sc-dom:hover .sc-wedge { fill-opacity: .07; }
+  .sc-dom:hover .sc-domain { fill: var(--sc-teal-dark); }
+  .sc-dom:hover .sc-icon { opacity: 1; stroke: var(--sc-teal-dark); }
+
+  /* phone-sized chart: same drawing, larger type and heavier lines because it is scaled down */
+  .sc-svg-m { max-width: 520px; margin: 6px auto 24px; }
+  .sc-svg-m .sc-ring { stroke-width: 1.3; }
+  .sc-svg-m .sc-axis { stroke-width: 1.8; stroke-dasharray: 0.1 8; }
+  .sc-svg-m .sc-spoke { stroke-width: 1; }
+  .sc-svg-m .sc-shape { stroke-width: 2; }
+  .sc-svg-m .sc-hollow { stroke-width: 2.2; stroke-dasharray: 3.4 3; }
+  .sc-svg-m .sc-hollow-strong { stroke-width: 2.4; stroke-dasharray: none; }
+  .sc-svg-m .sc-halo { stroke-width: 6px; }
+  .sc-svg-m .sc-label { font-size: 30px; }
+  .sc-svg-m .sc-domain { font-size: 18px; }
+  .sc-svg-m .sc-icon { stroke-width: 1.9; }
+  .sc-svg-m .sc-dot-num { font-size: 16px; }
+  .sc-svg-m .sc-lvnum { font-size: 18px; }
+  .sc-svg-m .sc-exp { font-size: 23px; }
+
+  /* stacked list (mobile) */
+  .sc-list { font-family: 'Nunito', sans-serif; color: var(--sc-ink-mid); }
+  .sc-list .sc-key-m { display: flex; gap: 22px; font: 600 9.5px 'Nunito', sans-serif; text-transform: uppercase; letter-spacing: .16em; }
+  .sc-list .sc-key-m span { display: flex; align-items: center; gap: 8px; }
+  .sc-list .sc-key-m .sc-mk { width: 11px; height: 11px; }
+  .sc-list .sc-credit-m { margin: 12px 0 22px; font: italic 600 14px 'Cormorant Garamond', serif; color: var(--sc-ink-faint); }
+  .sc-list section { padding: 18px 0; border-top: 1px solid color-mix(in oklch, var(--sc-ink-faint) 55%, transparent); }
+  .sc-list h4 { display: flex; align-items: center; gap: 9px; margin: 0 0 10px; font: 600 11px 'Nunito', sans-serif; text-transform: uppercase; letter-spacing: .22em; color: var(--sc-ink-mid); }
+  .sc-list h4 svg { width: 16px; height: 16px; fill: none; stroke: var(--sc-teal); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: .6; }
+  .sc-list ul, .sc-list ol { list-style: none; margin: 0; padding: 0; }
+  .sc-list li { display: flex; gap: 10px; align-items: center; margin: 7px 0; }
+  .sc-list .sc-s { font: italic 600 19px 'Cormorant Garamond', serif; color: var(--sc-ink); }
+  .sc-list .sc-e { font: italic 600 17px/1.3 'Cormorant Garamond', serif; color: var(--sc-ink-mid); }
+  .sc-list .sc-e5 strong { font-weight: 700; color: var(--sc-teal); }
+  .sc-list .sc-n { flex: none; font: 600 11px 'Nunito', sans-serif; color: var(--sc-ink-faint); min-width: 8px; text-align: right; }
+  .sc-list .sc-mk { flex: none; display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--sc-teal); color: var(--sc-bg); font: 600 10px 'Nunito', sans-serif; font-style: normal; }
+  .sc-list .sc-mk.o { width: 11px; height: 11px; background: transparent; border: 1.4px dashed var(--sc-teal-dark); }
+  .sc-list .sc-mk.o.y { background: color-mix(in oklch, var(--sc-teal) 45%, transparent); border: 1.6px solid var(--sc-teal); }
+  .sc-list .sc-sub { margin: 0 0 10px; font: 600 12px 'Nunito', sans-serif; letter-spacing: .04em; color: var(--sc-ink-faint); }
+  .sc-list .sc-imp { align-items: baseline; margin: 12px 0; }
+  .sc-list .sc-imp .sc-mk.o { width: 20px; height: 20px; box-sizing: border-box; border: 1.4px dashed var(--sc-teal-dark); color: var(--sc-teal-dark); font-size: 10px; }
+  .sc-list .sc-imp5 .sc-mk.o { background: color-mix(in oklch, var(--sc-teal) 45%, transparent); border: 1.6px solid var(--sc-teal); color: var(--sc-ink); }
+  .sc-list .sc-it { display: flex; flex-direction: column; }
+  .sc-list .sc-ih { font: 600 13.5px 'Nunito', sans-serif; letter-spacing: .02em; color: var(--sc-ink); }
+  .sc-list .sc-imp5 .sc-ih { color: var(--sc-teal); }
+  .sc-list .sc-it .sc-e { margin-top: 1px; }
+
+  /* list is screen-reader only on wide screens */
+  .sc-list {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+  @media (max-width: 559px) {
+    .sc-svg-d { display: none; }
+    .sc-list { position: static; width: auto; height: auto; overflow: visible; clip: auto; clip-path: none; white-space: normal; }
+  }
+</style>
+
+<figure class="sc">
+  <svg class="sc-svg sc-svg-d" viewBox="150.7 -40.8 701.3 799.5" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Hand-drawn wobble. Swap for your site's own filter id if you prefer, or delete the filter attributes below. -->
+      <filter id="scd-wobble" filterUnits="userSpaceOnUse" x="150.7" y="-40.8" width="701.3" height="799.5">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- solid backing behind impact labels so ring lines stop short of the words -->
+      <filter id="scd-pad" x="-0.07" y="-0.22" width="1.14" height="1.44">
+        <feFlood class="sc-pad-flood" result="bg"/>
+        <feMerge><feMergeNode in="bg"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <!-- invisible arcs the curved labels sit on -->
+      <path id="scd-s0" d="M192.3 428.7 A328.97 328.97 0 0 0 491.3 727.7"/>
+      <path id="scd-s1" d="M207.8 455.0 A317 317 0 0 1 411.6 102.1"/>
+      <path id="scd-s2" d="M222.1 291.6 A317 317 0 0 1 575.0 87.8"/>
+      <path id="scd-s3" d="M465.0 87.8 A317 317 0 0 1 817.9 291.6"/>
+      <path id="scd-s4" d="M628.4 102.1 A317 317 0 0 1 832.2 455.0"/>
+      <path id="scd-dst" d="M171.1 562.7 A384.97 384.97 0 0 1 682.7 51.1"/>
+      <path id="scd-dex" d="M357.3 51.1 A384.97 384.97 0 0 1 868.9 562.7"/>
+      <path id="scd-drb" d="M163.4 233.7 A393.43 393.43 0 0 0 686.3 756.6"/>
+      <path id="scd-din" d="M353.7 756.6 A393.43 393.43 0 0 0 876.6 233.7"/>
+    </defs>
+
+    <!-- key + credit -->
+    <g class="sc-key">
+      <circle class="sc-dot" cx="408" cy="-18.8" r="6"/>
+      <text class="sc-legend" x="421" y="-15.3">Mike's Strengths</text>
+      <circle class="sc-hollow" cx="576" cy="-18.8" r="6"/>
+      <text class="sc-legend" x="589" y="-15.3">Impact</text>
+      <text class="sc-credit" x="520" y="15.2" text-anchor="middle">Top 5 CliftonStrengths® assessed by Gallup</text>
+    </g>
+
+    <g class="sc-chart">
+    <!-- rings (rank 1 outermost, rank 5 innermost) and dotted axes -->
+    <g>
+      <circle class="sc-ring" cx="520" cy="400" r="300"/>
+      <circle class="sc-ring" cx="520" cy="400" r="245"/>
+      <circle class="sc-ring" cx="520" cy="400" r="190"/>
+      <circle class="sc-ring" cx="520" cy="400" r="135"/>
+      <circle class="sc-ring" cx="520" cy="400" r="80"/>
+      <line class="sc-axis" x1="520" y1="80" x2="520" y2="720"/>
+      <line class="sc-axis" x1="200" y1="400" x2="840" y2="400"/>
+    </g>
+
+    <!-- profile shape joining the five strengths -->
+    <polygon class="sc-shape" points="307.9,612.1 307.8,277.5 452.5,283.1 615.0,235.5 589.3,360.0" filter="url(#scd-wobble)"/>
+
+    <!-- STRATEGIC THINKING -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L220 400 A300 300 0 0 1 520 100 Z"/>
+      <g class="sc-icon" transform="translate(180.1 210.4) rotate(-60.85) scale(0.9167) translate(-12 -12)"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/></g>
+      <text class="sc-domain"><textPath href="#scd-dst" startOffset="50%" text-anchor="middle">Strategic Thinking</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="253.3" y2="246.0"/>
+      <circle class="sc-dot" cx="307.8" cy="277.5" r="9" filter="url(#scd-wobble)"/>
+      <text class="sc-dot-num" x="307.8" y="281.2">2</text>
+      <text class="sc-label sc-halo"><textPath href="#scd-s1" startOffset="50%" text-anchor="middle">Learner</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="366.0" y2="133.3"/>
+      <circle class="sc-dot" cx="452.5" cy="283.1" r="9" filter="url(#scd-wobble)"/>
+      <text class="sc-dot-num" x="452.5" y="286.8">4</text>
+      <text class="sc-label sc-halo"><textPath href="#scd-s2" startOffset="50%" text-anchor="middle">Strategic</textPath></text>
+    </g>
+
+    <!-- EXECUTING -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L520 100 A300 300 0 0 1 820 400 Z"/>
+      <g class="sc-icon" transform="translate(745.0 82.4) rotate(35.32) scale(0.9167) translate(-12 -12)"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></g>
+      <text class="sc-domain"><textPath href="#scd-dex" startOffset="50%" text-anchor="middle">Executing</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="674.0" y2="133.3"/>
+      <circle class="sc-dot" cx="615.0" cy="235.5" r="9" filter="url(#scd-wobble)"/>
+      <text class="sc-dot-num" x="615.0" y="239.2">3</text>
+      <text class="sc-label sc-halo"><textPath href="#scd-s3" startOffset="50%" text-anchor="middle">Arranger</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="786.7" y2="246.0"/>
+      <circle class="sc-dot" cx="589.3" cy="360.0" r="9" filter="url(#scd-wobble)"/>
+      <text class="sc-dot-num" x="589.3" y="363.7">5</text>
+      <text class="sc-label sc-halo"><textPath href="#scd-s4" startOffset="50%" text-anchor="middle">Restorative</textPath></text>
+    </g>
+
+    <!-- RELATIONSHIP BUILDING -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L520 700 A300 300 0 0 1 220 400 Z"/>
+      <g class="sc-icon" transform="translate(174.3 578.7) rotate(62.67) scale(0.9167) translate(-12 -12)"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></g>
+      <text class="sc-domain"><textPath href="#scd-drb" startOffset="50%" text-anchor="middle">Relationship Building</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="302.2" y2="617.8"/>
+      <circle class="sc-dot" cx="307.9" cy="612.1" r="9" filter="url(#scd-wobble)"/>
+      <text class="sc-dot-num" x="307.9" y="615.8">1</text>
+      <text class="sc-label sc-halo"><textPath href="#scd-s0" startOffset="50%" text-anchor="middle">Connectedness</textPath></text>
+    </g>
+
+    <!-- INFLUENCING: impact, level n on ring n -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L820 400 A300 300 0 0 1 520 700 Z"/>
+      <g class="sc-icon" transform="translate(738.6 722.0) rotate(-34.16) scale(0.9167) translate(-12 -12)"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></g>
+      <text class="sc-domain"><textPath href="#scd-din" startOffset="50%" text-anchor="middle">Influencing</textPath></text>
+      <g class="sc-padg" filter="url(#scd-pad)"><text class="sc-exp"><tspan x="591.1" y="695.4">Cross-functional</tspan><tspan x="591.1" y="711.9">team leadership</tspan></text></g>
+      <g class="sc-padg" filter="url(#scd-pad)"><text class="sc-exp"><tspan x="619.2" y="631.5">National-level professional</tspan><tspan x="619.2" y="648.0">development workshops</tspan></text></g>
+      <g class="sc-padg" filter="url(#scd-pad)"><text class="sc-exp"><tspan x="635.7" y="563.5">Inter-ministerial and</tspan><tspan x="635.7" y="580.0">cross-agency collaboration</tspan></text></g>
+      <g class="sc-padg" filter="url(#scd-pad)"><text class="sc-exp"><tspan x="636.3" y="493.6">International-level</tspan><tspan x="636.3" y="510.1">organisational re-accreditation</tspan></text></g>
+      <g class="sc-padg" filter="url(#scd-pad)"><text class="sc-exp"><tspan class="sc-you" x="614.2" y="427.4">Partnering with you</tspan><tspan x="614.2" y="443.9">to solve challenges together</tspan></text></g>
+      <circle class="sc-knock" cx="551.3" cy="698.4" r="8.5"/>
+      <text class="sc-lvnum" x="551.3" y="702.6">1</text>
+      <circle class="sc-hollow" cx="572.1" cy="695.4" r="6.5" filter="url(#scd-wobble)"/>
+      <circle class="sc-knock" cx="580.1" cy="637.5" r="8.5"/>
+      <text class="sc-lvnum" x="580.1" y="641.8">2</text>
+      <circle class="sc-hollow" cx="600.2" cy="631.5" r="6.5" filter="url(#scd-wobble)"/>
+      <circle class="sc-knock" cx="598.1" cy="573.2" r="8.5"/>
+      <text class="sc-lvnum" x="598.1" y="577.4">3</text>
+      <circle class="sc-hollow" cx="616.7" cy="563.5" r="6.5" filter="url(#scd-wobble)"/>
+      <circle class="sc-knock" cx="601.6" cy="507.5" r="8.5"/>
+      <text class="sc-lvnum" x="601.6" y="511.8">4</text>
+      <circle class="sc-hollow" cx="617.3" cy="493.6" r="6.5" filter="url(#scd-wobble)"/>
+      <circle class="sc-knock" cx="585.5" cy="445.9" r="8.5"/>
+      <text class="sc-lvnum" x="585.5" y="450.2">5</text>
+      <circle class="sc-hollow sc-hollow-strong" cx="595.2" cy="427.4" r="6.5" filter="url(#scd-wobble)"/>
+    </g>
+    </g>
+  </svg>
+
+  <!-- stacked version: shown below 560px (screen-reader only above) -->
+  <div class="sc-list">
+    <div class="sc-key-m"><span><i class="sc-mk"></i>Mike's Strengths</span><span><i class="sc-mk o"></i>Impact</span></div>
+    <p class="sc-credit-m">Top 5 CliftonStrengths® assessed by Gallup</p>
+  <svg class="sc-svg sc-svg-m" viewBox="124.0 23.1 761.2 760.4" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Hand-drawn wobble. Swap for your site's own filter id if you prefer, or delete the filter attributes below. -->
+      <filter id="scm-wobble" filterUnits="userSpaceOnUse" x="124.0" y="23.1" width="761.2" height="760.4">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- solid backing behind impact labels so ring lines stop short of the words -->
+      <filter id="scm-pad" x="-0.07" y="-0.22" width="1.14" height="1.44">
+        <feFlood class="sc-pad-flood" result="bg"/>
+        <feMerge><feMergeNode in="bg"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <!-- invisible arcs the curved labels sit on -->
+      <path id="scm-s0" d="M180.4 429.7 A340.9 340.9 0 0 0 490.3 739.6"/>
+      <path id="scm-s1" d="M202.9 455.9 A322 322 0 0 1 409.9 97.4"/>
+      <path id="scm-s2" d="M217.4 289.9 A322 322 0 0 1 575.9 82.9"/>
+      <path id="scm-s3" d="M464.1 82.9 A322 322 0 0 1 822.6 289.9"/>
+      <path id="scm-s4" d="M630.1 97.4 A322 322 0 0 1 837.1 455.9"/>
+      <path id="scm-dst" d="M171.2 562.7 A384.9 384.9 0 0 1 682.7 51.2"/>
+      <path id="scm-dex" d="M357.3 51.2 A384.9 384.9 0 0 1 868.8 562.7"/>
+      <path id="scm-drb" d="M159.7 232.0 A397.59 397.59 0 0 0 688.0 760.3"/>
+      <path id="scm-din" d="M352.0 760.3 A397.59 397.59 0 0 0 880.3 232.0"/>
+    </defs>
+
+    <g class="sc-chart">
+    <!-- rings (rank 1 outermost, rank 5 innermost) and dotted axes -->
+    <g>
+      <circle class="sc-ring" cx="520" cy="400" r="300"/>
+      <circle class="sc-ring" cx="520" cy="400" r="245"/>
+      <circle class="sc-ring" cx="520" cy="400" r="190"/>
+      <circle class="sc-ring" cx="520" cy="400" r="135"/>
+      <circle class="sc-ring" cx="520" cy="400" r="80"/>
+      <line class="sc-axis" x1="520" y1="80" x2="520" y2="720"/>
+      <line class="sc-axis" x1="200" y1="400" x2="840" y2="400"/>
+    </g>
+
+    <!-- profile shape joining the five strengths -->
+    <polygon class="sc-shape" points="307.9,612.1 307.8,277.5 452.5,283.1 615.0,235.5 589.3,360.0" filter="url(#scm-wobble)"/>
+
+    <!-- STRATEGIC THINKING -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L220 400 A300 300 0 0 1 520 100 Z"/>
+      <g class="sc-icon" transform="translate(155.5 257.9) rotate(-68.70) scale(1.3333) translate(-12 -12)"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/></g>
+      <text class="sc-domain"><textPath href="#scm-dst" startOffset="50%" text-anchor="middle">Strategic Thinking</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="253.3" y2="246.0"/>
+      <circle class="sc-dot" cx="307.8" cy="277.5" r="14" filter="url(#scm-wobble)"/>
+      <text class="sc-dot-num" x="307.8" y="283.1">2</text>
+      <text class="sc-label sc-halo"><textPath href="#scm-s1" startOffset="50%" text-anchor="middle">Learner</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="366.0" y2="133.3"/>
+      <circle class="sc-dot" cx="452.5" cy="283.1" r="14" filter="url(#scm-wobble)"/>
+      <text class="sc-dot-num" x="452.5" y="288.7">4</text>
+      <text class="sc-label sc-halo"><textPath href="#scm-s2" startOffset="50%" text-anchor="middle">Strategic</textPath></text>
+    </g>
+
+    <!-- EXECUTING -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L520 100 A300 300 0 0 1 820 400 Z"/>
+      <g class="sc-icon" transform="translate(720.0 63.7) rotate(30.74) scale(1.3333) translate(-12 -12)"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></g>
+      <text class="sc-domain"><textPath href="#scm-dex" startOffset="50%" text-anchor="middle">Executing</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="674.0" y2="133.3"/>
+      <circle class="sc-dot" cx="615.0" cy="235.5" r="14" filter="url(#scm-wobble)"/>
+      <text class="sc-dot-num" x="615.0" y="241.1">3</text>
+      <text class="sc-label sc-halo"><textPath href="#scm-s3" startOffset="50%" text-anchor="middle">Arranger</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="786.7" y2="246.0"/>
+      <circle class="sc-dot" cx="589.3" cy="360.0" r="14" filter="url(#scm-wobble)"/>
+      <text class="sc-dot-num" x="589.3" y="365.6">5</text>
+      <text class="sc-label sc-halo"><textPath href="#scm-s4" startOffset="50%" text-anchor="middle">Restorative</textPath></text>
+    </g>
+
+    <!-- RELATIONSHIP BUILDING -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L520 700 A300 300 0 0 1 220 400 Z"/>
+      <g class="sc-icon" transform="translate(149.8 526.6) rotate(71.11) scale(1.3333) translate(-12 -12)"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></g>
+      <text class="sc-domain"><textPath href="#scm-drb" startOffset="50%" text-anchor="middle">Relationship Building</textPath></text>
+      <line class="sc-spoke" x1="520" y1="400" x2="302.2" y2="617.8"/>
+      <circle class="sc-dot" cx="307.9" cy="612.1" r="14" filter="url(#scm-wobble)"/>
+      <text class="sc-dot-num" x="307.9" y="617.8">1</text>
+      <text class="sc-label sc-halo"><textPath href="#scm-s0" startOffset="50%" text-anchor="middle">Connectedness</textPath></text>
+    </g>
+
+    <!-- INFLUENCING: impact, level n on ring n -->
+    <g class="sc-dom">
+      <path class="sc-wedge" d="M520 400 L820 400 A300 300 0 0 1 520 700 Z"/>
+      <g class="sc-icon" transform="translate(711.8 741.0) rotate(-29.35) scale(1.3333) translate(-12 -12)"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></g>
+      <text class="sc-domain"><textPath href="#scm-din" startOffset="50%" text-anchor="middle">Influencing</textPath></text>
+      <g class="sc-padg" filter="url(#scm-pad)"><text class="sc-exp"><tspan x="594.6" y="695.4">Leading diversity</tspan></text></g>
+      <g class="sc-padg" filter="url(#scm-pad)"><text class="sc-exp"><tspan x="622.7" y="631.5">Building capability</tspan></text></g>
+      <g class="sc-padg" filter="url(#scm-pad)"><text class="sc-exp"><tspan x="639.2" y="563.5">Diverse stakeholdership</tspan></text></g>
+      <g class="sc-padg" filter="url(#scm-pad)"><text class="sc-exp"><tspan x="639.8" y="493.6">Organisational development</tspan></text></g>
+      <g class="sc-padg" filter="url(#scm-pad)"><text class="sc-exp"><tspan class="sc-you" x="617.7" y="427.4">Partnering with you</tspan></text></g>
+      <circle class="sc-knock" cx="540.3" cy="699.3" r="13"/>
+      <text class="sc-lvnum" x="540.3" y="705.7">1</text>
+      <circle class="sc-hollow" cx="572.1" cy="695.4" r="10" filter="url(#scm-wobble)"/>
+      <circle class="sc-knock" cx="569.3" cy="640.0" r="13"/>
+      <text class="sc-lvnum" x="569.3" y="646.3">2</text>
+      <circle class="sc-hollow" cx="600.2" cy="631.5" r="10" filter="url(#scm-wobble)"/>
+      <circle class="sc-knock" cx="587.9" cy="577.4" r="13"/>
+      <text class="sc-lvnum" x="587.9" y="583.8">3</text>
+      <circle class="sc-hollow" cx="616.7" cy="563.5" r="10" filter="url(#scm-wobble)"/>
+      <circle class="sc-knock" cx="592.6" cy="513.8" r="13"/>
+      <text class="sc-lvnum" x="592.6" y="520.2">4</text>
+      <circle class="sc-hollow" cx="617.3" cy="493.6" r="10" filter="url(#scm-wobble)"/>
+      <circle class="sc-knock" cx="578.6" cy="454.5" r="13"/>
+      <text class="sc-lvnum" x="578.6" y="460.8">5</text>
+      <circle class="sc-hollow sc-hollow-strong" cx="595.2" cy="427.4" r="10" filter="url(#scm-wobble)"/>
+    </g>
+    </g>
+  </svg>
+    <section>
+      <h4><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Relationship Building</h4>
+      <ul><li><span class="sc-mk">1</span><span class="sc-s">Connectedness</span></li></ul>
+    </section>
+    <section>
+      <h4><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/></svg>Strategic Thinking</h4>
+      <ul><li><span class="sc-mk">2</span><span class="sc-s">Learner</span></li><li><span class="sc-mk">4</span><span class="sc-s">Strategic</span></li></ul>
+    </section>
+    <section>
+      <h4><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></svg>Executing</h4>
+      <ul><li><span class="sc-mk">3</span><span class="sc-s">Arranger</span></li><li><span class="sc-mk">5</span><span class="sc-s">Restorative</span></li></ul>
+    </section>
+    <section>
+      <h4><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>Influencing</h4>
+      <p class="sc-sub">Scalable Impact</p>
+      <ol><li class="sc-imp"><span class="sc-mk o">1</span><span class="sc-it"><span class="sc-ih">Leading diversity</span><span class="sc-e">Cross-functional team leadership</span></span></li><li class="sc-imp"><span class="sc-mk o">2</span><span class="sc-it"><span class="sc-ih">Building capability</span><span class="sc-e">National-level professional development workshops</span></span></li><li class="sc-imp"><span class="sc-mk o">3</span><span class="sc-it"><span class="sc-ih">Diverse stakeholdership</span><span class="sc-e">Inter-ministerial and cross-agency collaboration</span></span></li><li class="sc-imp"><span class="sc-mk o">4</span><span class="sc-it"><span class="sc-ih">Organisational development</span><span class="sc-e">International-level organisational re&#8209;accreditation</span></span></li><li class="sc-imp sc-imp5"><span class="sc-mk o">5</span><span class="sc-it"><span class="sc-ih">Partnering with you</span><span class="sc-e">to solve challenges together</span></span></li></ol>
+    </section>
+  </div>
+</figure>
+<!-- ============ /Strengths chart ============ -->
     <a class="section-back" href="#hero"><i>↑</i>Let&rsquo;s collaborate</a>
   </section>
 
@@ -1475,7 +1798,7 @@ LAYOUT
         ]
       },
       fineart06: {
-        title: 'Hello · 2013',
+        title: 'Hello, My Name Is · 2013',
         items: [
           img('images/fineart06-hello/fineart06-hello_01.webp'),
           img('images/fineart06-hello/fineart06-hello_02.jpg'),
@@ -1490,7 +1813,7 @@ LAYOUT
 
       // ===== DESIGN =====
       design01: {
-        title: 'CEC · 2021',
+        title: 'Catholic Education Conference · 2021',
         items: [
           img('images/design01-cec/design01-cec-00.jpg'),
           img('images/design01-cec/design01-cec-01.PNG'),
